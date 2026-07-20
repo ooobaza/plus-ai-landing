@@ -60,6 +60,10 @@ function Logo() {
   )
 }
 
+function ModePills({ compact = false }: { compact?: boolean }) {
+  return <div className={`mode-pills ${compact ? 'mode-pills--compact' : ''}`} aria-label="Sport и Cybersport"><span>Sport</span><strong>Cybersport</strong></div>
+}
+
 function Header() {
   return (
     <header className="site-header">
@@ -130,10 +134,11 @@ function Hero() {
       <div className="hero-orb hero-orb--one" aria-hidden="true" /><div className="hero-orb hero-orb--two" aria-hidden="true" />
       <div className="container hero-layout">
         <div className="hero-copy">
-          <div className="eyebrow"><span className="eyebrow-dot" /> TELEGRAM-NATIVE ANALYTICS</div>
+          <div className="hero-system-line"><div className="eyebrow"><span className="eyebrow-dot" /> AI MATCH DETECTION</div><ModePills compact /></div>
           <h1><span>AI-анализ матчей</span><span className="hero-title-accent">и Пульс рынка</span><small>в Telegram</small></h1>
           <p className="hero-lead">Разбирай матчи, смотри контекст, риски и крупные рыночные движения в одном Telegram-боте</p>
           <div className="hero-actions"><TelegramButton>Открыть Plus AI</TelegramButton><a className="text-link" href="#features">Посмотреть возможности <Icon name="chevron" size={15} /></a></div>
+          <div className="hero-trust"><span><Icon name="scan" size={13} /> Матч распознан</span><span><Icon name="pulse" size={13} /> Market intelligence</span><span><Icon name="telegram" size={13} /> Telegram-native</span></div>
           <p className="hero-meta">Sport + Cybersport <i /> AI-мнение по матчу <i /> Market Pulse alerts <i /> Telegram-native</p>
         </div>
         <div className="hero-visual"><HeroConsole /></div>
@@ -164,10 +169,10 @@ function ToolPreview({ kind }: { kind: string }) {
 function Tools() {
   return (
     <section className="section tools-section reveal" id="features"><div className="container">
-      <div className="section-heading section-heading--split"><div><span className="section-index">01 / ВОЗМОЖНОСТИ</span><h2>Два инструмента.<br />Один рабочий контекст.</h2></div><p>Матч и рынок не существуют отдельно. Plus AI собирает оба слоя в одном понятном Telegram-инструменте.</p></div>
+      <div className="section-heading section-heading--split"><div><span className="section-index">01 / ВОЗМОЖНОСТИ</span><h2>Два инструмента.<br />Один рабочий контекст.</h2></div><div className="section-heading__aside"><ModePills compact /><p>Матч и рынок не существуют отдельно. Plus AI собирает оба слоя в одном понятном Telegram-инструменте.</p></div></div>
       <div className="tool-grid">{toolCards.map((tool) => <article className={`tool-card tool-card--${tool.kind}`} key={tool.title}>
-        <div className="tool-card__top"><span>{tool.number}</span><span className="card-eyebrow">{tool.eyebrow}</span></div>
-        <div className="tool-card__body"><h3>{tool.title}</h3><p>{tool.text}</p><ul>{tool.points.map((point) => <li key={point}><Icon name="check" size={14} />{point}</li>)}</ul></div>
+        <div className="tool-card__top"><span>{tool.number}</span><ModePills compact /></div>
+        <div className="tool-card__body"><span className="card-eyebrow">{tool.eyebrow}</span><h3>{tool.title}</h3><p>{tool.text}</p><ul>{tool.points.map((point) => <li key={point}><Icon name="check" size={14} />{point}</li>)}</ul></div>
         <ToolPreview kind={tool.kind} />
       </article>)}</div>
     </div></section>
@@ -186,8 +191,8 @@ function MarketCard({ item, ghost = false }: { item: typeof marketFeed[number]; 
 function MarketPulse() {
   return (
     <section className="section market-section reveal" id="market"><div className="container market-layout">
-      <div className="market-copy"><span className="section-index">02 / ПУЛЬС РЫНКА</span><h2>Замечай движение.<br /><span>Сохраняй контекст.</span></h2><p>Структурированная лента крупных рыночных движений. Фильтры помогают оставить только нужные виды спорта, этап события и диапазон коэффициентов.</p><div className="filter-row" aria-label="Доступные фильтры"><span>SPORT</span><span>LIVE</span><span>PREMATCH</span><span>ODDS</span></div><div className="interface-note"><Icon name="eye" size={16} /><span>Пример интерфейса. Полная карточка открывается в Telegram-боте</span></div></div>
-      <div className="market-terminal"><div className="terminal-header"><div><span className="live-dot" /> MARKET PULSE · DEMO VIEW</div><span className="terminal-counter">INTERFACE PREVIEW</span></div><div className="feed-window"><div className="feed-track"><div className="feed-set">{marketFeed.map((item) => <MarketCard item={item} key={item.sport} />)}</div><div className="feed-set" aria-hidden="true">{marketFeed.map((item) => <MarketCard item={item} ghost key={`copy-${item.sport}`} />)}</div></div><div className="feed-fade feed-fade--top" /><div className="feed-fade feed-fade--bottom" /></div><div className="terminal-footer"><span>DEMO DATA · NOT A LIVE FEED</span><span>FULL DETAILS IN TELEGRAM</span></div></div>
+      <div className="market-copy"><span className="section-index">02 / ПУЛЬС РЫНКА</span><ModePills compact /><h2>Замечай движение.<br /><span>Сохраняй контекст.</span></h2><p>Структурированная лента крупных рыночных движений. Фильтры помогают оставить только нужные виды спорта, этап события и диапазон коэффициентов.</p><div className="filter-row" aria-label="Доступные фильтры"><span>SPORT</span><span>LIVE</span><span>PREMATCH</span><span>ODDS</span></div><div className="interface-note"><Icon name="eye" size={16} /><span>Пример интерфейса. Полная карточка открывается в Telegram-боте</span></div></div>
+      <div className="market-terminal"><div className="terminal-header"><div><span className="live-dot" /> MARKET INTELLIGENCE</div><div className="terminal-header__right"><ModePills compact /><span className="terminal-counter">DEMO VIEW</span></div></div><div className="feed-window"><div className="feed-track"><div className="feed-set">{marketFeed.map((item) => <MarketCard item={item} key={item.sport} />)}</div><div className="feed-set" aria-hidden="true">{marketFeed.map((item) => <MarketCard item={item} ghost key={`copy-${item.sport}`} />)}</div></div><div className="feed-fade feed-fade--top" /><div className="feed-fade feed-fade--bottom" /></div><div className="terminal-footer"><span>DEMO DATA · NOT A LIVE FEED</span><span>FULL DETAILS IN TELEGRAM</span></div></div>
     </div></section>
   )
 }
@@ -201,9 +206,9 @@ function AnalysisSection() {
   ]
   return (
     <section className="section analysis-section reveal" id="analysis"><div className="container">
-      <div className="section-heading section-heading--center"><span className="section-index">03 / AI-АНАЛИЗ МАТЧА</span><h2>Разбор, который можно<br />прочитать по делу</h2><p>Не декоративный дашборд, а последовательный отчёт: данные события, ключевые факторы, риск-заметки и итоговое AI-мнение.</p></div>
+      <div className="section-heading section-heading--center"><span className="section-index">03 / AI-АНАЛИЗ МАТЧА</span><ModePills compact /><h2>Разбор, который можно<br />прочитать по делу</h2><p>Не декоративный дашборд, а последовательный отчёт: данные события, ключевые факторы, риск-заметки и итоговое AI-мнение.</p></div>
       <article className="analysis-report">
-        <header className="report-header"><div className="report-brand"><span>+</span><strong>Plus AI</strong><small>Analysis report</small></div><div><span className="report-id">REPORT / 00418</span><span className="demo-view">DEMO VIEW</span></div></header>
+        <header className="report-header"><div className="report-brand"><span>+</span><strong>Plus AI</strong><small>Match intelligence</small></div><div><ModePills compact /><span className="report-id">REPORT / 00418</span><span className="demo-view">DEMO VIEW</span></div></header>
         <div className="report-meta"><div><span>MATCH</span><strong>Demo match</strong></div><div><span>TOURNAMENT</span><strong>Championship Series</strong></div><div><span>TIME</span><strong>Сегодня · 19:30 UTC</strong></div><div><span>SPORT</span><strong>CS2</strong></div></div>
         <div className="report-body"><div className="report-sections">{details.map(([num, title, text], index) => <section className="report-section" style={{ '--step': index } as React.CSSProperties} key={title}><span>{num}</span><div><h3>{title}</h3><p>{text}</p></div></section>)}</div><aside className="report-sidebar"><div className="report-movement"><span>MARKET MOVEMENT</span><strong>1.84 <i>→</i> 1.91</strong><small>Изменение линии в demo view</small></div><div className="report-opinion"><span>AI-МНЕНИЕ</span><p>По доступному контексту одна сторона выглядит стабильнее, но ключевой риск — динамика линии и возможное изменение состава.</p><small>Информационно-аналитический разбор</small></div></aside></div>
       </article>
@@ -218,7 +223,7 @@ function HowItWorks() {
     { number: '03', title: 'Получаешь разбор в Telegram', text: 'AI-мнение и рыночные уведомления остаются в одном чате.', icon: 'telegram' as IconName },
   ]
   return (
-    <section className="section flow-section reveal" id="how"><div className="container"><div className="section-heading section-heading--split"><div><span className="section-index">04 / КАК ЭТО РАБОТАЕТ</span><h2>От события<br />к ясной картине</h2></div><p>Три коротких шага — без отдельного кабинета, сложной навигации и переключения между сервисами.</p></div><div className="flow-grid"><div className="flow-line" aria-hidden="true"><span /></div>{steps.map((step, index) => <article className="flow-card" style={{ '--step': index } as React.CSSProperties} key={step.number}><div className="flow-card__top"><span>{step.number}</span><div><Icon name={step.icon} size={20} /></div></div><h3>{step.title}</h3><p>{step.text}</p></article>)}</div></div></section>
+    <section className="section flow-section reveal" id="how"><div className="container"><div className="section-heading section-heading--split"><div><span className="section-index">04 / КАК ЭТО РАБОТАЕТ</span><h2>От события<br />к ясной картине</h2></div><div className="section-heading__aside"><ModePills compact /><p>Три коротких шага — без отдельного кабинета, сложной навигации и переключения между сервисами.</p></div></div><div className="flow-grid"><div className="flow-line" aria-hidden="true"><span /></div>{steps.map((step, index) => <article className="flow-card" style={{ '--step': index } as React.CSSProperties} key={step.number}><div className="flow-card__top"><span>{step.number}</span><div><Icon name={step.icon} size={20} /></div></div><h3>{step.title}</h3><p>{step.text}</p></article>)}</div></div></section>
   )
 }
 
@@ -226,7 +231,7 @@ function TelegramSection() {
   const benefits = ['Без отдельного кабинета', 'Уведомления сразу в чате', 'Удобно смотреть с телефона', 'Один бот для двух инструментов']
   return (
     <section className="section telegram-section reveal" id="telegram"><div className="container telegram-layout">
-      <div className="telegram-copy"><span className="section-index">05 / TELEGRAM-NATIVE</span><h2>Аналитика там,<br />где ты уже на связи</h2><p>Plus AI не требует осваивать ещё один кабинет. Разборы матчей и уведомления Пульса рынка приходят прямо в Telegram.</p><ul>{benefits.map((benefit) => <li key={benefit}><span><Icon name="check" size={14} /></span>{benefit}</li>)}</ul></div>
+      <div className="telegram-copy"><span className="section-index">05 / TELEGRAM-NATIVE</span><ModePills compact /><h2>Аналитика там,<br />где ты уже на связи</h2><p>Plus AI не требует осваивать ещё один кабинет. Разборы матчей и уведомления Пульса рынка приходят прямо в Telegram.</p><ul>{benefits.map((benefit) => <li key={benefit}><span><Icon name="check" size={14} /></span>{benefit}</li>)}</ul></div>
       <div className="chat-stage"><div className="telegram-chat">
         <div className="chat-header"><button aria-label="Назад">‹</button><div className="chat-avatar">+</div><div><strong>Plus AI</strong><span>бот</span></div><button aria-label="Меню">•••</button></div>
         <div className="chat-body"><div className="chat-date">Сегодня</div>
@@ -241,7 +246,7 @@ function TelegramSection() {
 
 function FinalCta() {
   return (
-    <section className="section final-section reveal"><div className="container final-card"><div className="final-brand"><span>+</span><strong>Plus AI</strong><small>Telegram analytics</small></div><span className="section-index">НАЧАТЬ РАБОТУ</span><h2>Открой Plus AI<br /><span>в Telegram</span></h2><p>AI-анализ матчей и Пульс рынка — в одном боте</p><TelegramButton className="final-button">Перейти в @plus_ai_robot</TelegramButton><small className="final-note">Telegram-native · Sport + Cybersport</small></div></section>
+    <section className="section final-section reveal"><div className="container final-card"><div className="final-brand"><span>+</span><strong>Plus AI</strong><small>Match intelligence</small></div><ModePills compact /><span className="section-index">НАЧАТЬ РАБОТУ</span><h2>Открой Plus AI<br /><span>в Telegram</span></h2><p>AI-анализ матчей и Пульс рынка — в одном боте</p><TelegramButton className="final-button">Перейти в @plus_ai_robot</TelegramButton><small className="final-note">Telegram-native · Sport + Cybersport</small></div></section>
   )
 }
 
