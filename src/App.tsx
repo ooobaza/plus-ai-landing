@@ -151,7 +151,7 @@ function ToolPreview({ kind }: { kind: string }) {
   if (kind === 'analysis') {
     return (
       <div className="tool-preview tool-preview--analysis">
-        <div className="tool-preview__head"><span>DEMO REPORT</span><small>CS2 · 19:30</small></div>
+        <div className="tool-preview__head"><span>DEMO REPORT</span><small>CS2 · DEMO VIEW</small></div>
         <div className="tool-analysis-row"><span>01</span><strong>Контекст</strong><small>Решающая стадия турнира</small></div>
         <div className="tool-analysis-row"><span>02</span><strong>Форма</strong><small>Стабильность последних карт</small></div>
         <div className="tool-analysis-row"><span>03</span><strong>Риски</strong><small>Состав · динамика линии</small></div>
@@ -208,8 +208,8 @@ function AnalysisSection() {
     <section className="section analysis-section reveal" id="analysis"><div className="container">
       <div className="section-heading section-heading--center"><span className="section-index">03 / AI-АНАЛИЗ МАТЧА</span><ModePills compact /><h2>Разбор, который можно<br />прочитать по делу</h2><p>Не декоративный дашборд, а последовательный отчёт: данные события, ключевые факторы, риск-заметки и итоговое AI-мнение.</p></div>
       <article className="analysis-report">
-        <header className="report-header"><div className="report-brand"><span>+</span><strong>Plus AI</strong><small>Match intelligence</small></div><div><ModePills compact /><span className="report-id">REPORT / 00418</span><span className="demo-view">DEMO VIEW</span></div></header>
-        <div className="report-meta"><div><span>MATCH</span><strong>Demo match</strong></div><div><span>TOURNAMENT</span><strong>Championship Series</strong></div><div><span>TIME</span><strong>Сегодня · 19:30 UTC</strong></div><div><span>SPORT</span><strong>CS2</strong></div></div>
+        <header className="report-header"><div className="report-brand"><span>+</span><strong>Plus AI</strong><small>Match intelligence</small></div><div><ModePills compact /><span className="report-id">INFORMATIONAL VIEW</span><span className="demo-view">DEMO VIEW</span></div></header>
+        <div className="report-meta"><div><span>MATCH</span><strong>Скрыт в demo view</strong></div><div><span>TOURNAMENT</span><strong>Не отображается в demo</strong></div><div><span>TIME</span><strong>Доступно в полной карточке</strong></div><div><span>SPORT</span><strong>CS2</strong></div></div>
         <div className="report-body"><div className="report-sections">{details.map(([num, title, text], index) => <section className="report-section" style={{ '--step': index } as React.CSSProperties} key={title}><span>{num}</span><div><h3>{title}</h3><p>{text}</p></div></section>)}</div><aside className="report-sidebar"><div className="report-movement"><span>MARKET MOVEMENT</span><strong>1.84 <i>→</i> 1.91</strong><small>Изменение линии в demo view</small></div><div className="report-opinion"><span>AI-МНЕНИЕ</span><p>По доступному контексту одна сторона выглядит стабильнее, но ключевой риск — динамика линии и возможное изменение состава.</p><small>Информационно-аналитический разбор</small></div></aside></div>
       </article>
     </div></section>
