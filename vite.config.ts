@@ -20,13 +20,13 @@ export default defineConfig({
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#080b0b" />
     <meta name="description" content="Plus AI — информационно-аналитический разбор матчей и Пульс рынка в Telegram." />
-    <link rel="stylesheet" href="./plus-ai.css?v=20260721-system2" />
+    <link rel="stylesheet" href="./plus-ai.css?v=20260721-system" />
     <title>Plus AI — Sport + Cybersport analytics</title>
   </head>
   <body>
     <div id="root"></div>
     <noscript>Для просмотра сайта включите JavaScript в браузере.</noscript>
-    <script src="./plus-ai.js?v=20260721-system2"></script>
+    <script src="./plus-ai.js?v=20260721-system"></script>
   </body>
 </html>`,
         })
