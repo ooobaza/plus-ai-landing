@@ -76,48 +76,49 @@ function Header() {
 
 function HeroConsole() {
   return (
-    <div className="product-window" aria-label="Демонстрационный интерфейс Plus AI">
+    <div className="product-window match-ready-window" aria-label="Демонстрационный экран найденного матча в Plus AI">
       <div className="product-window__bar">
-        <div className="product-brand"><span>+</span><strong>Plus AI</strong><small>Матч-центр</small></div>
+        <div className="product-brand"><span>+</span><strong>Plus AI</strong><small>AI-анализ</small></div>
         <span className="demo-view">DEMO VIEW</span>
       </div>
-      <div className="product-window__body">
-        <div className="product-analysis">
-          <div className="product-section-head"><span>AI-анализ матча</span><small>Обновлено 12:49</small></div>
-          <div className="product-match">
-            <div className="product-match__mark">CS</div>
-            <div><small>CS2 · PREMATCH</small><h3>Demo match</h3></div>
-            <span className="match-time">19:30 UTC</span>
-          </div>
-          <div className="product-meta-grid">
-            <div><span>MATCH</span><strong>Demo match</strong></div>
-            <div><span>TOURNAMENT</span><strong>Championship Series</strong></div>
-            <div><span>TIME</span><strong>Сегодня · 19:30</strong></div>
-            <div><span>SPORT</span><strong>CS2</strong></div>
-          </div>
-          <div className="movement-row">
-            <div><span>MARKET MOVEMENT</span><strong>1.84 <i>→</i> 1.91</strong></div>
-            <div className="movement-line" aria-hidden="true"><i /><i /><i /></div>
-            <small>+3.8%</small>
-          </div>
-          <div className="risk-notes">
-            <span>RISK NOTES</span>
-            <ul><li>Возможное изменение состава</li><li>Высокий разброс по последним картам</li></ul>
-          </div>
-          <div className="product-opinion"><span>AI-МНЕНИЕ</span><p>Одна сторона выглядит стабильнее по текущему контексту. Ключевой риск — динамика линии перед началом события.</p></div>
+      <div className="match-ready-shell">
+        <div className="sport-switch" aria-label="Тип события">
+          <span>Sport</span><strong>Cybersport</strong>
         </div>
-        <aside className="product-pulse">
-          <div className="product-section-head"><span>Пульс рынка</span><small>DEMO DATA</small></div>
-          <div className="product-pulse__list">
-            {marketFeed.slice(0, 3).map((item) => (
-              <div className="pulse-preview" key={item.sport}>
-                <div className="pulse-preview__top"><span>{item.mark}</span><strong>{item.sport}</strong><small>{item.phase}</small></div>
-                <div className="pulse-preview__values"><div><span>AMOUNT</span><strong>{item.amount}</strong></div><div><span>ODDS</span><strong>{item.odds}</strong></div></div>
-                <div className="pulse-preview__foot"><span>{item.type}</span><small>Match details hidden in demo</small></div>
-              </div>
-            ))}
+        <div className="match-ready-card">
+          <div className="ready-status-icon" aria-hidden="true"><Icon name="check" size={23} /></div>
+          <span className="ready-kicker">СОБЫТИЕ РАСПОЗНАНО</span>
+          <h3>Матч найден</h3>
+          <p className="ready-intro">Данные события доступны для информационно-аналитического разбора</p>
+
+          <div className="detected-event">
+            <div className="detected-event__mark">CS</div>
+            <div><span>CYBERSPORT · CS2</span><strong>Матч скрыт в demo view</strong></div>
+            <small><i /> Готово к анализу</small>
           </div>
-        </aside>
+
+          <div className="ready-info-grid">
+            <div><span>ИСТОЧНИК</span><strong>Ссылка на событие распознана</strong></div>
+            <div><span>ДОСТУПНЫЕ ДАННЫЕ</span><strong>Контекст · форма · линия · риски</strong></div>
+          </div>
+
+          <div className="ready-progress" aria-label="Готовность разбора">
+            <span><i><Icon name="check" size={11} /></i> Матч определён</span>
+            <span><i><Icon name="check" size={11} /></i> Контекст собран</span>
+            <span><i><Icon name="check" size={11} /></i> Готово к разбору</span>
+          </div>
+
+          <a className="match-ready-cta" href={TELEGRAM_URL} target="_blank" rel="noreferrer">
+            <span>Открыть AI-разбор</span><Icon name="arrow" size={16} />
+          </a>
+        </div>
+
+        <div className="ready-pulse-strip">
+          <div className="ready-pulse-strip__icon"><Icon name="pulse" size={18} /></div>
+          <div><span>ВТОРОЙ ИНСТРУМЕНТ</span><strong>Пульс рынка</strong></div>
+          <div className="ready-pulse-strip__data"><span>CS2 · PREMATCH</span><strong>$41,000 <i>·</i> 1.95</strong></div>
+          <small>Детали скрыты в demo</small>
+        </div>
       </div>
     </div>
   )
