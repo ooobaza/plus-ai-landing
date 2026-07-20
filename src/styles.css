@@ -43,7 +43,7 @@ img, svg { display: block; }
 .header-cta { justify-self: end; display: inline-flex; align-items: center; gap: 9px; padding: 10px 15px; border: 1px solid var(--line-bright); border-radius: 10px; font-size: 12px; font-weight: 600; background: rgba(255,255,255,.045); transition: background .25s, border-color .25s, transform .25s; }
 .header-cta:hover { transform: translateY(-1px); border-color: rgba(74,215,186,.38); background: var(--emerald-soft); }
 
-.hero { position: relative; min-height: 790px; padding: 138px 0 66px; overflow: hidden; border-bottom: 1px solid var(--line); background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size: 80px 80px; }
+.hero { position: relative; min-height: 740px; padding: 138px 0 44px; overflow: hidden; border-bottom: 1px solid var(--line); background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size: 80px 80px; }
 .hero::after { content: ""; position: absolute; inset: 72px 0 auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(96,217,237,.3), transparent); animation: scan-line 7s ease-in-out infinite; }
 .hero-orb { position: absolute; pointer-events: none; border-radius: 50%; filter: blur(1px); }
 .hero-orb--one { width: 700px; height: 700px; right: -300px; top: 20px; background: radial-gradient(circle, rgba(36,142,127,.16), rgba(8,11,11,0) 69%); }
@@ -118,7 +118,7 @@ img, svg { display: block; }
 .section-heading h2, .market-copy h2, .telegram-copy h2 { margin: 21px 0 0; font-size: clamp(40px, 5vw, 66px); line-height: 1.04; letter-spacing: -.055em; font-weight: 500; }
 .section-heading--split { display: grid; grid-template-columns: 1.4fr .6fr; gap: 80px; align-items: end; margin-bottom: 64px; }
 .section-heading--split > p { max-width: 410px; margin: 0 0 7px; color: var(--muted); font-size: 14px; line-height: 1.75; }
-.tools-section { padding-top: 128px; background: #090c0c; }
+.tools-section { padding-top: 96px; background: #090c0c; }
 .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .tool-card { position: relative; min-height: 500px; display: flex; flex-direction: column; overflow: hidden; padding: 25px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.012) 56%); transition: transform .35s, border-color .35s, background .35s; }
 .tool-card:hover { transform: translateY(-5px); border-color: rgba(74,215,186,.22); background: linear-gradient(145deg, rgba(74,215,186,.065), rgba(255,255,255,.012) 50%); }
