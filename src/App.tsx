@@ -52,10 +52,18 @@ function TelegramButton({ children, className = '' }: { children: React.ReactNod
   )
 }
 
+function LogoGlyph({ size = 30 }: { size?: number }) {
+  return (
+    <svg className="logo-glyph" width={size} height={size} viewBox="0 0 36 36" aria-hidden="true">
+      <path d="M14.8 1.5h8.1l-3 11.4h13l-6.1 8.2h-9l-3.5 13.4H6.2l3.6-13.4H2.3l6.1-8.2h3.4l3-11.4Z" />
+    </svg>
+  )
+}
+
 function Logo() {
   return (
     <a className="logo" href="#top" aria-label="Plus AI — на главную">
-      <span className="logo__plus">+</span><span className="logo__letters">AI</span>
+      <LogoGlyph /><span className="logo__letters">AI</span>
     </a>
   )
 }
@@ -75,48 +83,61 @@ function Header() {
 }
 
 function HeroConsole() {
+  const factors = ['Контекст', 'Форма', 'Линия', 'Риски']
+  const pulseItems = marketFeed.slice(0, 2)
+
   return (
-    <div className="product-window" aria-label="Демонстрационный интерфейс Plus AI">
-      <div className="product-window__bar">
-        <div className="product-brand"><span>+</span><strong>Plus AI</strong><small>Матч-центр</small></div>
-        <span className="demo-view">DEMO VIEW</span>
+    <div className="hero-product" aria-label="Демонстрационный интерфейс Plus AI">
+      <div className="hero-product__header">
+        <div className="hero-product__brand"><LogoGlyph size={20} /><strong>Plus AI</strong></div>
+        <div className="hero-product__tabs" aria-label="Инструменты Plus AI"><span className="is-active">AI-анализ</span><span>Пульс рынка</span></div>
+        <span className="hero-product__demo">DEMO</span>
       </div>
-      <div className="product-window__body">
-        <div className="product-analysis">
-          <div className="product-section-head"><span>AI-анализ матча</span><small>Обновлено 12:49</small></div>
-          <div className="product-match">
-            <div className="product-match__mark">CS</div>
-            <div><small>CS2 · PREMATCH</small><h3>Demo match</h3></div>
-            <span className="match-time">19:30 UTC</span>
-          </div>
-          <div className="product-meta-grid">
-            <div><span>MATCH</span><strong>Demo match</strong></div>
-            <div><span>TOURNAMENT</span><strong>Championship Series</strong></div>
-            <div><span>TIME</span><strong>Сегодня · 19:30</strong></div>
-            <div><span>SPORT</span><strong>CS2</strong></div>
-          </div>
-          <div className="movement-row">
-            <div><span>MARKET MOVEMENT</span><strong>1.84 <i>→</i> 1.91</strong></div>
-            <div className="movement-line" aria-hidden="true"><i /><i /><i /></div>
-            <small>+3.8%</small>
-          </div>
-          <div className="risk-notes">
-            <span>RISK NOTES</span>
-            <ul><li>Возможное изменение состава</li><li>Высокий разброс по последним картам</li></ul>
-          </div>
-          <div className="product-opinion"><span>AI-МНЕНИЕ</span><p>Одна сторона выглядит стабильнее по текущему контексту. Ключевой риск — динамика линии перед началом события.</p></div>
-        </div>
-        <aside className="product-pulse">
-          <div className="product-section-head"><span>Пульс рынка</span><small>DEMO DATA</small></div>
-          <div className="product-pulse__list">
-            {marketFeed.slice(0, 3).map((item) => (
-              <div className="pulse-preview" key={item.sport}>
-                <div className="pulse-preview__top"><span>{item.mark}</span><strong>{item.sport}</strong><small>{item.phase}</small></div>
-                <div className="pulse-preview__values"><div><span>AMOUNT</span><strong>{item.amount}</strong></div><div><span>ODDS</span><strong>{item.odds}</strong></div></div>
-                <div className="pulse-preview__foot"><span>{item.type}</span><small>Match details hidden in demo</small></div>
+
+      <div className="hero-product__body">
+        <section className="analysis-preview">
+          <div className="analysis-preview__status"><span><i /> Событие распознано</span><small>Cybersport · demo view</small></div>
+          <h3>Матч готов к разбору</h3>
+          <p>Plus AI собрал контекст события, форму участников, движение линии и ключевые риски.</p>
+
+          <div className="analysis-factors">
+            {factors.map((factor, index) => (
+              <div className="analysis-factor" style={{ '--factor-delay': `${index * 0.65}s` } as React.CSSProperties} key={factor}>
+                <span>0{index + 1}</span><strong>{factor}</strong><i><b /></i>
               </div>
             ))}
           </div>
+
+          <div className="analysis-chart">
+            <div className="analysis-chart__head"><span>Динамика линии</span><strong>1.84 <i>→</i> 1.91</strong></div>
+            <svg viewBox="0 0 420 92" preserveAspectRatio="none" role="img" aria-label="Демонстрационный график движения линии">
+              <defs><linearGradient id="heroChartArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#4ad7ba" stopOpacity=".2"/><stop offset="1" stopColor="#4ad7ba" stopOpacity="0"/></linearGradient></defs>
+              <path className="analysis-chart__grid" d="M0 22H420M0 46H420M0 70H420" />
+              <path className="analysis-chart__area" d="M0 74C38 68 58 76 91 60s56-4 84-12 50-28 82-17 52 21 82 4 55-9 81-24V92H0Z" />
+              <path className="analysis-chart__line" pathLength="1" d="M0 74C38 68 58 76 91 60s56-4 84-12 50-28 82-17 52 21 82 4 55-9 81-24" />
+              <circle className="analysis-chart__dot" cx="420" cy="11" r="4" />
+            </svg>
+          </div>
+
+          <div className="analysis-opinion">
+            <span>AI-мнение</span>
+            <p>Картина матча собрана. Перед решением важно учитывать движение линии и отмеченные риски.</p>
+          </div>
+        </section>
+
+        <aside className="pulse-preview-panel">
+          <div className="pulse-preview-panel__head"><div><Icon name="pulse" size={17} /><strong>Пульс рынка</strong></div><span>Demo</span></div>
+          <p>Крупные движения с уведомлением в Telegram</p>
+          <div className="pulse-preview-panel__list">
+            {pulseItems.map((item, index) => (
+              <article className="pulse-event" style={{ '--pulse-delay': `${index * 1.1}s` } as React.CSSProperties} key={item.sport}>
+                <div><span>{item.sport}</span><small>{item.phase} · {item.type}</small></div>
+                <strong>{item.amount}</strong>
+                <b>{item.odds}</b>
+              </article>
+            ))}
+          </div>
+          <div className="pulse-preview-panel__locked"><span>Матч и детали скрыты в demo</span></div>
         </aside>
       </div>
     </div>
@@ -129,11 +150,9 @@ function Hero() {
       <div className="hero-orb hero-orb--one" aria-hidden="true" /><div className="hero-orb hero-orb--two" aria-hidden="true" />
       <div className="container hero-layout">
         <div className="hero-copy">
-          <div className="eyebrow"><span className="eyebrow-dot" /> TELEGRAM-NATIVE ANALYTICS</div>
           <h1><span>AI-анализ матчей</span><span className="hero-title-accent">и Пульс рынка</span><small>в Telegram</small></h1>
-          <p className="hero-lead">Разбирай матчи, смотри контекст, риски и крупные рыночные движения в одном Telegram-боте</p>
-          <div className="hero-actions"><TelegramButton>Открыть Plus AI</TelegramButton><a className="text-link" href="#features">Посмотреть возможности <Icon name="chevron" size={15} /></a></div>
-          <p className="hero-meta">Sport + Cybersport <i /> AI-мнение по матчу <i /> Market Pulse alerts <i /> Telegram-native</p>
+          <p className="hero-lead">Аналитика матча, риски и крупные рыночные движения — в одном Telegram-боте.</p>
+          <div className="hero-actions"><TelegramButton>Открыть Plus AI</TelegramButton><a className="text-link" href="#features">Как работает <Icon name="chevron" size={15} /></a></div>
         </div>
         <div className="hero-visual"><HeroConsole /></div>
       </div>
