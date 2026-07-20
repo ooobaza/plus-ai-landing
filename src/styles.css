@@ -540,9 +540,12 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
   .site-header { height: 68px; }
   .logo { font-size: 25px; }
   .logo-glyph { width: 27px; height: 27px; }
+  .hero .container { width: min(calc(100% - 32px),1280px); }
   .hero { padding: 101px 0 50px; }
   .hero-layout { gap: 39px; }
   .hero-copy h1 { margin-bottom: 20px; }
+  .hero-copy h1 > span { font-size: clamp(40px,11vw,46px); }
+  .hero-copy h1 > small { font-size: clamp(35px,9.6vw,40px); }
   .hero-lead { max-width: 345px; font-size: 14px; }
   .hero-actions { margin-top: 27px; }
   .hero-product { border-radius: 15px; animation-name: hero-product-enter; }
