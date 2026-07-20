@@ -199,7 +199,11 @@ function Hero() {
       <div className="container hero-layout">
         <div className="hero-copy">
           <div className="eyebrow"><span className="eyebrow-dot" /> ЗАКРЫТЫЙ TELEGRAM-ИНСТРУМЕНТ</div>
-          <h1>AI-анализ матчей <span className="headline-muted">и Пульс рынка</span> в Telegram</h1>
+          <h1>
+            <span className="hero-title-line">AI-анализ матчей</span>
+            <span className="hero-title-line headline-muted">и Пульс рынка</span>
+            <span className="hero-title-line">в Telegram</span>
+          </h1>
           <p className="hero-lead">Разбирай матчи, смотри контекст, риски и крупные рыночные движения в одном аналитическом боте</p>
           <div className="hero-actions">
             <TelegramButton>Открыть Plus AI</TelegramButton>
