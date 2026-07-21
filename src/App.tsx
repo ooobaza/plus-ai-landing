@@ -67,7 +67,7 @@ function Header() {
   )
 }
 
-function HeroTelegramPhone() {
+function TelegramPhone() {
   return (
     <div className="hero-phone-stage" aria-label="Демонстрация Telegram-бота Plus AI">
       <div className="hero-phone-backplate" aria-hidden="true" />
@@ -101,6 +101,71 @@ function HeroTelegramPhone() {
   )
 }
 
+function HeroConsole() {
+  const factors = ['Контекст', 'Форма', 'Линия', 'Риски']
+  const pulseItems = [
+    marketFeed[0],
+    { ...marketFeed[1], amount: '$105,000' },
+    { ...marketFeed[3], amount: '$28,500' },
+  ]
+
+  return (
+    <div className="hero-product" aria-label="Демонстрационный интерфейс Plus AI">
+      <div className="hero-product__header">
+        <div className="hero-product__brand"><LogoGlyph size={25} /></div>
+        <div className="hero-product__tabs" aria-label="Инструменты Plus AI"><span className="is-active">AI-анализ</span><span>Пульс рынка</span></div>
+        <span className="hero-product__demo">DEMO</span>
+      </div>
+
+      <div className="hero-product__body">
+        <section className="analysis-preview">
+          <div className="analysis-preview__status"><span><i /> Событие распознано</span></div>
+          <h3>Матч готов к разбору</h3>
+          <p>Plus AI собрал контекст события, форму участников, движение линии и ключевые риски.</p>
+
+          <div className="analysis-factors">
+            {factors.map((factor, index) => (
+              <div className="analysis-factor" style={{ '--factor-delay': `${index * 0.65}s` } as React.CSSProperties} key={factor}>
+                <i><Icon name="check" size={12} /></i><strong>{factor}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="analysis-chart">
+            <div className="analysis-chart__head"><span>Динамика коэффициента</span><strong>1.64 <i>→</i> 3.42</strong></div>
+            <svg viewBox="0 0 420 92" preserveAspectRatio="none" role="img" aria-label="Демонстрационный график движения линии">
+              <defs><linearGradient id="heroChartArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#4ad7ba" stopOpacity=".2"/><stop offset="1" stopColor="#4ad7ba" stopOpacity="0"/></linearGradient></defs>
+              <path className="analysis-chart__grid" d="M0 22H420M0 46H420M0 70H420" />
+              <path className="analysis-chart__area" d="M0 74C38 68 58 76 91 60s56-4 84-12 50-28 82-17 52 21 82 4 55-9 81-24V92H0Z" />
+              <path className="analysis-chart__line" pathLength="1" d="M0 74C38 68 58 76 91 60s56-4 84-12 50-28 82-17 52 21 82 4 55-9 81-24" />
+              <circle className="analysis-chart__dot" cx="420" cy="11" r="4" />
+            </svg>
+          </div>
+
+          <div className="analysis-opinion">
+            <div className="analysis-opinion__title"><span>✦</span><strong>AI-мнение</strong></div>
+            <p>Картина матча собрана: линия заметно изменилась. Ключевые факторы и риски доступны в полном разборе.</p>
+          </div>
+        </section>
+
+        <aside className="pulse-preview-panel">
+          <div className="pulse-preview-panel__head"><div><Icon name="pulse" size={17} /><strong>Пульс рынка</strong></div></div>
+          <p>Крупные движения с уведомлением в Telegram</p>
+          <div className="pulse-preview-panel__list">
+            {pulseItems.map((item, index) => (
+              <article className="pulse-event" style={{ '--pulse-delay': `${index * 1.1}s` } as React.CSSProperties} key={item.sport}>
+                <div><span>{item.sport}</span><small>{item.phase} · {item.type}</small></div>
+                <strong>{item.amount}</strong>
+                <b>{item.odds}</b>
+              </article>
+            ))}
+          </div>
+        </aside>
+      </div>
+    </div>
+  )
+}
+
 function Hero() {
   return (
     <section className="hero" id="top">
@@ -111,7 +176,7 @@ function Hero() {
           <p className="hero-lead">AI-разбор матчей и Пульс рынка — прямо в Telegram.</p>
           <div className="hero-actions"><TelegramButton>Открыть Plus AI</TelegramButton><a className="text-link" href="#market">Смотреть интерфейс <Icon name="chevron" size={15} /></a></div>
         </div>
-        <div className="hero-visual"><HeroTelegramPhone /></div>
+        <div className="hero-visual"><HeroConsole /></div>
       </div>
     </section>
   )
@@ -176,14 +241,7 @@ function TelegramSection() {
   return (
     <section className="section telegram-section reveal" id="telegram"><div className="container telegram-layout">
       <div className="telegram-copy"><span className="section-index">03 / TELEGRAM-NATIVE</span><h2>Весь продукт —<br />прямо в Telegram</h2><p>Не нужно открывать отдельный кабинет и разбираться в сложной навигации. Матч, контекст и рыночные движения остаются в одном чате Plus AI.</p><ul>{benefits.map(([title, text]) => <li key={title}><span><Icon name="check" size={14} /></span><div><strong>{title}</strong><p>{text}</p></div></li>)}</ul></div>
-      <div className="chat-stage"><div className="telegram-chat">
-        <div className="chat-header"><button aria-label="Назад">‹</button><div className="chat-avatar">+</div><div><strong>Plus AI</strong><span>бот</span></div><button aria-label="Меню">•••</button></div>
-        <div className="chat-body"><div className="chat-date">Сегодня</div>
-          <article className="chat-bubble"><div className="chat-label"><Icon name="pulse" size={14} /> Market Pulse · demo</div><div className="chat-title"><strong>CS2</strong><span>$41,000</span></div><div className="chat-data"><div><span>Amount</span><strong>$41,000</strong></div><div><span>Odds</span><strong>1.95</strong></div><div><span>Stage</span><strong>Prematch</strong></div><div><span>Type</span><strong>Single</strong></div></div><p className="chat-note">Match and tournament hidden in demo view</p><time>12:48</time></article>
-          <article className="chat-bubble"><div className="chat-label">✦ AI-мнение по матчу</div><h3>Demo match · CS2</h3><p>По текущему контексту одна сторона выглядит стабильнее. Перед событием важно учитывать движение линии.</p><div className="chat-risk"><span>Риск</span> Возможное изменение состава</div><time>12:49</time></article>
-        </div>
-        <div className="chat-input"><span>＋</span><p>Сообщение</p><span>◉</span></div>
-      </div></div>
+      <div className="chat-stage chat-stage--phone"><TelegramPhone /></div>
     </div></section>
   )
 }

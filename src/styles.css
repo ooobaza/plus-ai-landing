@@ -707,8 +707,8 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
   .market-spark path, .report-movement svg path { animation: none !important; stroke-dashoffset: 0; }
 }
 
-/* Telegram phone hero */
-.hero-layout { grid-template-columns: minmax(420px,.9fr) minmax(520px,1.1fr); }
+/* Telegram phone product preview */
+.hero-layout { grid-template-columns: minmax(420px,.78fr) minmax(690px,1.22fr); gap: 48px; }
 .hero-visual { display: grid; place-items: center; }
 .hero-phone-stage { position: relative; width: 100%; min-width: 0; min-height: 650px; display: grid; place-items: center; overflow: hidden; isolation: isolate; }
 .hero-phone-stage::before { content: ''; position: absolute; z-index: -3; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle,rgba(48,221,182,.2),rgba(59,170,185,.08) 38%,transparent 70%); filter: blur(30px); animation: phone-glow 7s ease-in-out infinite; }
@@ -761,6 +761,8 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
 .hero-phone__input p { margin: 0; padding: 8px 12px; border-radius: 18px; background: rgba(255,255,255,.035); font-size: 8px; }.hero-phone__input span:last-child { color: #62ddc5; text-align: right; }
 
 .market-section,.analysis-section,.telegram-section { overflow: hidden; }
+.chat-stage--phone { min-height: 690px; padding: 0; overflow: hidden; }
+.chat-stage--phone .hero-phone-stage { min-height: 688px; }
 
 @keyframes phone-enter { from { transform: translateY(16px) scale(.99); } to { transform: none; } }
 @keyframes phone-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -5px; } }
@@ -768,7 +770,7 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
 @keyframes phone-message-focus { 0%,15%,100% { border-color: rgba(108,208,190,.11); box-shadow: inset 0 1px 0 rgba(255,255,255,.025); } 7% { border-color: rgba(83,229,200,.24); box-shadow: 0 0 20px rgba(74,215,186,.045),inset 0 1px 0 rgba(255,255,255,.03); } }
 
 @media (max-width: 1120px) {
-  .hero-layout { grid-template-columns: minmax(380px,.9fr) minmax(470px,1.1fr); gap: 28px; }
+  .hero-layout { grid-template-columns: minmax(380px,.78fr) minmax(560px,1.22fr); gap: 30px; }
   .hero-phone { width: min(370px,calc(100% - 22px)); }
 }
 
@@ -778,6 +780,8 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
 }
 
 @media (max-width: 620px) {
+  .chat-stage--phone { min-height: 630px; }
+  .chat-stage--phone .hero-phone-stage { min-height: 628px; }
   .hero-phone-stage { min-height: 615px; }
   .hero-phone-backplate { width: 92%; height: 430px; }
   .hero-phone-stage::after { left: 1%; right: 1%; bottom: 24px; }
