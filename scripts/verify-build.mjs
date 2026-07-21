@@ -23,11 +23,11 @@ for (const file of requiredFiles) {
   await access(path.join(root, file))
 }
 
-const [html, css, app, legal] = await Promise.all([
+const [html, css, js, links] = await Promise.all([
   readFile(path.join(root, 'dist/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/plus-ai.css'), 'utf8'),
-  readFile(path.join(root, 'src/App.tsx'), 'utf8'),
-  readFile(path.join(root, 'src/legal.tsx'), 'utf8'),
+  readFile(path.join(root, 'dist/plus-ai.js'), 'utf8'),
+  readFile(path.join(root, 'src/links.ts'), 'utf8'),
 ])
 
 const requiredHtml = [
@@ -35,29 +35,19 @@ const requiredHtml = [
   'https://plus-ai.site/og-plus-ai.png',
   'application/ld+json',
 ]
-const requiredPayloads = [
-  'site_header',
-  'site_hero_trial',
-  'site_telegram_mockup',
-  'site_faq_trial',
-  'site_final',
-  'site_footer',
-  'site_support',
-]
+const campaignUrl = 'https://t.me/plus_ai_robot?start=ad_SITE'
 
 for (const value of requiredHtml) {
   if (!html.includes(value)) throw new Error(`Missing build metadata: ${value}`)
 }
-for (const value of requiredPayloads) {
-  if (!app.includes(value)) throw new Error(`Missing CTA source payload: ${value}`)
+if (!links.includes(campaignUrl) || !js.includes(campaignUrl)) {
+  throw new Error('The Telegram advertising campaign link is missing from the build')
 }
-for (const location of ['aside', 'footer']) {
-  if (!legal.includes(`site_legal_\${type}_${location}`)) {
-    throw new Error(`Missing legal CTA source template: ${location}`)
-  }
+if (js.includes('?start=site_')) {
+  throw new Error('A legacy per-button Telegram payload remains in the build')
 }
 if (/fonts\.googleapis\.com|fonts\.gstatic\.com/.test(css)) {
   throw new Error('External Google Fonts reference found in built CSS')
 }
 
-console.log('Build verification passed: assets, legal pages, local fonts, metadata and CTA source payloads are present.')
+console.log('Build verification passed: assets, legal pages, local fonts, metadata and the Telegram campaign link are present.')

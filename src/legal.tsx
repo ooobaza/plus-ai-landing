@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
 
-import { botUrl } from './links'
-
-const TELEGRAM_URL = 'https://t.me/plus_ai_robot'
+import { botUrl, TELEGRAM_BOT_URL } from './links'
 
 type LegalDocumentKey = 'privacy' | 'terms' | 'disclaimer'
 
@@ -267,7 +265,7 @@ function linkify(text: string) {
   const url = 'https://t.me/plus_ai_robot'
   const [before, after] = text.split(url)
   if (after === undefined) return text
-  return <>{before}<a href={url} target="_blank" rel="noreferrer">{url}</a>{after}</>
+  return <>{before}<a href={TELEGRAM_BOT_URL} target="_blank" rel="noreferrer">{url}</a>{after}</>
 }
 
 export function LegalPage({ type }: { type: LegalDocumentKey }) {
