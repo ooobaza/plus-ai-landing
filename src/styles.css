@@ -22,8 +22,9 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; background: var(--bg); }
-body { margin: 0; min-width: 320px; overflow-x: hidden; color: var(--text); background: var(--bg); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+html { max-width: 100%; overflow-x: hidden; scroll-behavior: smooth; background: var(--bg); }
+body { position: relative; width: 100%; max-width: 100%; margin: 0; min-width: 320px; overflow-x: hidden; color: var(--text); background: var(--bg); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+#root { width: 100%; max-width: 100%; overflow-x: clip; }
 a { color: inherit; text-decoration: none; }
 button { color: inherit; font: inherit; }
 .container { width: min(calc(100% - 48px), var(--container)); margin-inline: auto; }
@@ -297,7 +298,7 @@ button { color: inherit; font: inherit; }
   .telegram-layout { gap: 55px; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) {
   .nav { display: none; }
   .header-inner { grid-template-columns: 1fr auto; }
   .hero { min-height: auto; padding: 124px 0 78px; }
@@ -527,7 +528,7 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
   .analysis-preview { padding: 24px 22px; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) {
   .hero { min-height: auto; padding: 116px 0 64px; }
   .hero-layout { grid-template-columns: 1fr; gap: 48px; }
   .hero-copy { max-width: 650px; }
@@ -670,7 +671,7 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
 .final-card > p { max-width: 650px; margin-top: 25px; color: #aab7b2; font-size: 16px; line-height: 1.65; }
 .final-button { margin-top: 32px; min-height: 54px; padding-inline: 22px; font-size: 13px; }
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) {
   .hero + .market-section { padding-top: 70px; }
   .report-body { grid-template-columns: 1fr; }
   .report-sidebar { grid-template-columns: 1fr 1.2fr; }
@@ -774,7 +775,7 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
   .hero-phone { width: min(370px,calc(100% - 22px)); }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) {
   .hero-layout { grid-template-columns: 1fr; }
   .hero-phone-stage { max-width: 650px; }
 }
@@ -829,7 +830,7 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
 .report-opinion p { margin-top: 18px; font-size: 12.5px; line-height: 1.7; }
 .report-opinion small { display: block; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.07); font-size: 7.5px; line-height: 1.4; }
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) {
   .report-sidebar { grid-template-columns: 1fr 1fr; }
   .report-opinion { min-height: 100%; }
 }
