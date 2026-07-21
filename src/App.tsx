@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 const TELEGRAM_URL = 'https://t.me/plus_ai_robot'
 
-type IconName = 'arrow' | 'check' | 'chevron' | 'eye' | 'pulse' | 'scan' | 'telegram'
+type IconName = 'arrow' | 'check' | 'chevron' | 'eye' | 'pulse' | 'scan' | 'telegram' | 'trend'
 
 function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
   const paths: Record<IconName, React.ReactNode> = {
@@ -13,6 +13,7 @@ function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
     pulse: <path d="M3 12h4l2.2-6 4 12 2.1-6H21"/>,
     scan: <><path d="M4 8V5a1 1 0 0 1 1-1h3"/><path d="M16 4h3a1 1 0 0 1 1 1v3"/><path d="M20 16v3a1 1 0 0 1-1 1h-3"/><path d="M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M7 12h10"/></>,
     telegram: <><path d="m21 4-3.2 16-6-4.2-3.3 2.7.6-5.2L19 5.8 7 12.3 2.4 10.8 21 4Z"/><path d="m9.1 13.3 2.7 2.5"/></>,
+    trend: <><path d="M4 17.5 9.2 12l4 3.2L20 7.5"/><path d="M15.5 7.5H20V12"/></>,
   }
 
   return (
@@ -75,7 +76,7 @@ function TelegramPhone() {
         <div className="hero-phone__status"><span>09:41</span><div><i /><i /><i /></div></div>
         <header className="hero-phone__header"><button aria-label="Назад">‹</button><div className="hero-phone__avatar">+AI</div><div><strong>Plus AI</strong><span>бот</span></div><b>•••</b></header>
         <div className="hero-phone__chat">
-          <div className="hero-phone__day">DEMO INTERFACE</div>
+          <div className="hero-phone__day">ДЕМО ИНТЕРФЕЙСА</div>
 
           <article className="hero-phone-message hero-phone-message--pulse">
             <div className="hero-phone-message__head"><span><Icon name="pulse" size={15} /></span><div><strong>Пульс рынка</strong><small>Крупное движение замечено</small></div><time>09:41</time></div>
@@ -201,7 +202,7 @@ function MarketCard({ item, ghost = false, index = 0 }: { item: typeof marketFee
 function MarketPulse() {
   return (
     <section className="section market-section reveal" id="market"><div className="container market-layout">
-      <div className="market-copy"><span className="section-index">01 / ПУЛЬС РЫНКА</span><h2>Крупные движения.<br /><span>Только нужный контекст.</span></h2><p>Пульс рынка собирает заметные изменения в спокойную ленту: вид спорта, объём, коэффициент и этап события видны сразу. Полные детали открываются в Telegram.</p><div className="filter-row" aria-label="Доступные фильтры"><span>SPORT + CYBERSPORT</span><span>LIVE / PREMATCH</span><span>SINGLE / EXPRESS</span><span>ODDS</span></div><div className="interface-note"><Icon name="eye" size={16} /><span>Демонстрационный интерфейс. Без статистики результатов и обещаний.</span></div></div>
+      <div className="market-copy"><span className="section-index">01 / ПУЛЬС РЫНКА</span><h2>Крупные движения<br />на рынке</h2><p>Пульс рынка собирает заметные изменения в спокойную ленту: вид спорта, объём, коэффициент и этап события видны сразу. Полные детали открываются в Telegram.</p><div className="filter-row" aria-label="Доступные фильтры"><span>SPORT + CYBERSPORT</span><span>LIVE / PREMATCH</span><span>SINGLE / EXPRESS</span><span>ODDS</span></div><div className="interface-note"><Icon name="eye" size={16} /><span>Демонстрационный интерфейс. Без статистики результатов и обещаний.</span></div></div>
       <div className="market-terminal"><div className="terminal-header"><div><span className="live-dot" /> ПУЛЬС РЫНКА</div><span className="terminal-counter">DEMO</span></div><div className="feed-window"><div className="feed-track"><div className="feed-set">{marketFeed.map((item, index) => <MarketCard item={item} index={index} key={item.sport} />)}</div><div className="feed-set" aria-hidden="true">{marketFeed.map((item, index) => <MarketCard item={item} index={index} ghost key={`copy-${item.sport}`} />)}</div></div><div className="feed-fade feed-fade--top" /><div className="feed-fade feed-fade--bottom" /></div><div className="terminal-footer"><span>Пример интерфейса</span><span>Полные детали — в Telegram</span></div></div>
     </div></section>
   )
@@ -221,9 +222,16 @@ function AnalysisSection() {
         <header className="report-header"><div className="report-brand"><LogoGlyph size={23} /><strong>Plus AI</strong><small>Analysis Report</small></div><span className="demo-view">DEMO VIEW</span></header>
         <div className="report-meta"><div><span>МАТЧ</span><strong>Франция — Англия</strong></div><div><span>ТУРНИР</span><strong>International Series</strong></div><div><span>ВРЕМЯ</span><strong>Сегодня · 19:30 UTC</strong></div><div><span>ТИП</span><strong>Футбол</strong></div></div>
         <div className="report-body">
-          <div className="report-sections">{details.map(([num, title, text, icon], index) => <section className="report-section" style={{ '--step': index } as React.CSSProperties} key={title}><span>{num}</span><i className="report-section__icon"><Icon name={icon as IconName} size={19} /></i><div><h3>{title}</h3><p>{text}</p></div></section>)}</div>
+          <div className="report-sections">
+            {details.map(([num, title, text, icon], index) => <section className="report-section" style={{ '--step': index } as React.CSSProperties} key={title}><span>{num}</span><i className="report-section__icon"><Icon name={icon as IconName} size={19} /></i><div><h3>{title}</h3><p>{text}</p></div></section>)}
+            <div className="report-summary">
+              <div><span>СТРУКТУРА ОТЧЁТА</span><strong>Все ключевые факторы — в одном разборе</strong></div>
+              <p>Plus AI связывает контекст, текущую форму, движение линии и риски в последовательную картину матча.</p>
+              <ul><li>Контекст события</li><li>Рыночная динамика</li><li>Факторы риска</li></ul>
+            </div>
+          </div>
           <aside className="report-sidebar">
-            <div className="report-movement"><div className="report-card-title"><Icon name="pulse" size={17} /><strong>Движение линии</strong></div><div className="report-movement__value">1.91 <i>→</i> <b>1.78</b></div><p>Рынок усиливает сторону Франции</p><div className="report-chart"><svg viewBox="0 0 260 92" preserveAspectRatio="none" aria-label="Демонстрационный график движения линии"><path className="report-chart__grid" d="M0 18H260M0 46H260M0 74H260"/><path className="report-chart__area" d="M0 16 C32 20 48 17 70 30 S108 37 132 43 S170 48 196 60 S230 63 260 78V92H0Z"/><path className="report-chart__line" pathLength="1" d="M0 16 C32 20 48 17 70 30 S108 37 132 43 S170 48 196 60 S230 63 260 78"/><circle cx="260" cy="78" r="4"/></svg><div><span>1.95</span><span>1.85</span><span>1.75</span></div></div><div className="report-chart__time"><span>3 дня назад</span><span>сейчас</span></div></div>
+            <div className="report-movement"><div className="report-card-title"><span><Icon name="trend" size={19} /></span><strong>Движение линии</strong></div><div className="report-movement__value">1.91 <i>→</i> <b>1.78</b></div><p>Рынок усиливает сторону Франции</p><div className="report-chart"><svg viewBox="0 0 300 104" preserveAspectRatio="none" aria-label="Демонстрационный график движения линии"><path className="report-chart__grid" d="M0 18H300M0 52H300M0 86H300"/><path className="report-chart__area" d="M0 18 C28 21 45 20 66 34 S105 39 130 48 S168 55 194 66 S235 67 264 82 S286 87 300 91V104H0Z"/><path className="report-chart__line" pathLength="1" d="M0 18 C28 21 45 20 66 34 S105 39 130 48 S168 55 194 66 S235 67 264 82 S286 87 300 91"/><circle cx="300" cy="91" r="4"/></svg><div><span>1.95</span><span>1.85</span><span>1.75</span></div></div><div className="report-chart__time"><span>3 дня назад</span><span>сейчас</span></div></div>
             <div className="report-opinion"><div><span>✦</span><strong>AI-МНЕНИЕ</strong></div><p>По доступному контексту Франция выглядит стабильнее, но ключевой риск — быстрые переходы Англии и стандарты.</p><small>Информационный анализ, не финансовый совет</small></div>
           </aside>
         </div>
