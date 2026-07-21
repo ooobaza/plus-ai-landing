@@ -274,7 +274,7 @@ function AnalysisSection() {
   ]
   return (
     <section className="section analysis-section reveal" id="analysis"><div className="container">
-      <div className="section-heading section-heading--center"><span className="section-index">02 / AI-АНАЛИЗ МАТЧА</span><h2><span>Разбор,</span> который можно<br />прочитать по делу</h2><p>Не декоративный дашборд, а последовательный отчет: контекст, форма, линия, риски и итоговое AI-мнение.</p></div>
+      <div className="section-heading section-heading--center"><span className="section-index">02 / AI-АНАЛИЗ МАТЧА</span><h2><span>Разбор,</span> который можно<br />{' '}прочитать по делу</h2><p>Не декоративный дашборд, а последовательный отчет: контекст, форма, линия, риски и итоговое AI-мнение.</p></div>
       <article className="analysis-report">
         <header className="report-header"><div className="report-brand"><LogoGlyph size={23} /><strong>Plus AI</strong><small>Analysis Report</small></div><span className="demo-view">DEMO VIEW</span></header>
         <div className="report-meta"><div><span>МАТЧ</span><strong>Франция — Англия</strong></div><div><span>ТУРНИР</span><strong>International Series</strong></div><div><span>ВРЕМЯ</span><strong>Сегодня · 19:30 UTC</strong></div><div><span>ТИП</span><strong>Футбол</strong></div></div>
