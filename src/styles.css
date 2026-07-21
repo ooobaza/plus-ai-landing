@@ -524,7 +524,9 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
 .pulse-preview-panel__head > span { color: #66756f; font: 500 6px/1 var(--mono); text-transform: uppercase; }
 .pulse-preview-panel > p { margin: 13px 0 0; color: #7e8c86; font-size: 9px; line-height: 1.55; }
 .pulse-preview-panel__list { display: grid; gap: 7px; margin-top: 15px; }
-.pulse-event { padding: 11px 12px; border: 1px solid rgba(101,214,195,.1); border-radius: 10px; background: linear-gradient(145deg, rgba(77,206,184,.055), rgba(101,201,217,.018)); box-shadow: inset 0 1px 0 rgba(255,255,255,.02); animation: pulse-event-live 6s var(--pulse-delay) ease-in-out infinite; }
+.pulse-event { position: relative; overflow: hidden; padding: 11px 12px; border: 1px solid rgba(101,214,195,.1); border-radius: 10px; background: linear-gradient(145deg, rgba(77,206,184,.055), rgba(101,201,217,.018)); box-shadow: inset 0 1px 0 rgba(255,255,255,.02); animation: pulse-event-live 12s var(--pulse-delay) ease-in-out infinite; }
+.pulse-event::after { content: ''; position: absolute; inset: 0; opacity: 0; background: radial-gradient(circle at 18% 0%,rgba(79,226,194,.12),transparent 58%); animation: pulse-event-glow 12s var(--pulse-delay) ease-in-out infinite; pointer-events: none; }
+.pulse-event > * { position: relative; z-index: 1; }
 .pulse-event > div { display: flex; justify-content: space-between; gap: 6px; }
 .pulse-event > div span { color: #c7d2ce; font-size: 10px; font-weight: 600; }
 .pulse-event > div small { color: #74827c; font-size: 7px; }
@@ -541,7 +543,8 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
 @keyframes chart-draw { from { stroke-dashoffset: .12; } to { stroke-dashoffset: 0; } }
 @keyframes chart-dot { 0%,100% { opacity: .68; filter: drop-shadow(0 0 4px rgba(74,215,186,.55)); } 50% { opacity: 1; filter: drop-shadow(0 0 9px rgba(74,215,186,.92)); } }
 @keyframes chart-sheen { 0%,18% { left: -25%; opacity: 0; } 38% { opacity: 1; } 66%,100% { left: 115%; opacity: 0; } }
-@keyframes pulse-event-live { 0%,15%,100% { border-color: rgba(255,255,255,.075); transform: translateY(0); } 7% { border-color: rgba(101,201,217,.18); transform: translateY(-2px); } }
+@keyframes pulse-event-live { 0%,6%,32%,100% { border-color: rgba(101,214,195,.1); box-shadow: inset 0 1px 0 rgba(255,255,255,.02),0 0 0 rgba(74,215,186,0); } 16%,22% { border-color: rgba(105,226,203,.25); box-shadow: inset 0 1px 0 rgba(255,255,255,.035),0 0 24px rgba(74,215,186,.055); } }
+@keyframes pulse-event-glow { 0%,6%,32%,100% { opacity: 0; } 16%,22% { opacity: 1; } }
 
 @media (max-width: 1120px) {
   .hero-layout { grid-template-columns: minmax(380px,.78fr) minmax(560px,1.22fr); gap: 30px; }
@@ -596,7 +599,7 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-product, .analysis-preview::after, .analysis-factor, .analysis-chart::after, .analysis-chart__line, .analysis-chart__dot, .pulse-event, .analysis-preview__status i { animation: none !important; }
+  .hero-product, .analysis-preview::after, .analysis-factor, .analysis-chart::after, .analysis-chart__line, .analysis-chart__dot, .pulse-event, .pulse-event::after, .analysis-preview__status i { animation: none !important; }
   .analysis-chart__line { stroke-dashoffset: 0; }
 }
 
