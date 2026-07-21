@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 
 const TELEGRAM_URL = 'https://t.me/plus_ai_robot'
-const CHANNEL_URL = 'https://t.me/plusovoy_ai'
 const REPORT_URL = 'https://t.me/plusovoy_ai/13'
 
 type IconName = 'arrow' | 'check' | 'chevron' | 'eye' | 'pulse' | 'scan' | 'telegram' | 'trend'
@@ -205,7 +204,7 @@ function MarketCard({ item, ghost = false, index = 0 }: { item: typeof marketFee
 function MarketPulse() {
   return (
     <section className="section market-section reveal" id="market"><div className="container market-layout">
-      <div className="market-copy"><span className="section-index">01 / ПУЛЬС РЫНКА</span><h2>Крупные движения<br />на рынке</h2><p>В ленте сразу видны спорт, объём, коэффициент и этап события. Матч и полные детали открываются в боте.</p><div className="market-proof" aria-label="Опубликованная статистика Plus AI"><div className="market-proof__head"><span>ОПУБЛИКОВАННАЯ ОТЧЁТНОСТЬ</span><a href={REPORT_URL} target="_blank" rel="noreferrer">Открыть отчёт <Icon name="arrow" size={14} /></a></div><div className="market-proof__metrics"><div><strong>72,3%</strong><span>положительных исходов</span></div><div><strong>2,33</strong><span>средний коэффициент</span></div></div><p>Данные опубликованной выборки. Прошлые результаты не гарантируют будущие.</p></div></div>
+      <div className="market-copy"><span className="section-index">01 / ПУЛЬС РЫНКА</span><h2>Крупные движения<br />на рынке</h2><p>В ленте сразу видны спорт, объём, коэффициент и этап события. Матч и полные детали открываются в боте.</p></div>
       <div className="market-terminal"><div className="terminal-header"><div><span className="live-dot" /> ПУЛЬС РЫНКА</div><span className="terminal-counter">DEMO</span></div><div className="feed-window"><div className="feed-track"><div className="feed-set">{marketFeed.map((item, index) => <MarketCard item={item} index={index} key={item.sport} />)}</div><div className="feed-set" aria-hidden="true">{marketFeed.map((item, index) => <MarketCard item={item} index={index} ghost key={`copy-${item.sport}`} />)}</div></div><div className="feed-fade feed-fade--top" /><div className="feed-fade feed-fade--bottom" /></div><div className="terminal-footer"><span>Пример интерфейса</span><span>Полные детали — в Telegram</span></div></div>
     </div></section>
   )
@@ -227,11 +226,7 @@ function AnalysisSection() {
         <div className="report-body">
           <div className="report-sections">
             {details.map(([num, title, text, icon], index) => <section className="report-section" style={{ '--step': index } as React.CSSProperties} key={title}><span>{num}</span><i className="report-section__icon"><Icon name={icon as IconName} size={19} /></i><div><h3>{title}</h3><p>{text}</p></div></section>)}
-            <div className="report-summary">
-              <div><span>СТРУКТУРА ОТЧЁТА</span><strong>Все ключевые факторы — в одном разборе</strong></div>
-              <p>Plus AI связывает контекст, текущую форму, движение линии и риски в последовательную картину матча.</p>
-              <ul><li>Контекст события</li><li>Рыночная динамика</li><li>Факторы риска</li></ul>
-            </div>
+            <div className="market-proof analysis-proof" aria-label="Опубликованная статистика AI-анализов Plus AI"><div className="market-proof__head"><span>ОПУБЛИКОВАННАЯ ОТЧЁТНОСТЬ AI-АНАЛИЗОВ</span><a href={REPORT_URL} target="_blank" rel="noreferrer">Открыть отчёт <Icon name="arrow" size={14} /></a></div><div className="market-proof__metrics"><div><strong>72,3%</strong><span>положительных исходов</span></div><div><strong>2,33</strong><span>средний коэффициент</span></div></div><p>Данные опубликованной выборки. Прошлые результаты не гарантируют будущие.</p></div>
           </div>
           <aside className="report-sidebar">
             <div className="report-movement"><div className="report-card-title"><span><Icon name="trend" size={19} /></span><strong>Движение линии</strong></div><div className="report-movement__value">1.91 <i>→</i> <b>1.78</b></div><p>Рынок усиливает сторону Франции</p><div className="report-chart"><svg viewBox="0 0 300 104" preserveAspectRatio="none" aria-label="Демонстрационный график движения линии"><path className="report-chart__grid" d="M0 18H300M0 52H300M0 86H300"/><path className="report-chart__area" d="M0 18 C28 21 45 20 66 34 S105 39 130 48 S168 55 194 66 S235 67 264 82 S286 87 300 91V104H0Z"/><path className="report-chart__line" pathLength="1" d="M0 18 C28 21 45 20 66 34 S105 39 130 48 S168 55 194 66 S235 67 264 82 S286 87 300 91"/><circle cx="300" cy="91" r="4"/></svg><div><span>1.95</span><span>1.85</span><span>1.75</span></div></div><div className="report-chart__time"><span>3 дня назад</span><span>сейчас</span></div></div>
@@ -259,7 +254,7 @@ function TelegramSection() {
 
 function FinalCta() {
   return (
-    <section className="section final-section reveal"><div className="container final-card"><LogoGlyph size={38} /><span className="final-eyebrow">ДОСТУП ДЛЯ ПОДПИСЧИКОВ</span><h2>7 дней Пульса рынка<br /><span>бесплатно</span></h2><p>Подпишись на канал Plus AI и активируй доступ в боте.</p><div className="final-actions"><TelegramButton className="final-button">Активировать 7 дней</TelegramButton><a className="final-channel-link" href={CHANNEL_URL} target="_blank" rel="noreferrer">Подписаться на канал <Icon name="arrow" size={15} /></a></div><small className="final-access-note">Подписка проверяется ботом при активации</small></div></section>
+    <section className="section final-section reveal"><div className="container final-card"><LogoGlyph size={38} /><h2>Открой Plus AI<br /><span>в Telegram</span></h2><p>Получай AI-анализ матчей и уведомления Пульса рынка<br />в одном понятном Telegram-боте.</p><TelegramButton className="final-button">Перейти в @plus_ai_robot</TelegramButton></div></section>
   )
 }
 
