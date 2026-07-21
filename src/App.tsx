@@ -254,10 +254,50 @@ function FinalCta() {
 
 function Footer() {
   return (
-    <footer className="footer"><div className="container">
-      <div className="footer-main"><div className="footer-brand"><Logo /><p>Информационный Telegram-сервис для анализа матчей и наблюдения за рыночными движениями.</p></div><div className="footer-column"><span>ПРОДУКТ</span><a href="#analysis">AI-анализ матчей</a><a href="#market">Пульс рынка</a></div><div className="footer-column"><span>СЕРВИС</span><p>Информационный сервис</p><p>Demo interface</p></div><div className="footer-column"><span>TELEGRAM</span><a href={TELEGRAM_URL} target="_blank" rel="noreferrer">@plus_ai_robot</a><p>No financial guarantees</p></div></div>
-      <div className="footer-legal"><p>Plus AI предоставляет информационно-аналитические материалы и демонстрационные интерфейсные примеры. Сервис не является букмекерской конторой, не принимает ставки, не гарантирует результат событий и не даёт финансовых рекомендаций. Любые решения пользователь принимает самостоятельно.</p><div><span>© 2026 Plus AI</span><span>18+</span></div></div>
-    </div></footer>
+    <footer className="footer">
+      <div className="container footer-shell">
+        <div className="footer-main">
+          <section className="footer-brand" aria-label="О сервисе Plus AI">
+            <Logo />
+            <p className="footer-brand__lead">Информационно-аналитический Telegram-сервис для разбора спортивных и киберспортивных событий</p>
+            <p className="footer-brand__note">AI-анализ матчей и «Пульс рынка» в одном боте</p>
+            <a className="footer-action" href={TELEGRAM_URL} target="_blank" rel="noreferrer"><Icon name="telegram" size={16} />Открыть Telegram-бота<Icon name="arrow" size={15} /></a>
+          </section>
+
+          <nav className="footer-column" aria-label="Разделы сервиса">
+            <h2>Сервис</h2>
+            <a href="#analysis">AI-анализ матчей</a>
+            <a href="#market">Пульс рынка</a>
+            <a href="#market">Демо интерфейса</a>
+            <a href="#telegram">Telegram-бот</a>
+          </nav>
+
+          <nav className="footer-column" aria-label="Юридические документы">
+            <h2>Документы</h2>
+            <a href="./terms/">Пользовательское соглашение</a>
+            <a href="./privacy/">Политика конфиденциальности</a>
+            <a href="./disclaimer/">Дисклеймер</a>
+          </nav>
+
+          <section className="footer-column footer-support" aria-label="Поддержка">
+            <h2>Поддержка</h2>
+            <p>По вопросам доступа, оплаты и работы сервиса обращайтесь через официальный Telegram-бот</p>
+            <a className="footer-support__link" href={TELEGRAM_URL} target="_blank" rel="noreferrer">Написать в поддержку<Icon name="arrow" size={14} /></a>
+            <p className="footer-operator">Оператор сервиса: <strong>Plus AI</strong></p>
+          </section>
+        </div>
+
+        <div className="footer-disclaimer">
+          <span aria-hidden="true">i</span>
+          <p>Plus AI — информационно-аналитический сервис. Мы не являемся букмекерской конторой, не принимаем ставки, не организуем азартные игры, не гарантируем исходы событий и не даём финансовых рекомендаций. Любые решения пользователь принимает самостоятельно.</p>
+        </div>
+
+        <div className="footer-bottom">
+          <span>© 2026 Plus AI. Все права защищены.</span>
+          <div><span>Информационно-аналитический сервис</span><strong>18+</strong></div>
+        </div>
+      </div>
+    </footer>
   )
 }
 
