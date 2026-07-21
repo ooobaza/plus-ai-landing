@@ -67,66 +67,35 @@ function Header() {
   )
 }
 
-function HeroConsole() {
-  const factors = ['Контекст', 'Форма', 'Линия', 'Риски']
-  const pulseItems = [
-    marketFeed[0],
-    { ...marketFeed[1], amount: '$105,000' },
-    { ...marketFeed[3], amount: '$28,500' },
-  ]
-
+function HeroTelegramPhone() {
   return (
-    <div className="hero-product" aria-label="Демонстрационный интерфейс Plus AI">
-      <div className="hero-product__header">
-        <div className="hero-product__brand"><LogoGlyph size={25} /></div>
-        <div className="hero-product__tabs" aria-label="Инструменты Plus AI"><span className="is-active">AI-анализ</span><span>Пульс рынка</span></div>
-        <span className="hero-product__demo">DEMO</span>
-      </div>
+    <div className="hero-phone-stage" aria-label="Демонстрация Telegram-бота Plus AI">
+      <div className="hero-phone-backplate" aria-hidden="true" />
+      <div className="hero-phone">
+        <div className="hero-phone__status"><span>09:41</span><div><i /><i /><i /></div></div>
+        <header className="hero-phone__header"><button aria-label="Назад">‹</button><div className="hero-phone__avatar">+AI</div><div><strong>Plus AI</strong><span>бот</span></div><b>•••</b></header>
+        <div className="hero-phone__chat">
+          <div className="hero-phone__day">DEMO INTERFACE</div>
 
-      <div className="hero-product__body">
-        <section className="analysis-preview">
-          <div className="analysis-preview__status"><span><i /> Событие распознано</span></div>
-          <h3>Матч готов к разбору</h3>
-          <p>Plus AI собрал контекст события, форму участников, движение линии и ключевые риски.</p>
+          <article className="hero-phone-message hero-phone-message--pulse">
+            <div className="hero-phone-message__head"><span><Icon name="pulse" size={15} /></span><div><strong>Пульс рынка</strong><small>Крупное движение замечено</small></div><time>09:41</time></div>
+            <div className="hero-phone-market"><div><span>Football · Prematch</span><strong>$105,000</strong></div><div><span>Коэффициент</span><strong>2.10</strong></div></div>
+            <div className="hero-phone-tags"><span>Single</span><span>Детали в боте</span></div>
+          </article>
 
-          <div className="analysis-factors">
-            {factors.map((factor, index) => (
-              <div className="analysis-factor" style={{ '--factor-delay': `${index * 0.65}s` } as React.CSSProperties} key={factor}>
-                <i><Icon name="check" size={12} /></i><strong>{factor}</strong>
-              </div>
-            ))}
-          </div>
+          <article className="hero-phone-message hero-phone-message--analysis">
+            <div className="hero-phone-message__head"><span>✦</span><div><strong>AI-анализ матча</strong><small>Контекст события собран</small></div><time>09:42</time></div>
+            <p><b>AI-мнение:</b> одна сторона выглядит интереснее по текущей форме. Ключевой риск — нестабильность последних игр.</p>
+            <div className="hero-phone-factors"><span>Контекст</span><span>Форма</span><span>Риски</span></div>
+          </article>
 
-          <div className="analysis-chart">
-            <div className="analysis-chart__head"><span>Динамика коэффициента</span><strong>1.64 <i>→</i> 3.42</strong></div>
-            <svg viewBox="0 0 420 92" preserveAspectRatio="none" role="img" aria-label="Демонстрационный график движения линии">
-              <defs><linearGradient id="heroChartArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#4ad7ba" stopOpacity=".2"/><stop offset="1" stopColor="#4ad7ba" stopOpacity="0"/></linearGradient></defs>
-              <path className="analysis-chart__grid" d="M0 22H420M0 46H420M0 70H420" />
-              <path className="analysis-chart__area" d="M0 74C38 68 58 76 91 60s56-4 84-12 50-28 82-17 52 21 82 4 55-9 81-24V92H0Z" />
-              <path className="analysis-chart__line" pathLength="1" d="M0 74C38 68 58 76 91 60s56-4 84-12 50-28 82-17 52 21 82 4 55-9 81-24" />
-              <circle className="analysis-chart__dot" cx="420" cy="11" r="4" />
-            </svg>
-          </div>
-
-          <div className="analysis-opinion">
-            <div className="analysis-opinion__title"><span>✦</span><strong>AI-мнение</strong></div>
-            <p>Картина матча собрана: линия заметно изменилась. Ключевые факторы и риски доступны в полном разборе.</p>
-          </div>
-        </section>
-
-        <aside className="pulse-preview-panel">
-          <div className="pulse-preview-panel__head"><div><Icon name="pulse" size={17} /><strong>Пульс рынка</strong></div></div>
-          <p>Крупные движения с уведомлением в Telegram</p>
-          <div className="pulse-preview-panel__list">
-            {pulseItems.map((item, index) => (
-              <article className="pulse-event" style={{ '--pulse-delay': `${index * 1.1}s` } as React.CSSProperties} key={item.sport}>
-                <div><span>{item.sport}</span><small>{item.phase} · {item.type}</small></div>
-                <strong>{item.amount}</strong>
-                <b>{item.odds}</b>
-              </article>
-            ))}
-          </div>
-        </aside>
+          <article className="hero-phone-message hero-phone-message--chart">
+            <div className="hero-phone-chart__head"><div><Icon name="pulse" size={14} /><strong>Движение коэффициента</strong></div><span>1.64 <i>→</i> 3.42</span></div>
+            <svg viewBox="0 0 300 58" preserveAspectRatio="none" role="img" aria-label="Демо-график движения коэффициента"><path className="hero-phone-chart__grid" d="M0 14H300M0 29H300M0 44H300"/><path className="hero-phone-chart__line" pathLength="1" d="M0 48 C34 46 52 35 82 38 S127 51 158 31 S210 27 238 18 S276 20 300 7"/><circle cx="300" cy="7" r="3" /></svg>
+          </article>
+        </div>
+        <div className="hero-phone__actions"><button><Icon name="scan" size={14} />Разобрать матч</button><button><Icon name="pulse" size={14} />Пульс рынка</button><a href={TELEGRAM_URL} target="_blank" rel="noreferrer"><Icon name="telegram" size={14} />Открыть бота</a></div>
+        <div className="hero-phone__input"><span>＋</span><p>Сообщение</p><span>◉</span></div>
       </div>
     </div>
   )
@@ -142,7 +111,7 @@ function Hero() {
           <p className="hero-lead">AI-разбор матчей и Пульс рынка — прямо в Telegram.</p>
           <div className="hero-actions"><TelegramButton>Открыть Plus AI</TelegramButton><a className="text-link" href="#market">Смотреть интерфейс <Icon name="chevron" size={15} /></a></div>
         </div>
-        <div className="hero-visual"><HeroConsole /></div>
+        <div className="hero-visual"><HeroTelegramPhone /></div>
       </div>
     </section>
   )
@@ -175,18 +144,24 @@ function MarketPulse() {
 
 function AnalysisSection() {
   const details = [
-    ['01', 'Контекст события', 'Стадия турнира, формат встречи и условия, которые влияют на чтение матча.'],
-    ['02', 'Форма и динамика', 'Последние игры, стабильность результатов и заметные изменения в игре участников.'],
-    ['03', 'Линия и коэффициенты', 'Plus AI отмечает движение линии и показывает, где контекст требует повторной проверки.'],
-    ['04', 'Ключевые риски', 'Состав, нестабильность формы и другие факторы, способные изменить общую картину.'],
+    ['01', 'Контекст', 'Решающая стадия турнира. Команды подходят к матчу с разной динамикой и стилем игры.', 'eye'],
+    ['02', 'Форма', 'Франция стабильнее по контролю темпа и качеству моментов. Англия опасна в быстрых переходах.', 'scan'],
+    ['03', 'Линия', 'Коэффициент сместился с 1.91 до 1.78. Рынок усиливает сторону Франции.', 'pulse'],
+    ['04', 'Риски', 'Составы, поздние замены и стандарты могут изменить общую картину матча.', 'check'],
   ]
   return (
     <section className="section analysis-section reveal" id="analysis"><div className="container">
-      <div className="section-heading section-heading--center"><span className="section-index">02 / AI-АНАЛИЗ МАТЧА</span><h2>Контекст матча.<br />Собран в одну картину.</h2><p>Plus AI последовательно показывает, что важно в событии: форму участников, движение линии, риски и итоговое AI-мнение.</p></div>
+      <div className="section-heading section-heading--center"><span className="section-index">02 / AI-АНАЛИЗ МАТЧА</span><h2><span>Разбор,</span> который можно<br />прочитать по делу</h2><p>Не декоративный дашборд, а последовательный отчет: контекст, форма, линия, риски и итоговое AI-мнение.</p></div>
       <article className="analysis-report">
-        <header className="report-header"><div className="report-brand"><LogoGlyph size={25} /><strong>Аналитика матча</strong></div><span className="demo-view">DEMO</span></header>
-        <div className="report-meta"><div><span>СОБЫТИЕ</span><strong>Распознано</strong></div><div><span>ВИД СПОРТА</span><strong>CS2</strong></div><div><span>КОНТЕКСТ</span><strong>Собран для анализа</strong></div><div><span>ДЕТАЛИ</span><strong>Доступны в боте</strong></div></div>
-        <div className="report-body"><div className="report-sections">{details.map(([num, title, text], index) => <section className="report-section" style={{ '--step': index } as React.CSSProperties} key={title}><span>{num}</span><div><div className="report-section__title"><h3>{title}</h3><i><Icon name="check" size={12} /></i></div><p>{text}</p></div></section>)}</div><aside className="report-sidebar"><div className="report-movement"><span>ДВИЖЕНИЕ КОЭФФИЦИЕНТА</span><strong>1.64 <i>→</i> 3.42</strong><svg viewBox="0 0 220 58" preserveAspectRatio="none" aria-hidden="true"><path d="M0 47 C28 45 42 31 72 34 S112 49 140 28 S184 22 220 8" /></svg><small>Линия заметно изменилась</small></div><div className="report-opinion"><div><span>✦</span><strong>AI-МНЕНИЕ</strong></div><p>По доступному контексту одна сторона выглядит интереснее, но ключевой риск — нестабильность последних игр и возможное дальнейшее изменение линии.</p><small>Информационно-аналитический разбор без гарантии результата</small></div></aside></div>
+        <header className="report-header"><div className="report-brand"><LogoGlyph size={23} /><strong>Plus AI</strong><small>Analysis Report</small></div><span className="demo-view">DEMO VIEW</span></header>
+        <div className="report-meta"><div><span>МАТЧ</span><strong>Франция — Англия</strong></div><div><span>ТУРНИР</span><strong>International Series</strong></div><div><span>ВРЕМЯ</span><strong>Сегодня · 19:30 UTC</strong></div><div><span>ТИП</span><strong>Футбол</strong></div></div>
+        <div className="report-body">
+          <div className="report-sections">{details.map(([num, title, text, icon], index) => <section className="report-section" style={{ '--step': index } as React.CSSProperties} key={title}><span>{num}</span><i className="report-section__icon"><Icon name={icon as IconName} size={19} /></i><div><h3>{title}</h3><p>{text}</p></div></section>)}</div>
+          <aside className="report-sidebar">
+            <div className="report-movement"><div className="report-card-title"><Icon name="pulse" size={17} /><strong>Движение линии</strong></div><div className="report-movement__value">1.91 <i>→</i> <b>1.78</b></div><p>Рынок усиливает сторону Франции</p><div className="report-chart"><svg viewBox="0 0 260 92" preserveAspectRatio="none" aria-label="Демонстрационный график движения линии"><path className="report-chart__grid" d="M0 18H260M0 46H260M0 74H260"/><path className="report-chart__area" d="M0 16 C32 20 48 17 70 30 S108 37 132 43 S170 48 196 60 S230 63 260 78V92H0Z"/><path className="report-chart__line" pathLength="1" d="M0 16 C32 20 48 17 70 30 S108 37 132 43 S170 48 196 60 S230 63 260 78"/><circle cx="260" cy="78" r="4"/></svg><div><span>1.95</span><span>1.85</span><span>1.75</span></div></div><div className="report-chart__time"><span>3 дня назад</span><span>сейчас</span></div></div>
+            <div className="report-opinion"><div><span>✦</span><strong>AI-МНЕНИЕ</strong></div><p>По доступному контексту Франция выглядит стабильнее, но ключевой риск — быстрые переходы Англии и стандарты.</p><small>Информационный анализ, не финансовый совет</small></div>
+          </aside>
+        </div>
       </article>
     </div></section>
   )
