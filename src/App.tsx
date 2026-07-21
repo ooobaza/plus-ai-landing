@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 
 const TELEGRAM_URL = 'https://t.me/plus_ai_robot'
+const CHANNEL_URL = 'https://t.me/plusovoy_ai'
+const REPORT_URL = 'https://t.me/plusovoy_ai/13'
 
 type IconName = 'arrow' | 'check' | 'chevron' | 'eye' | 'pulse' | 'scan' | 'telegram' | 'trend'
 
@@ -174,8 +176,9 @@ function Hero() {
       <div className="container hero-layout">
         <div className="hero-copy">
           <h1><span>AI-анализ матчей</span><span className="hero-title-accent">и Пульс рынка</span><small>в Telegram</small></h1>
-          <p className="hero-lead">AI-разбор матчей и Пульс рынка — прямо в Telegram.</p>
-          <div className="hero-actions"><TelegramButton>Открыть Plus AI</TelegramButton><a className="text-link" href="#market">Смотреть интерфейс <Icon name="chevron" size={15} /></a></div>
+          <p className="hero-lead">Разбор матча и крупные движения рынка — без лишних экранов.</p>
+          <div className="hero-actions"><TelegramButton>Получить 7 дней бесплатно</TelegramButton><a className="text-link" href="#market">Смотреть интерфейс <Icon name="chevron" size={15} /></a></div>
+          <div className="hero-trial-note"><span><Icon name="pulse" size={14} /></span><strong>Пульс рынка · 7 дней</strong><small>для подписчиков @plusovoy_ai</small></div>
         </div>
         <div className="hero-visual"><HeroConsole /></div>
       </div>
@@ -202,7 +205,7 @@ function MarketCard({ item, ghost = false, index = 0 }: { item: typeof marketFee
 function MarketPulse() {
   return (
     <section className="section market-section reveal" id="market"><div className="container market-layout">
-      <div className="market-copy"><span className="section-index">01 / ПУЛЬС РЫНКА</span><h2>Крупные движения<br />на рынке</h2><p>Пульс рынка собирает заметные изменения в спокойную ленту: вид спорта, объём, коэффициент и этап события видны сразу. Полные детали открываются в Telegram.</p><div className="filter-row" aria-label="Доступные фильтры"><span>SPORT + CYBERSPORT</span><span>LIVE / PREMATCH</span><span>SINGLE / EXPRESS</span><span>ODDS</span></div><div className="interface-note"><Icon name="eye" size={16} /><span>Демонстрационный интерфейс. Без статистики результатов и обещаний.</span></div></div>
+      <div className="market-copy"><span className="section-index">01 / ПУЛЬС РЫНКА</span><h2>Крупные движения<br />на рынке</h2><p>В ленте сразу видны спорт, объём, коэффициент и этап события. Матч и полные детали открываются в боте.</p><div className="market-proof" aria-label="Опубликованная статистика Plus AI"><div className="market-proof__head"><span>ОПУБЛИКОВАННАЯ ОТЧЁТНОСТЬ</span><a href={REPORT_URL} target="_blank" rel="noreferrer">Открыть отчёт <Icon name="arrow" size={14} /></a></div><div className="market-proof__metrics"><div><strong>72,3%</strong><span>положительных исходов</span></div><div><strong>2,33</strong><span>средний коэффициент</span></div></div><p>Данные опубликованной выборки. Прошлые результаты не гарантируют будущие.</p></div></div>
       <div className="market-terminal"><div className="terminal-header"><div><span className="live-dot" /> ПУЛЬС РЫНКА</div><span className="terminal-counter">DEMO</span></div><div className="feed-window"><div className="feed-track"><div className="feed-set">{marketFeed.map((item, index) => <MarketCard item={item} index={index} key={item.sport} />)}</div><div className="feed-set" aria-hidden="true">{marketFeed.map((item, index) => <MarketCard item={item} index={index} ghost key={`copy-${item.sport}`} />)}</div></div><div className="feed-fade feed-fade--top" /><div className="feed-fade feed-fade--bottom" /></div><div className="terminal-footer"><span>Пример интерфейса</span><span>Полные детали — в Telegram</span></div></div>
     </div></section>
   )
@@ -256,7 +259,7 @@ function TelegramSection() {
 
 function FinalCta() {
   return (
-    <section className="section final-section reveal"><div className="container final-card"><LogoGlyph size={38} /><h2>Открой Plus AI<br /><span>в Telegram</span></h2><p>Получай AI-анализ матчей и уведомления Пульса рынка<br />в одном понятном Telegram-боте.</p><TelegramButton className="final-button">Перейти в @plus_ai_robot</TelegramButton></div></section>
+    <section className="section final-section reveal"><div className="container final-card"><LogoGlyph size={38} /><span className="final-eyebrow">ДОСТУП ДЛЯ ПОДПИСЧИКОВ</span><h2>7 дней Пульса рынка<br /><span>бесплатно</span></h2><p>Подпишись на канал Plus AI и активируй доступ в боте.</p><div className="final-actions"><TelegramButton className="final-button">Активировать 7 дней</TelegramButton><a className="final-channel-link" href={CHANNEL_URL} target="_blank" rel="noreferrer">Подписаться на канал <Icon name="arrow" size={15} /></a></div><small className="final-access-note">Подписка проверяется ботом при активации</small></div></section>
   )
 }
 

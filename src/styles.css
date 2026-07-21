@@ -1192,3 +1192,163 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
   .feed-track,.report-summary::after,.analysis-section.is-visible .analysis-report,.analysis-section.is-visible .report-section,.telegram-section.is-visible .telegram-copy li,.chat-stage--phone::before,.final-card::before,.final-card::after,.final-section.is-visible .final-card > .logo-glyph,.final-section.is-visible .final-button { animation: none !important; }
   .feed-track { transform: none; }
 }
+
+/* Conversion accents: free access and published report */
+.hero-actions .button {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 14px 40px rgba(38,192,162,.2),0 0 0 1px rgba(126,255,226,.08);
+}
+.hero-actions .button::after {
+  content: '';
+  position: absolute;
+  top: -80%;
+  bottom: -80%;
+  width: 48px;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,.26),transparent);
+  transform: translateX(-150px) rotate(14deg);
+  animation: trial-button-sheen 6s 1.4s ease-in-out infinite;
+  pointer-events: none;
+}
+.hero-trial-note {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: 28px auto;
+  align-items: center;
+  gap: 2px 9px;
+  margin-top: 18px;
+  color: #d7e7e2;
+}
+.hero-trial-note > span {
+  grid-row: 1 / 3;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(83,231,199,.3);
+  border-radius: 8px;
+  color: #68e7ce;
+  background: rgba(55,204,175,.09);
+  box-shadow: 0 0 20px rgba(57,220,185,.08);
+}
+.hero-trial-note strong { font-size: 11px; font-weight: 650; line-height: 1.15; }
+.hero-trial-note small { color: #7f918b; font: 500 7px/1.3 var(--mono); }
+
+.market-proof {
+  position: relative;
+  overflow: hidden;
+  margin-top: 30px;
+  padding: 18px;
+  border: 1px solid rgba(82,229,198,.25);
+  border-radius: 16px;
+  background: radial-gradient(circle at 10% 0%,rgba(52,224,177,.14),transparent 42%),linear-gradient(145deg,rgba(18,34,30,.96),rgba(9,18,16,.98));
+  box-shadow: 0 24px 65px rgba(0,0,0,.25),0 0 42px rgba(53,218,184,.055),inset 0 1px 0 rgba(211,255,246,.045);
+}
+.market-proof::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  background: linear-gradient(90deg,transparent,rgba(93,236,207,.055),transparent);
+  transform: translateX(-140px) skewX(-14deg);
+  animation: proof-scan 9s ease-in-out infinite;
+  pointer-events: none;
+}
+.market-proof__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.market-proof__head > span { color: #86aca3; font: 600 7px/1.2 var(--mono); letter-spacing: .1em; }
+.market-proof__head a {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #79e4ce;
+  font-size: 10px;
+  font-weight: 600;
+  transition: color .2s ease,transform .2s ease;
+}
+.market-proof__head a:hover { color: #b1f8e9; transform: translateX(2px); }
+.market-proof__metrics {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  margin-top: 17px;
+  border-top: 1px solid rgba(124,210,194,.1);
+  border-bottom: 1px solid rgba(124,210,194,.1);
+}
+.market-proof__metrics > div { display: flex; flex-direction: column; gap: 7px; padding: 18px 14px 17px 0; }
+.market-proof__metrics > div + div { padding-left: 18px; border-left: 1px solid rgba(124,210,194,.1); }
+.market-proof__metrics strong {
+  color: #effaf7;
+  font: 650 38px/.95 var(--mono);
+  letter-spacing: -.055em;
+  text-shadow: 0 0 26px rgba(85,232,202,.12);
+}
+.market-proof__metrics > div:first-child strong { color: #61e3c7; text-shadow: 0 0 30px rgba(65,224,190,.22); }
+.market-proof__metrics span { color: #a7b8b2; font-size: 10px; line-height: 1.35; }
+.market-proof > p { margin: 13px 0 0; color: #71847d; font-size: 9px; line-height: 1.55; }
+
+.final-card {
+  border-color: rgba(88,235,203,.34);
+  background: radial-gradient(circle at 50% 18%,rgba(50,228,180,.2),transparent 42%),radial-gradient(circle at 78% 70%,rgba(52,174,201,.08),transparent 34%),linear-gradient(150deg,#0d1916,#08100f);
+  box-shadow: 0 40px 110px rgba(0,0,0,.34),0 0 65px rgba(56,223,188,.08),inset 0 1px 0 rgba(220,255,248,.06);
+}
+.final-card > .logo-glyph { margin-bottom: 20px; }
+.final-eyebrow {
+  margin-bottom: 22px;
+  padding: 7px 11px;
+  border: 1px solid rgba(98,232,203,.2);
+  border-radius: 999px;
+  color: #78d9c5;
+  background: rgba(61,201,173,.075);
+  font: 600 8px/1 var(--mono);
+  letter-spacing: .12em;
+}
+.final-card h2 span { color: #63e0c5; text-shadow: 0 0 32px rgba(62,221,187,.16); }
+.final-actions { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 31px; }
+.final-actions .final-button { margin-top: 0; box-shadow: 0 15px 45px rgba(38,190,160,.22); }
+.final-channel-link {
+  min-height: 54px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 19px;
+  border: 1px solid rgba(123,211,195,.18);
+  border-radius: 10px;
+  color: #c2d0cc;
+  background: rgba(255,255,255,.018);
+  font-size: 12px;
+  font-weight: 600;
+  transition: color .2s ease,border-color .2s ease,background .2s ease;
+}
+.final-channel-link:hover { color: #ecf7f4; border-color: rgba(99,226,199,.38); background: rgba(70,210,180,.07); }
+.final-access-note { margin-top: 16px; color: #70837c; font: 500 8px/1.4 var(--mono); }
+
+@keyframes trial-button-sheen {
+  0%,56%,100% { transform: translateX(-150px) rotate(14deg); opacity: 0; }
+  65% { opacity: 1; }
+  78% { transform: translateX(360px) rotate(14deg); opacity: 0; }
+}
+@keyframes proof-scan {
+  0%,62%,100% { transform: translateX(-140px) skewX(-14deg); opacity: 0; }
+  70% { opacity: 1; }
+  88% { transform: translateX(560px) skewX(-14deg); opacity: 0; }
+}
+
+@media (max-width: 720px) {
+  .hero-trial-note { margin-top: 16px; }
+  .market-proof { margin-top: 25px; padding: 15px; }
+  .market-proof__head { align-items: flex-start; }
+  .market-proof__head > span { max-width: 150px; line-height: 1.45; }
+  .market-proof__metrics strong { font-size: 30px; }
+  .market-proof__metrics span { font-size: 9px; }
+  .final-card > .logo-glyph { margin-bottom: 17px; }
+  .final-eyebrow { margin-bottom: 18px; }
+  .final-actions { width: 100%; flex-direction: column; gap: 10px; margin-top: 27px; }
+  .final-actions > * { width: 100%; justify-content: center; }
+  .final-channel-link { min-height: 50px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-actions .button::after,.market-proof::after { animation: none !important; }
+}
