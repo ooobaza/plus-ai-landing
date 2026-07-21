@@ -1411,12 +1411,31 @@ body::before {
 
 /* Mobile precision pass: hero offer, product frame, report and Telegram phone */
 @media (max-width: 620px) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+  #root {
+    overflow-x: visible;
+  }
   .site-header {
+    position: sticky;
+    top: 0;
     height: 68px;
+    padding-top: 0;
     background: #080c0b;
     border-bottom-color: rgba(255,255,255,.06);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+  .site-header .header-inner {
+    position: relative;
+    z-index: 1;
+    height: 68px;
+  }
+
+  .hero {
+    padding-top: 33px;
   }
 
   .hero-copy {
