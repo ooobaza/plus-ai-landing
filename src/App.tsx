@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const TELEGRAM_URL = 'https://t.me/plus_ai_robot'
 const REPORT_URL = 'https://t.me/plusovoy_ai/13'
@@ -34,11 +34,59 @@ const marketFeed = [
 ]
 
 function TelegramButton({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  const handlePointerMove = (event: React.PointerEvent<HTMLAnchorElement>) => {
+    if (event.pointerType === 'touch') return
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 4
+    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 3
+    event.currentTarget.style.setProperty('--magnet-x', `${x}px`)
+    event.currentTarget.style.setProperty('--magnet-y', `${y}px`)
+  }
+
+  const resetMagnet = (event: React.PointerEvent<HTMLAnchorElement>) => {
+    event.currentTarget.style.setProperty('--magnet-x', '0px')
+    event.currentTarget.style.setProperty('--magnet-y', '0px')
+  }
+
   return (
-    <a className={`button ${className}`} href={TELEGRAM_URL} target="_blank" rel="noreferrer">
+    <a className={`button ${className}`} href={TELEGRAM_URL} target="_blank" rel="noreferrer" onPointerMove={handlePointerMove} onPointerLeave={resetMagnet}>
       <Icon name="telegram" size={17} /><span>{children}</span><Icon name="arrow" size={16} />
     </a>
   )
+}
+
+function AnimatedMetric({ value, decimals, suffix = '' }: { value: number; decimals: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    const element = ref.current
+    if (!element) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setCurrent(value); return }
+
+    let frame = 0
+    let started = false
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || started) return
+      started = true
+      const start = performance.now()
+      const duration = 1350
+      const tick = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1)
+        const eased = 1 - Math.pow(1 - progress, 3)
+        setCurrent(value * eased)
+        if (progress < 1) frame = requestAnimationFrame(tick)
+      }
+      frame = requestAnimationFrame(tick)
+      observer.disconnect()
+    }, { threshold: 0.45 })
+
+    observer.observe(element)
+    return () => { observer.disconnect(); cancelAnimationFrame(frame) }
+  }, [value])
+
+  const formatted = current.toLocaleString('ru-RU', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+  return <span ref={ref} className="animated-metric" aria-label={`${value.toLocaleString('ru-RU')} ${suffix}`}>{formatted}{suffix}</span>
 }
 
 function LogoGlyph({ size = 30 }: { size?: number }) {
@@ -111,8 +159,15 @@ function HeroConsole() {
     { ...marketFeed[3], amount: '$28,500' },
   ]
 
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === 'touch') return
+    const rect = event.currentTarget.getBoundingClientRect()
+    event.currentTarget.style.setProperty('--pointer-x', `${((event.clientX - rect.left) / rect.width) * 100}%`)
+    event.currentTarget.style.setProperty('--pointer-y', `${((event.clientY - rect.top) / rect.height) * 100}%`)
+  }
+
   return (
-    <div className="hero-product" aria-label="Демонстрационный интерфейс Plus AI">
+    <div className="hero-product" aria-label="Демонстрационный интерфейс Plus AI" onPointerMove={handlePointerMove}>
       <div className="hero-product__header">
         <div className="hero-product__brand"><LogoGlyph size={25} /></div>
         <div className="hero-product__tabs" aria-label="Инструменты Plus AI"><span className="is-active">AI-анализ</span><span>Пульс рынка</span></div>
@@ -226,7 +281,7 @@ function AnalysisSection() {
         <div className="report-body">
           <div className="report-sections">
             {details.map(([num, title, text, icon], index) => <section className="report-section" style={{ '--step': index } as React.CSSProperties} key={title}><span>{num}</span><i className="report-section__icon"><Icon name={icon as IconName} size={19} /></i><div><h3>{title}</h3><p>{text}</p></div></section>)}
-            <div className="market-proof analysis-proof" aria-label="Опубликованная статистика AI-анализов Plus AI"><div className="market-proof__head"><span>ОПУБЛИКОВАННАЯ ОТЧЁТНОСТЬ AI-АНАЛИЗОВ</span><a href={REPORT_URL} target="_blank" rel="noreferrer">Открыть отчёт <Icon name="arrow" size={14} /></a></div><div className="market-proof__metrics"><div><strong>72,3%</strong><span>положительных исходов</span></div><div><strong>2,33</strong><span>средний коэффициент</span></div></div><p>Данные опубликованной выборки. Прошлые результаты не гарантируют будущие.</p></div>
+            <div className="market-proof analysis-proof" aria-label="Опубликованная статистика AI-анализов Plus AI"><div className="market-proof__head"><span>ОПУБЛИКОВАННАЯ ОТЧЁТНОСТЬ AI-АНАЛИЗОВ</span><a href={REPORT_URL} target="_blank" rel="noreferrer">Открыть отчёт <Icon name="arrow" size={14} /></a></div><div className="market-proof__metrics"><div><strong><AnimatedMetric value={72.3} decimals={1} suffix="%" /></strong><span>положительных исходов</span></div><div><strong><AnimatedMetric value={2.33} decimals={2} /></strong><span>средний коэффициент</span></div></div><p>Данные опубликованной выборки. Прошлые результаты не гарантируют будущие.</p></div>
           </div>
           <aside className="report-sidebar">
             <div className="report-movement"><div className="report-card-title"><span><Icon name="trend" size={19} /></span><strong>Движение линии</strong></div><div className="report-movement__value">1.91 <i>→</i> <b>1.78</b></div><p>Рынок усиливает сторону Франции</p><div className="report-chart"><svg viewBox="0 0 300 104" preserveAspectRatio="none" aria-label="Демонстрационный график движения линии"><path className="report-chart__grid" d="M0 18H300M0 52H300M0 86H300"/><path className="report-chart__area" d="M0 18 C28 21 45 20 66 34 S105 39 130 48 S168 55 194 66 S235 67 264 82 S286 87 300 91V104H0Z"/><path className="report-chart__line" pathLength="1" d="M0 18 C28 21 45 20 66 34 S105 39 130 48 S168 55 194 66 S235 67 264 82 S286 87 300 91"/><circle cx="300" cy="91" r="4"/></svg><div><span>1.95</span><span>1.85</span><span>1.75</span></div></div><div className="report-chart__time"><span>3 дня назад</span><span>сейчас</span></div></div>

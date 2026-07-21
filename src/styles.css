@@ -1318,3 +1318,103 @@ main { background: radial-gradient(ellipse 900px 620px at 73% 5%, rgba(44,142,12
 @media (prefers-reduced-motion: reduce) {
   .hero-actions .button::after,.market-proof::after { animation: none !important; }
 }
+
+/* Premium interaction pass */
+body::before {
+  content: '';
+  position: fixed;
+  z-index: 999;
+  inset: 0;
+  pointer-events: none;
+  opacity: .022;
+  background-image: radial-gradient(rgba(224,255,248,.7) .45px,transparent .6px);
+  background-size: 4px 4px;
+}
+
+.hero-product { --pointer-x: 72%; --pointer-y: 18%; }
+.hero-product::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  opacity: .75;
+  background: radial-gradient(320px circle at var(--pointer-x) var(--pointer-y),rgba(91,237,207,.11),rgba(58,185,198,.035) 36%,transparent 70%);
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+.hero-product > * { position: relative; z-index: 1; }
+
+.button {
+  --magnet-x: 0px;
+  --magnet-y: 0px;
+  transform: translate3d(var(--magnet-x),var(--magnet-y),0);
+  transition: transform .18s ease,box-shadow .2s ease,background .2s ease;
+}
+.button:hover { transform: translate3d(var(--magnet-x),calc(var(--magnet-y) - 2px),0); }
+.button:active { transform: translate3d(var(--magnet-x),calc(var(--magnet-y) + 1px),0) scale(.985); }
+.button svg:last-child { transition: transform .22s ease; }
+.button:hover svg:last-child { transform: translateX(3px); }
+
+.market-proof__metrics .animated-metric {
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
+
+.analysis-section.is-visible .analysis-proof { animation: premium-rise .72s .62s ease-out both; }
+.analysis-section.is-visible .report-movement { animation: premium-side-in .68s .48s ease-out both; }
+.analysis-section.is-visible .report-opinion { animation: premium-side-in .68s .72s ease-out both; }
+.analysis-section.is-visible .report-chart__line { animation: chart-draw 1.8s .8s ease-out both; }
+
+.telegram-section.is-visible .hero-phone-message--pulse { animation: telegram-message-in .58s .3s ease-out both; }
+.telegram-section.is-visible .hero-phone-message--analysis { animation: telegram-message-in .58s .68s ease-out both; }
+.telegram-section.is-visible .hero-phone-message--chart { animation: telegram-message-in .58s 1.02s ease-out both; }
+.telegram-section.is-visible .hero-phone-chart__line { animation: chart-draw 1.65s 1.3s ease-out both; }
+.telegram-section.is-visible .hero-phone__actions { animation: telegram-controls-in .55s 1.48s ease-out both; }
+.telegram-section.is-visible .hero-phone__input { animation: telegram-controls-in .55s 1.65s ease-out both; }
+
+.final-section.is-visible .final-card h2 { animation: final-content-in .7s .12s ease-out both; }
+.final-section.is-visible .final-card > p { animation: final-content-in .7s .28s ease-out both; }
+.final-section.is-visible .final-button { animation: final-content-in .7s .42s ease-out both,final-button-glow 4.5s 1.2s ease-in-out infinite; }
+
+@keyframes premium-rise {
+  from { opacity: .6; transform: translateY(12px); box-shadow: 0 12px 35px rgba(0,0,0,.18); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes premium-side-in {
+  from { opacity: .58; transform: translateX(11px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes telegram-message-in {
+  from { opacity: .58; transform: translateY(10px) scale(.992); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes telegram-controls-in {
+  from { opacity: .55; transform: translateY(7px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes final-content-in {
+  from { opacity: .55; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hero-product::before { opacity: .55; }
+  .button,.button:hover,.button:active { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .analysis-section.is-visible .analysis-proof,
+  .analysis-section.is-visible .report-movement,
+  .analysis-section.is-visible .report-opinion,
+  .analysis-section.is-visible .report-chart__line,
+  .telegram-section.is-visible .hero-phone-message,
+  .telegram-section.is-visible .hero-phone-chart__line,
+  .telegram-section.is-visible .hero-phone__actions,
+  .telegram-section.is-visible .hero-phone__input,
+  .final-section.is-visible .final-card h2,
+  .final-section.is-visible .final-card > p,
+  .final-section.is-visible .final-button { animation: none !important; }
+  .button,.button:hover,.button:active { transform: none; }
+}
