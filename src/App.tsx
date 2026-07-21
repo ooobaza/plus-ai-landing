@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { botUrl } from './links'
 
 const REPORT_URL = 'https://t.me/plusovoy_ai/13'
+const CHANNEL_URL = 'https://t.me/plusovoy_ai'
 
 type IconName = 'arrow' | 'check' | 'chevron' | 'eye' | 'pulse' | 'scan' | 'telegram' | 'trend'
 
@@ -232,7 +233,7 @@ function Hero() {
           <h1><span>AI-анализ матчей</span><span className="hero-title-accent">и Пульс рынка</span><small>в Telegram</small></h1>
           <p className="hero-lead hero-value"><span>Пульс показывает движение рынка.</span><strong>AI-разбор объясняет контекст и риски.</strong></p>
           <div className="hero-actions"><TelegramButton source="site_hero_trial">Получить 7 дней бесплатно</TelegramButton><a className="text-link" href="#market">Смотреть интерфейс <Icon name="chevron" size={15} /></a></div>
-          <div className="hero-trial-note"><span><Icon name="pulse" size={14} /></span><strong>Пульс рынка · 7 дней</strong><small>для подписчиков @plusovoy_ai</small></div>
+          <a className="hero-trial-note" href={CHANNEL_URL} target="_blank" rel="noreferrer" aria-label="Подписаться на канал Plus AI для получения семи дней доступа"><span><Icon name="pulse" size={14} /></span><strong>Пульс рынка · 7 дней</strong><small>Подписаться на @plusovoy_ai</small></a>
         </div>
         <div className="hero-visual"><HeroConsole /></div>
       </div>
@@ -320,7 +321,7 @@ const faqItems = [
   },
   {
     question: 'Как работает AI-анализ матча?',
-    answer: 'Ты выбираешь событие в Telegram-боте. Plus AI собирает доступный контекст, форму, движение линии и ключевые риски, а затем формирует последовательный информационный разбор.',
+    answer: 'Ты выбираешь любое спортивное или киберспортивное событие и отправляешь его в Telegram-бот Plus AI. Бот собирает доступный контекст, форму, движение линии и ключевые риски, а затем формирует последовательный информационный разбор.',
   },
   {
     question: 'Что показывает «Пульс рынка»?',
@@ -328,16 +329,12 @@ const faqItems = [
   },
   {
     question: 'Как получить 7 дней бесплатно?',
-    answer: 'Подпишись на канал Plus AI и открой официального бота. При активации бот проверит подписку и предоставит семь дней доступа к «Пульсу рынка».',
-    action: true,
+    answer: 'Сначала подпишись на канал Plus AI, затем открой Telegram-бот и активируй пробный доступ. Бот проверит подписку и откроет «Пульс рынка» на 7 дней.',
+    trialActions: true,
   },
   {
     question: 'Что произойдёт после пробного периода?',
     answer: 'Доступ не продлевается незаметно. Актуальные варианты продолжения и условия показываются внутри Telegram-бота до активации.',
-  },
-  {
-    question: 'Plus AI гарантирует результат события?',
-    answer: 'Нет. Plus AI — информационно-аналитический сервис, а AI-мнение не является гарантией результата или финансовой рекомендацией. Решения пользователь принимает самостоятельно.',
   },
 ]
 
@@ -365,7 +362,13 @@ function FaqSection() {
                   <i aria-hidden="true"><span /><span /></i>
                 </button>
                 <div className="faq-answer" id={answerId} aria-hidden={!isOpen}>
-                  <div><p>{item.answer}</p>{item.action && <a href={botUrl('site_faq_trial')} target="_blank" rel="noreferrer">Открыть бота <Icon name="arrow" size={14} /></a>}</div>
+                  <div>
+                    <p>{item.answer}</p>
+                    {item.trialActions && <div className="faq-actions">
+                      <a href={CHANNEL_URL} target="_blank" rel="noreferrer"><span>1</span>Подписаться на канал <Icon name="arrow" size={14} /></a>
+                      <a href={botUrl('site_faq_trial')} target="_blank" rel="noreferrer"><span>2</span>Активировать 7 дней в боте <Icon name="arrow" size={14} /></a>
+                    </div>}
+                  </div>
                 </div>
               </article>
             )
