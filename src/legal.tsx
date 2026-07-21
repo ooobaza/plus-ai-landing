@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+import { botUrl } from './links'
+
 const TELEGRAM_URL = 'https://t.me/plus_ai_robot'
 
 type LegalDocumentKey = 'privacy' | 'terms' | 'disclaimer'
@@ -303,7 +305,7 @@ export function LegalPage({ type }: { type: LegalDocumentKey }) {
             <aside className="legal-aside" aria-label="Навигация по документам">
               <strong>Документы</strong>
               <nav>{links.map(([key, label]) => <a className={key === type ? 'is-active' : ''} href={`../${key}/`} key={key}>{label}</a>)}</nav>
-              <a className="legal-aside__bot" href={TELEGRAM_URL} target="_blank" rel="noreferrer">Открыть Telegram-бота <span aria-hidden="true">↗</span></a>
+              <a className="legal-aside__bot" href={botUrl(`site_legal_${type}_aside`)} target="_blank" rel="noreferrer">Открыть Telegram-бота <span aria-hidden="true">↗</span></a>
             </aside>
 
             <article className="legal-document">
@@ -324,7 +326,7 @@ export function LegalPage({ type }: { type: LegalDocumentKey }) {
       <footer className="legal-page-footer">
         <div className="container">
           <div><strong>Plus AI</strong><span>Информационно-аналитический Telegram-сервис</span></div>
-          <a href={TELEGRAM_URL} target="_blank" rel="noreferrer">@plus_ai_robot</a>
+          <a href={botUrl(`site_legal_${type}_footer`)} target="_blank" rel="noreferrer">@plus_ai_robot</a>
           <span>© 2026 Plus AI · 18+</span>
         </div>
       </footer>

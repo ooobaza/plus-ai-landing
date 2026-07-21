@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { botUrl } from './links'
 
-const TELEGRAM_URL = 'https://t.me/plus_ai_robot'
 const REPORT_URL = 'https://t.me/plusovoy_ai/13'
 
 type IconName = 'arrow' | 'check' | 'chevron' | 'eye' | 'pulse' | 'scan' | 'telegram' | 'trend'
@@ -33,7 +33,7 @@ const marketFeed = [
   { sport: 'Hockey', amount: '$22,400', odds: '1.64', phase: 'Live', type: 'Express', mark: 'HK' },
 ]
 
-function TelegramButton({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+function TelegramButton({ children, source, className = '' }: { children: React.ReactNode; source: string; className?: string }) {
   const handlePointerMove = (event: React.PointerEvent<HTMLAnchorElement>) => {
     if (event.pointerType === 'touch') return
     const rect = event.currentTarget.getBoundingClientRect()
@@ -49,7 +49,7 @@ function TelegramButton({ children, className = '' }: { children: React.ReactNod
   }
 
   return (
-    <a className={`button ${className}`} href={TELEGRAM_URL} target="_blank" rel="noreferrer" onPointerMove={handlePointerMove} onPointerLeave={resetMagnet}>
+    <a className={`button ${className}`} href={botUrl(source)} target="_blank" rel="noreferrer" onPointerMove={handlePointerMove} onPointerLeave={resetMagnet}>
       <Icon name="telegram" size={17} /><span>{children}</span><Icon name="arrow" size={16} />
     </a>
   )
@@ -111,7 +111,7 @@ function Header() {
         <nav className="nav" aria-label="Основная навигация">
           <a href="#analysis">AI-анализ</a><a href="#market">Пульс рынка</a><a href="#telegram">Telegram</a>
         </nav>
-        <a className="header-cta" href={TELEGRAM_URL} target="_blank" rel="noreferrer">Открыть бота <Icon name="arrow" size={15} /></a>
+        <a className="header-cta" href={botUrl('site_header')} target="_blank" rel="noreferrer">Открыть бота <Icon name="arrow" size={15} /></a>
       </div>
     </header>
   )
@@ -144,7 +144,7 @@ function TelegramPhone() {
             <svg viewBox="0 0 300 58" preserveAspectRatio="none" role="img" aria-label="Демо-график движения коэффициента"><path className="hero-phone-chart__grid" d="M0 14H300M0 29H300M0 44H300"/><path className="hero-phone-chart__line" pathLength="1" d="M0 48 C34 46 52 35 82 38 S127 51 158 31 S210 27 238 18 S276 20 300 7"/><circle cx="300" cy="7" r="3" /></svg>
           </article>
         </div>
-        <div className="hero-phone__actions"><button><Icon name="scan" size={14} />Разобрать матч</button><button><Icon name="pulse" size={14} />Пульс рынка</button><a href={TELEGRAM_URL} target="_blank" rel="noreferrer"><Icon name="telegram" size={14} />Открыть бота</a></div>
+        <div className="hero-phone__actions"><button><Icon name="scan" size={14} />Разобрать матч</button><button><Icon name="pulse" size={14} />Пульс рынка</button><a href={botUrl('site_telegram_mockup')} target="_blank" rel="noreferrer"><Icon name="telegram" size={14} />Открыть бота</a></div>
         <div className="hero-phone__input"><span>＋</span><p>Сообщение</p><span>◉</span></div>
       </div>
     </div>
@@ -230,8 +230,8 @@ function Hero() {
       <div className="container hero-layout">
         <div className="hero-copy">
           <h1><span>AI-анализ матчей</span><span className="hero-title-accent">и Пульс рынка</span><small>в Telegram</small></h1>
-          <p className="hero-lead">Разбор матча и крупные движения рынка — без лишних экранов.</p>
-          <div className="hero-actions"><TelegramButton>Получить 7 дней бесплатно</TelegramButton><a className="text-link" href="#market">Смотреть интерфейс <Icon name="chevron" size={15} /></a></div>
+          <p className="hero-lead hero-value"><span>Пульс показывает движение рынка.</span><strong>AI-разбор объясняет контекст и риски.</strong></p>
+          <div className="hero-actions"><TelegramButton source="site_hero_trial">Получить 7 дней бесплатно</TelegramButton><a className="text-link" href="#market">Смотреть интерфейс <Icon name="chevron" size={15} /></a></div>
           <div className="hero-trial-note"><span><Icon name="pulse" size={14} /></span><strong>Пульс рынка · 7 дней</strong><small>для подписчиков @plusovoy_ai</small></div>
         </div>
         <div className="hero-visual"><HeroConsole /></div>
@@ -309,7 +309,70 @@ function TelegramSection() {
 
 function FinalCta() {
   return (
-    <section className="section final-section reveal"><div className="container final-card"><LogoGlyph size={38} /><h2>Открой Plus AI<br /><span>в Telegram</span></h2><p>Получай AI-анализ матчей и уведомления Пульса рынка<br />в одном понятном Telegram-боте.</p><TelegramButton className="final-button">Перейти в @plus_ai_robot</TelegramButton></div></section>
+    <section className="section final-section reveal"><div className="container final-card"><LogoGlyph size={38} /><h2>Открой Plus AI<br /><span>в Telegram</span></h2><p>Получай AI-анализ матчей и уведомления Пульса рынка<br />в одном понятном Telegram-боте.</p><TelegramButton source="site_final" className="final-button">Перейти в @plus_ai_robot</TelegramButton></div></section>
+  )
+}
+
+const faqItems = [
+  {
+    question: 'Чем Plus AI отличается от обычного парсера?',
+    answer: 'Парсер показывает, что произошло на рынке. Plus AI связывает движение с контекстом матча: формой участников, линией, рисками и итоговым AI-мнением.',
+  },
+  {
+    question: 'Как работает AI-анализ матча?',
+    answer: 'Ты выбираешь событие в Telegram-боте. Plus AI собирает доступный контекст, форму, движение линии и ключевые риски, а затем формирует последовательный информационный разбор.',
+  },
+  {
+    question: 'Что показывает «Пульс рынка»?',
+    answer: 'В уведомлении сразу видны вид спорта, объём, коэффициент, этап события и тип движения. Матч, турнир, исход и полная карточка открываются внутри бота.',
+  },
+  {
+    question: 'Как получить 7 дней бесплатно?',
+    answer: 'Подпишись на канал Plus AI и открой официального бота. При активации бот проверит подписку и предоставит семь дней доступа к «Пульсу рынка».',
+    action: true,
+  },
+  {
+    question: 'Что произойдёт после пробного периода?',
+    answer: 'Доступ не продлевается незаметно. Актуальные варианты продолжения и условия показываются внутри Telegram-бота до активации.',
+  },
+  {
+    question: 'Plus AI гарантирует результат события?',
+    answer: 'Нет. Plus AI — информационно-аналитический сервис, а AI-мнение не является гарантией результата или финансовой рекомендацией. Решения пользователь принимает самостоятельно.',
+  },
+]
+
+function FaqSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0)
+
+  return (
+    <section className="section faq-section reveal" id="faq">
+      <div className="faq-glow" aria-hidden="true" />
+      <div className="container faq-layout">
+        <div className="faq-copy">
+          <span className="section-index">04 / ВОПРОСЫ</span>
+          <h2>Коротко<br /><span>о главном</span></h2>
+          <p>Без сложных терминов и скрытых условий — только то, что важно перед первым запуском.</p>
+        </div>
+        <div className="faq-list">
+          {faqItems.map((item, index) => {
+            const isOpen = openIndex === index
+            const answerId = `faq-answer-${index}`
+            return (
+              <article className={`faq-item ${isOpen ? 'is-open' : ''}`} key={item.question}>
+                <button type="button" aria-expanded={isOpen} aria-controls={answerId} onClick={() => setOpenIndex(isOpen ? null : index)}>
+                  <span className="faq-number">{String(index + 1).padStart(2, '0')}</span>
+                  <strong>{item.question}</strong>
+                  <i aria-hidden="true"><span /><span /></i>
+                </button>
+                <div className="faq-answer" id={answerId} aria-hidden={!isOpen}>
+                  <div><p>{item.answer}</p>{item.action && <a href={botUrl('site_faq_trial')} target="_blank" rel="noreferrer">Открыть бота <Icon name="arrow" size={14} /></a>}</div>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -322,7 +385,7 @@ function Footer() {
             <Logo />
             <p className="footer-brand__lead">Информационно-аналитический Telegram-сервис для разбора спортивных и киберспортивных событий</p>
             <p className="footer-brand__note">AI-анализ матчей и «Пульс рынка» в одном боте</p>
-            <a className="footer-action" href={TELEGRAM_URL} target="_blank" rel="noreferrer"><Icon name="telegram" size={16} />Открыть Telegram-бота<Icon name="arrow" size={15} /></a>
+            <a className="footer-action" href={botUrl('site_footer')} target="_blank" rel="noreferrer"><Icon name="telegram" size={16} />Открыть Telegram-бота<Icon name="arrow" size={15} /></a>
           </section>
 
           <nav className="footer-column" aria-label="Разделы сервиса">
@@ -331,6 +394,7 @@ function Footer() {
             <a href="#market">Пульс рынка</a>
             <a href="#market">Демо интерфейса</a>
             <a href="#telegram">Telegram-бот</a>
+            <a href="#faq">Вопросы и ответы</a>
           </nav>
 
           <nav className="footer-column" aria-label="Юридические документы">
@@ -343,7 +407,7 @@ function Footer() {
           <section className="footer-column footer-support" aria-label="Поддержка">
             <h2>Поддержка</h2>
             <p>По вопросам доступа, оплаты и работы сервиса обращайтесь через официальный Telegram-бот</p>
-            <a className="footer-support__link" href={TELEGRAM_URL} target="_blank" rel="noreferrer">Написать в поддержку<Icon name="arrow" size={14} /></a>
+            <a className="footer-support__link" href={botUrl('site_support')} target="_blank" rel="noreferrer">Написать в поддержку<Icon name="arrow" size={14} /></a>
             <p className="footer-operator">Оператор сервиса: <strong>Plus AI</strong></p>
           </section>
         </div>
@@ -371,7 +435,7 @@ function App() {
     return () => observer.disconnect()
   }, [])
 
-  return <><a className="skip-link" href="#main">Перейти к содержимому</a><Header /><main id="main"><Hero /><MarketPulse /><AnalysisSection /><TelegramSection /><FinalCta /></main><Footer /></>
+  return <><a className="skip-link" href="#main">Перейти к содержимому</a><Header /><main id="main"><Hero /><MarketPulse /><AnalysisSection /><TelegramSection /><FaqSection /><FinalCta /></main><Footer /></>
 }
 
 export default App
