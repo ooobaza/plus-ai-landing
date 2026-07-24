@@ -41,6 +41,9 @@ const requiredHtml = [
   'https://plus-ai.site/',
   'https://plus-ai.site/og-plus-ai.png',
   'application/ld+json',
+  'Plus AI (Плюс АИ)',
+  '"alternateName":["Плюс АИ","Плюс AI"]',
+  '"sameAs":["https://t.me/plus_ai_robot","https://t.me/plusovoy_ai"]',
 ]
 const campaignUrl = 'https://t.me/plus_ai_robot?start=ad_SITE'
 
@@ -52,7 +55,7 @@ for (const [page, canonical, heading] of [
   [pulsePage, 'https://plus-ai.site/puls-rynka/', 'Крупные рыночные движения'],
   [telegramPage, 'https://plus-ai.site/telegram-bot-analiz-matchey/', 'Аналитика матчей'],
 ]) {
-  if (!page.includes(canonical) || !page.includes(heading)) {
+  if (!page.includes(canonical) || !page.includes(heading) || !page.includes('Плюс АИ')) {
     throw new Error(`SEO page is missing canonical or prerendered content: ${canonical}`)
   }
 }

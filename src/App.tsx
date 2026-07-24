@@ -316,8 +316,8 @@ function FinalCta() {
 
 const faqItems = [
   {
-    question: 'Чем Plus AI отличается от обычного парсера?',
-    answer: 'Парсер показывает, что произошло на рынке. Plus AI связывает движение с контекстом матча: формой участников, линией, рисками и итоговым AI-мнением.',
+    question: 'Чем Plus AI (Плюс АИ) отличается от обычного парсера?',
+    answer: 'Парсер показывает, что произошло на рынке. Plus AI (Плюс АИ) связывает движение с контекстом матча: формой участников, линией, рисками и итоговым AI-мнением.',
   },
   {
     question: 'Как работает AI-анализ матча?',
@@ -386,7 +386,7 @@ function Footer() {
         <div className="footer-main">
           <section className="footer-brand" aria-label="О сервисе Plus AI">
             <Logo />
-            <p className="footer-brand__lead">Информационно-аналитический Telegram-сервис для разбора спортивных и киберспортивных событий</p>
+            <p className="footer-brand__lead">Plus AI (Плюс АИ) — информационно-аналитический Telegram-сервис для разбора спортивных и киберспортивных событий</p>
             <p className="footer-brand__note">AI-анализ матчей и «Пульс рынка» в одном боте</p>
             <a className="footer-action" href={botUrl('site_footer')} target="_blank" rel="noreferrer"><Icon name="telegram" size={16} />Открыть Telegram-бота<Icon name="arrow" size={15} /></a>
           </section>

@@ -237,7 +237,7 @@ export function ProductPage({ type }: { type: ProductPageKey }) {
 
       <footer className="product-footer">
         <div className="container">
-          <div><ProductLogo /><p>Информационно-аналитический Telegram-сервис для Sport + Cybersport.</p></div>
+          <div><ProductLogo /><p>Plus AI (Плюс АИ) — информационно-аналитический Telegram-сервис для Sport + Cybersport.</p></div>
           <nav aria-label="Продукты Plus AI">{relatedPages.map(([key, label]) => <a href={`/${key}/`} key={key}>{label}</a>)}</nav>
           <nav aria-label="Документы Plus AI"><a href="/terms/">Соглашение</a><a href="/privacy/">Конфиденциальность</a><a href="/disclaimer/">Дисклеймер</a></nav>
           <span>© 2026 Plus AI · 18+</span>
