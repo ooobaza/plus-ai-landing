@@ -393,10 +393,10 @@ function Footer() {
 
           <nav className="footer-column" aria-label="Разделы сервиса">
             <h2>Сервис</h2>
-            <a href="#analysis">AI-анализ матчей</a>
-            <a href="#market">Пульс рынка</a>
+            <a href="/ai-analiz-matchey/">AI-анализ матчей</a>
+            <a href="/puls-rynka/">Пульс рынка</a>
+            <a href="/telegram-bot-analiz-matchey/">Telegram-бот</a>
             <a href="#market">Демо интерфейса</a>
-            <a href="#telegram">Telegram-бот</a>
             <a href="#faq">Вопросы и ответы</a>
           </nav>
 

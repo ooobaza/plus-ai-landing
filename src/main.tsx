@@ -1,17 +1,14 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App'
-import { LegalPage, type LegalDocumentKey } from './legal'
+import { createRoot, hydrateRoot } from 'react-dom/client'
+import { RouteContent } from './routes'
 import './styles.css'
 
-const route = window.location.pathname.split('/').filter(Boolean).at(-1)
-const legalRoutes = new Set<LegalDocumentKey>(['privacy', 'terms', 'disclaimer'])
-const content = legalRoutes.has(route as LegalDocumentKey)
-  ? <LegalPage type={route as LegalDocumentKey} />
-  : <App />
-
-createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root')!
+const content = (
   <StrictMode>
-    {content}
-  </StrictMode>,
+    <RouteContent pathname={window.location.pathname} />
+  </StrictMode>
 )
+
+if (root.hasChildNodes()) hydrateRoot(root, content)
+else createRoot(root).render(content)
