@@ -5,6 +5,7 @@ param(
 Add-Type -AssemblyName System.Drawing
 
 $publicDir = Join-Path $ProjectRoot 'public'
+$yandexFaviconPath = Join-Path $publicDir 'favicon.png'
 $faviconPath = Join-Path $publicDir 'favicon-plus-ai.png'
 $appleTouchPath = Join-Path $publicDir 'apple-touch-icon.png'
 
@@ -112,9 +113,11 @@ function New-Favicon {
   $bitmap.Dispose()
 }
 
+New-Favicon -Size 120 -OutputPath $yandexFaviconPath
 New-Favicon -Size 512 -OutputPath $faviconPath
 New-Favicon -Size 180 -OutputPath $appleTouchPath
 
 Write-Output "Generated:"
+Write-Output $yandexFaviconPath
 Write-Output $faviconPath
 Write-Output $appleTouchPath
