@@ -5,7 +5,6 @@ param(
 Add-Type -AssemblyName System.Drawing
 
 $publicDir = Join-Path $ProjectRoot 'public'
-$wordmarkPath = Join-Path $publicDir 'logo-plus-ai.png'
 $faviconPath = Join-Path $publicDir 'favicon-plus-ai.png'
 $appleTouchPath = Join-Path $publicDir 'apple-touch-icon.png'
 
@@ -65,37 +64,6 @@ function Set-HighQualityGraphics {
   $Graphics.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::AntiAliasGridFit
 }
 
-# Full transparent wordmark used in the website header and product previews.
-$wordmark = New-Object System.Drawing.Bitmap 780, 400, ([System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
-$graphics = [System.Drawing.Graphics]::FromImage($wordmark)
-Set-HighQualityGraphics $graphics
-$graphics.Clear([System.Drawing.Color]::Transparent)
-
-$markPath = New-PlusPath -X 26 -Y 24 -Size 350
-$markBrush = New-Object System.Drawing.Drawing2D.LinearGradientBrush(
-  [System.Drawing.PointF]::new(0, 20),
-  [System.Drawing.PointF]::new(0, 380),
-  [System.Drawing.ColorTranslator]::FromHtml('#68F08A'),
-  [System.Drawing.ColorTranslator]::FromHtml('#20CF74')
-)
-$graphics.FillPath($markBrush, $markPath)
-
-$font = New-Object System.Drawing.Font('Segoe UI', 238, ([System.Drawing.FontStyle]::Bold -bor [System.Drawing.FontStyle]::Italic), [System.Drawing.GraphicsUnit]::Pixel)
-$textBrush = New-Object System.Drawing.SolidBrush([System.Drawing.ColorTranslator]::FromHtml('#F1F5F4'))
-$textFormat = New-Object System.Drawing.StringFormat
-$textFormat.FormatFlags = [System.Drawing.StringFormatFlags]::NoClip
-$graphics.DrawString('AI', $font, $textBrush, [System.Drawing.PointF]::new(327, 62), $textFormat)
-
-$wordmark.Save($wordmarkPath, [System.Drawing.Imaging.ImageFormat]::Png)
-
-$textFormat.Dispose()
-$textBrush.Dispose()
-$font.Dispose()
-$markBrush.Dispose()
-$markPath.Dispose()
-$graphics.Dispose()
-$wordmark.Dispose()
-
 function New-Favicon {
   param(
     [int]$Size,
@@ -148,6 +116,5 @@ New-Favicon -Size 512 -OutputPath $faviconPath
 New-Favicon -Size 180 -OutputPath $appleTouchPath
 
 Write-Output "Generated:"
-Write-Output $wordmarkPath
 Write-Output $faviconPath
 Write-Output $appleTouchPath
