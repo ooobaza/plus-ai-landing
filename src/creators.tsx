@@ -8,7 +8,7 @@ const creatorFormats = [
 ]
 
 const creatorSupport = [
-  'Индивидуальная реферальная ссылка',
+  'Персональная ссылка от менеджера',
   'Материалы и фактура для контента',
   'Баннеры и готовые визуалы',
   'Идеи и сценарные заходы',
@@ -94,14 +94,14 @@ export function CreatorsPage() {
 
         <section className="creator-section creator-formats">
           <div className="container">
-            <header className="creator-section__head"><span>01 / КОГО ИЩЕМ</span><div><h2>Креаторов с чувством темпа<br />и подачи</h2><p>Не нужен сложный продакшен. Важнее понятный хук, аккуратный визуал и умение удержать внимание в коротком формате.</p></div></header>
+            <header className="creator-section__head"><span>01 / КОГО ИЩЕМ</span><div><h2>Креаторов, которые умеют удерживать внимание</h2><p>Сложный продакшен не обязателен. Нам важнее понятный хук, аккуратный визуал и уверенная подача в коротком формате.</p></div></header>
             <div className="creator-format-grid">{creatorFormats.map(([index, title, text]) => <article key={index}><span>{index}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div>
           </div>
         </section>
 
         <section className="creator-section creator-models" id="models">
           <div className="container">
-            <header className="creator-section__head"><span>02 / ВАРИАНТЫ СОТРУДНИЧЕСТВА</span><div><h2>Выбери модель, которая<br />подходит тебе</h2><p>Можно получать фиксированную оплату за просмотры или работать по результату через персональную ссылку.</p></div></header>
+            <header className="creator-section__head"><span>02 / ВАРИАНТЫ СОТРУДНИЧЕСТВА</span><div><h2>Выбери подходящую модель сотрудничества</h2><p>Можно получать фиксированную оплату за просмотры или работать по результату через персональную ссылку.</p></div></header>
             <div className="creator-model-grid">
               <article className="creator-model creator-model--fixed">
                 <div className="creator-model__top"><span>ВАРИАНТ 01</span><b>ФИКС ЗА ПРОСМОТРЫ</b></div>
@@ -115,7 +115,7 @@ export function CreatorsPage() {
                 <div className="creator-model__top"><span>ВАРИАНТ 02</span><b>ПАРТНЁРСКАЯ МОДЕЛЬ</b></div>
                 <h3>Свободный формат.<br />Оплата за результат.</h3>
                 <div className="creator-rate"><strong>$5</strong><span>пример выплаты<br />за оплату пользователя</span></div>
-                <ul><li>Индивидуальная реферальная ссылка</li><li>Ты сам выбираешь формат и площадку продвижения</li><li>Мы даём материалы, баннеры, идеи и варианты интеграций</li><li>Можно отдельно обсудить постоянную процентную модель</li></ul>
+                <ul><li>Персональная ссылка от менеджера</li><li>Ты сам выбираешь формат и площадку продвижения</li><li>Мы даём материалы, баннеры, идеи и варианты интеграций</li><li>Можно отдельно обсудить постоянную процентную модель</li></ul>
                 <p className="creator-model__note">Фиксированной оплаты за просмотры нет. Конкретную схему фиксируем с <ManagerInline>менеджером</ManagerInline> до старта.</p>
               </article>
             </div>
@@ -124,14 +124,14 @@ export function CreatorsPage() {
 
         <section className="creator-section creator-support">
           <div className="container">
-            <header className="creator-section__head"><span>03 / ЧТО ДАЁМ</span><div><h2>Не оставляем тебя<br />с пустым экраном</h2><p>Поможем быстрее перейти от идеи к ролику и подобрать механику под твою площадку.</p></div></header>
+            <header className="creator-section__head"><span>03 / ЧТО ДАЁМ</span><div><h2>Всё необходимое для быстрого старта</h2><p>Поможем перейти от идеи к ролику и подобрать механику под твою площадку.</p></div></header>
             <div className="creator-support__grid">{creatorSupport.map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item === 'Обсуждение интеграций с менеджером' ? <>Обсуждение интеграций с <ManagerInline>менеджером</ManagerInline></> : item}</strong></div>)}</div>
           </div>
         </section>
 
         <section className="creator-section creator-fit">
           <div className="container">
-            <header className="creator-section__head"><span>04 / КОМУ ПОДОЙДЁТ</span><div><h2>Тем, кто умеет привлекать<br />внимание</h2><p>Размер площадки не единственный критерий. Нам важнее качество контента, регулярность и готовность тестировать.</p></div></header>
+            <header className="creator-section__head"><span>04 / КОМУ ПОДОЙДЁТ</span><div><h2>Тем, кто умеет привлекать внимание</h2><p>Размер площадки — не единственный критерий. Нам важнее качество контента, регулярность и готовность тестировать.</p></div></header>
             <div className="creator-fit__grid">{creatorFit.map(([title, text], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
           </div>
         </section>
