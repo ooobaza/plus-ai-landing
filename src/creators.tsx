@@ -56,24 +56,34 @@ export function CreatorsPage() {
               <div className="creator-hero__meta"><span>REELS</span><span>SHORTS</span><span>TIKTOK</span><span>9:16</span></div>
             </div>
 
-            <div className="creator-preview" aria-label="Пример структуры вертикального ролика">
-              <div className="creator-preview__bar"><span><i /> CONTENT BRIEF</span><b>9:16</b></div>
-              <div className="creator-reel">
-                <div className="creator-reel__scan" aria-hidden="true" />
-                <div className="creator-reel__top"><span>PLUS AI</span><span>00:24</span></div>
-                <div className="creator-reel__message">
-                  <small>ХУК · ПЕРВЫЕ 3 СЕКУНДЫ</small>
-                  <strong>Событие замечено.<br />Что изменилось?</strong>
+            <div className="creator-phone-stage" aria-label="Пример короткого вертикального ролика на телефоне">
+              <div className="creator-phone-glow" aria-hidden="true" />
+              <div className="creator-phone">
+                <div className="creator-phone__side creator-phone__side--top" aria-hidden="true" />
+                <div className="creator-phone__side creator-phone__side--bottom" aria-hidden="true" />
+                <div className="creator-phone__screen">
+                  <div className="creator-phone__status"><b>9:41</b><span className="creator-phone__island" aria-hidden="true" /><span>5G&nbsp;&nbsp;▰</span></div>
+                  <div className="creator-phone__appbar"><span><i /> PLUS AI · REEL PREVIEW</span><b>9:16</b></div>
+                  <div className="creator-phone__video">
+                    <div className="creator-phone__scan" aria-hidden="true" />
+                    <span className="creator-phone__tag">ХУК · 0:00–0:03</span>
+                    <h3>Коэффициент изменился.<br />Что заметил Plus AI?</h3>
+                    <div className="creator-phone__movement">
+                      <div><span>ДВИЖЕНИЕ ЛИНИИ</span><strong>1.91 <i>→</i> 1.78</strong></div>
+                      <div className="creator-phone__spark" aria-hidden="true"><i /><i /><i /><i /><i /></div>
+                    </div>
+                    <div className="creator-phone__script">
+                      <div><b>01</b><span>Показать изменение</span></div>
+                      <div><b>02</b><span>Коротко объяснить</span></div>
+                      <div><b>03</b><span>Дать ссылку Plus AI</span></div>
+                    </div>
+                    <p><b>Подпись:</b> полный разбор матча — в Telegram-боте Plus AI</p>
+                  </div>
+                  <div className="creator-phone__timeline"><span /><i /></div>
+                  <div className="creator-phone__footer"><span>00:18</span><b>ПРИМЕР РОЛИКА</b><span>00:24</span></div>
                 </div>
-                <div className="creator-reel__line"><span /><span /><span /><span /></div>
-                <div className="creator-reel__steps">
-                  <div><b>01</b><span>Контекст</span></div>
-                  <div><b>02</b><span>Динамика</span></div>
-                  <div><b>03</b><span>Вывод</span></div>
-                </div>
-                <div className="creator-reel__cta">PLUS AI · ССЫЛКА В ПРОФИЛЕ</div>
               </div>
-              <div className="creator-preview__specs"><div><span>ФОРМАТ</span><strong>Vertical</strong></div><div><span>ДЛИТЕЛЬНОСТЬ</span><strong>15–60 сек</strong></div><div><span>ЗАДАЧА</span><strong>Внимание → переход</strong></div></div>
+              <div className="creator-phone-flow"><span>Хук</span><i>→</i><span>Объяснение</span><i>→</i><span>Переход</span></div>
             </div>
           </div>
         </section>
