@@ -31,6 +31,10 @@ function ContactLink({ className, children }: { className: string; children: Rea
   return <a className={className} href={CREATOR_CONTACT_URL} target="_blank" rel="noreferrer">{children}<span aria-hidden="true">↗</span></a>
 }
 
+function ManagerInline({ children }: { children: React.ReactNode }) {
+  return <a className="creator-manager-link" href={CREATOR_CONTACT_URL} target="_blank" rel="noreferrer">{children}</a>
+}
+
 export function CreatorsPage() {
   return (
     <div className="creator-page">
@@ -112,7 +116,7 @@ export function CreatorsPage() {
                 <h3>Свободный формат.<br />Оплата за результат.</h3>
                 <div className="creator-rate"><strong>$5</strong><span>пример выплаты<br />за оплату пользователя</span></div>
                 <ul><li>Индивидуальная реферальная ссылка</li><li>Ты сам выбираешь формат и площадку продвижения</li><li>Мы даём материалы, баннеры, идеи и варианты интеграций</li><li>Можно отдельно обсудить постоянную процентную модель</li></ul>
-                <p className="creator-model__note">Фиксированной оплаты за просмотры нет. Конкретную схему фиксируем с менеджером до старта.</p>
+                <p className="creator-model__note">Фиксированной оплаты за просмотры нет. Конкретную схему фиксируем с <ManagerInline>менеджером</ManagerInline> до старта.</p>
               </article>
             </div>
           </div>
@@ -121,7 +125,7 @@ export function CreatorsPage() {
         <section className="creator-section creator-support">
           <div className="container">
             <header className="creator-section__head"><span>03 / ЧТО ДАЁМ</span><div><h2>Не оставляем тебя<br />с пустым экраном</h2><p>Поможем быстрее перейти от идеи к ролику и подобрать механику под твою площадку.</p></div></header>
-            <div className="creator-support__grid">{creatorSupport.map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></div>)}</div>
+            <div className="creator-support__grid">{creatorSupport.map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item === 'Обсуждение интеграций с менеджером' ? <>Обсуждение интеграций с <ManagerInline>менеджером</ManagerInline></> : item}</strong></div>)}</div>
           </div>
         </section>
 
@@ -139,7 +143,7 @@ export function CreatorsPage() {
             <h2>Если тебе интересно —<br /><em>давай обсудим формат</em></h2>
             <p>Напиши нам, расскажи про свою площадку и какой вариант сотрудничества тебе ближе: фикс за просмотры или партнёрская модель.</p>
             <ContactLink className="creator-primary">Связаться с нами</ContactLink>
-            <small>Менеджер: @plus_maks</small>
+            <small><ManagerInline>Менеджер: @plus_maks ↗</ManagerInline></small>
           </div>
         </section>
       </main>
