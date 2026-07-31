@@ -27,6 +27,19 @@ const banners = [
   { id: '06', file: '/creator-assets/banners/banner-06.mp4', voice: 'Можно использовать без озвучки', tone: 'optional', format: 'vertical' },
 ] as const
 
+const voiceovers = [
+  {
+    id: '01',
+    file: '/creator-assets/audio/voice-01.mp3',
+    text: 'PLUS AI - Разбери матч и заметь крупную ставку. ссылка в профиле',
+  },
+  {
+    id: '02',
+    file: '/creator-assets/audio/voice-02.mp3',
+    text: 'PLUS AI - ссылки на экране и в профиле',
+  },
+] as const
+
 const contentFormats = [
   'Нарезки футбольных матчей, CS2, Dota 2 и других дисциплин',
   'Реакции стримеров на выигранные или проигранные события',
@@ -113,6 +126,23 @@ function BannerLibrary({ strict }: { strict: boolean }) {
             <div><span>Вариант {banner.id}</span><strong className={`manual-voice-tag manual-voice-tag--${strict ? banner.tone : 'optional'}`}>{strict ? banner.voice : 'Можно адаптировать под свой формат'}</strong></div>
             <a href={banner.file} download={`plus-ai-banner-${banner.id}.mp4`}>Скачать MP4 <span aria-hidden="true">↓</span></a>
           </div>
+        </article>
+      ))}
+    </div>
+  )
+}
+
+function VoiceoverLibrary() {
+  return (
+    <div className="manual-audio-grid">
+      {voiceovers.map((voiceover) => (
+        <article className="manual-audio-card" key={voiceover.id}>
+          <div className="manual-audio-card__head"><span>Вариант озвучки {voiceover.id}</span><b>MP3</b></div>
+          <audio controls preload="metadata" aria-label={`Прослушать вариант озвучки ${voiceover.id}`}>
+            <source src={voiceover.file} type="audio/mpeg" />
+          </audio>
+          <div className="manual-audio-card__script"><small>Текст озвучки</small><p>{voiceover.text}</p></div>
+          <a href={voiceover.file} download={`plus-ai-voice-${voiceover.id}.mp3`}>Скачать MP3 <span aria-hidden="true">↓</span></a>
         </article>
       ))}
     </div>
@@ -206,7 +236,8 @@ export function CreatorManualPage({ kind }: { kind: CreatorManualKind }) {
 
           <ManualSection id="voice" eyebrow={fixed ? '07 / АУДИО' : '07 / ДОПОЛНИТЕЛЬНЫЕ МАТЕРИАЛЫ'} title="Готовые варианты озвучки">
             <p className="manual-lead">{fixed ? 'Для баннеров 02, 03 и 04 озвучка обязательна. Для остальных вариантов ее можно не использовать.' : 'Озвучки можно будет использовать как заготовки. В партнерской модели они необязательны.'}</p>
-            <div className="manual-audio-grid"><div><span>Вариант озвучки 01</span><strong>Файл будет добавлен</strong><p>Раздел уже подготовлен. Здесь появится прослушивание и скачивание.</p></div><div><span>Вариант озвучки 02</span><strong>Файл будет добавлен</strong><p>Раздел уже подготовлен. Здесь появится прослушивание и скачивание.</p></div></div>
+            <div className="manual-callout manual-callout--important"><strong>Ограничение по скорости</strong><p>Озвучку разрешено ускорять не более чем на 50%. Максимальная допустимая скорость — <code>1.5×</code> от исходной.</p></div>
+            <VoiceoverLibrary />
           </ManualSection>
 
           <ManualSection id="publishing" eyebrow="08 / ПУБЛИКАЦИЯ" title="Как передать результат">
