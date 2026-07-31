@@ -16,6 +16,11 @@ const requiredFiles = [
   'dist/puls-rynka/index.html',
   'dist/telegram-bot-analiz-matchey/index.html',
   'dist/creators/index.html',
+  'dist/creator-fixed/index.html',
+  'dist/creator-partner/index.html',
+  'dist/creator-assets/guides/reels-safe-zones.png',
+  'dist/creator-assets/banners/banner-01.mp4',
+  'dist/creator-assets/banners/banner-06.mp4',
   'dist/404.html',
   'dist/og-plus-ai.png',
   'dist/fonts/inter-tight-cyrillic.woff2',
@@ -27,7 +32,7 @@ for (const file of requiredFiles) {
   await access(path.join(root, file))
 }
 
-const [html, css, js, links, aiPage, pulsePage, telegramPage, privacyPage, creatorsPage, sitemap] = await Promise.all([
+const [html, css, js, links, aiPage, pulsePage, telegramPage, privacyPage, creatorsPage, fixedManual, partnerManual, sitemap] = await Promise.all([
   readFile(path.join(root, 'dist/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/plus-ai.css'), 'utf8'),
   readFile(path.join(root, 'dist/plus-ai.js'), 'utf8'),
@@ -37,6 +42,8 @@ const [html, css, js, links, aiPage, pulsePage, telegramPage, privacyPage, creat
   readFile(path.join(root, 'dist/telegram-bot-analiz-matchey/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/privacy/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/creators/index.html'), 'utf8'),
+  readFile(path.join(root, 'dist/creator-fixed/index.html'), 'utf8'),
+  readFile(path.join(root, 'dist/creator-partner/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/sitemap.xml'), 'utf8'),
 ])
 
@@ -79,6 +86,17 @@ if (!creatorsPage.includes('noindex, nofollow') || !creatorsPage.includes('За�
 }
 if (sitemap.includes('/creators')) {
   throw new Error('The hidden creators page must not appear in sitemap.xml')
+}
+for (const [name, page, heading] of [
+  ['fixed creator manual', fixedManual, 'Мануал для работы по фиксированной оплате'],
+  ['partner creator manual', partnerManual, 'Мануал для партнерской работы'],
+]) {
+  if (!page.includes('noindex, nofollow') || !page.includes(heading) || page.includes('<div id="root"></div>')) {
+    throw new Error(`${name} is missing noindex metadata or prerendered content`)
+  }
+}
+if (sitemap.includes('/creator-fixed') || sitemap.includes('/creator-partner')) {
+  throw new Error('Private creator manuals must not appear in sitemap.xml')
 }
 if (!links.includes(campaignUrl) || !js.includes(campaignUrl)) {
   throw new Error('The Telegram advertising campaign link is missing from the build')

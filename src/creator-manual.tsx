@@ -1,0 +1,228 @@
+type CreatorManualKind = 'fixed' | 'partner'
+
+const MANAGER_URL = 'https://t.me/plus_maks'
+const SITE_URL = 'https://plus-ai.site'
+const BOT_URL = 'https://t.me/plus_ai_robot'
+
+const baseManualNavigation = [
+  ['start', 'Перед началом'],
+  ['terms', 'Условия работы'],
+  ['content', 'Какой контент подходит'],
+  ['integration', 'Интеграция Plus AI'],
+  ['banners', 'Баннеры'],
+  ['placement', 'Размещение баннера'],
+  ['chroma', 'Как убрать хромакей'],
+  ['voice', 'Озвучка'],
+  ['publishing', 'Публикация и отчет'],
+  ['rules', 'Что запрещено'],
+  ['checklist', 'Чек-лист'],
+] as const
+
+const banners = [
+  { id: '01', file: '/creator-assets/banners/banner-01.mp4', voice: 'Озвучка необязательна', tone: 'optional' },
+  { id: '02', file: '/creator-assets/banners/banner-02.mp4', voice: 'Озвучка обязательна', tone: 'required' },
+  { id: '03', file: '/creator-assets/banners/banner-03.mp4', voice: 'Озвучка обязательна', tone: 'required' },
+  { id: '04', file: '/creator-assets/banners/banner-04.mp4', voice: 'Озвучка обязательна', tone: 'required' },
+  { id: '05', file: '/creator-assets/banners/banner-05.mp4', voice: 'Можно использовать без озвучки', tone: 'optional' },
+  { id: '06', file: '/creator-assets/banners/banner-06.mp4', voice: 'Можно использовать без озвучки', tone: 'optional' },
+] as const
+
+const contentFormats = [
+  'Нарезки футбольных матчей, CS2, Dota 2 и других дисциплин',
+  'Реакции стримеров на выигранные или проигранные события',
+  'Яркие моменты матчей, турниров и трансляций',
+  'Объясняющие ролики об аналитике матчей и движении линии',
+  'Динамичные ролики на темы спорта, киберспорта и гемблинга',
+]
+
+const prohibitedRules = [
+  ['Накрутка', 'Запрещены боты, покупные просмотры, биржи заданий, клик-фермы, мотивированный и любой другой искусственный трафик.'],
+  ['Ложные обещания', 'Нельзя обещать гарантированный результат, доход, точный исход события или выдавать Plus AI за букмекерскую контору.'],
+  ['Скрытая интеграция', 'Нельзя уменьшать баннер до нечитаемого размера, обрезать ссылку или прятать интеграцию за интерфейсом приложения.'],
+  ['Один шаблон на всю ленту', 'Не используйте один и тот же фрагмент во всех роликах. Чередуйте записи, игры, реакции, подачу и монтаж.'],
+  ['Чужой контент без права использования', 'Креатор самостоятельно проверяет, что может публиковать выбранные фрагменты и не нарушает правила площадки и права третьих лиц.'],
+  ['Самовольное изменение бренда', 'Не перекрашивайте логотип, не растягивайте баннер и не меняйте ссылку внутри готового материала.'],
+  ['Несогласованное продвижение', 'Платное продвижение, закупку трафика и нестандартные источники просмотров сначала согласуйте с менеджером.'],
+]
+
+const partnerRules = [
+  ['Манипуляции с целевыми действиями', 'Запрещены фейковые регистрации, самостоятельные оплаты по своей ссылке, мотивированный трафик и любые способы искусственно создать результат.'],
+  ['Чужая реферальная ссылка', 'Используйте только ссылку, созданную в вашем аккаунте во вкладке «Реферальная программа».'],
+  ['Ложные обещания', 'Не обещайте гарантированный результат, доход или точный исход события от имени Plus AI.'],
+  ['Нарушение правил площадки', 'Формат продвижения выбираете вы, но он должен соответствовать правилам площадки и не нарушать права третьих лиц.'],
+]
+
+function ManualLogo() {
+  return <div className="manual-logo"><img src="/logo-plus-ai.png" alt="Plus AI" /><span>CREATOR DOCS</span></div>
+}
+
+function ManualNavigation({ kind }: { kind: CreatorManualKind }) {
+  const navigation = baseManualNavigation.map(([id, label]) => [id, kind === 'partner' && ['banners', 'placement', 'chroma', 'voice'].includes(id) ? `${label} · по желанию` : label] as const)
+  return (
+    <>
+      <aside className="manual-sidebar" aria-label="Навигация по мануалу">
+        <div className="manual-sidebar__label">Содержание</div>
+        <nav>{navigation.map(([id, label], index) => <a key={id} href={`#${id}`}><span>{String(index + 1).padStart(2, '0')}</span>{label}</a>)}</nav>
+        <div className="manual-sidebar__support"><span>Нужна помощь?</span><a href={MANAGER_URL} target="_blank" rel="noreferrer">Написать менеджеру ↗</a></div>
+      </aside>
+      <details className="manual-mobile-nav">
+        <summary>Содержание мануала <span>↓</span></summary>
+        <nav>{navigation.map(([id, label], index) => <a key={id} href={`#${id}`}><span>{String(index + 1).padStart(2, '0')}</span>{label}</a>)}</nav>
+        <small>{kind === 'fixed' ? 'Фиксированная оплата за просмотры' : 'Индивидуальное партнерство'}</small>
+      </details>
+    </>
+  )
+}
+
+function ManualSection({ id, eyebrow, title, children }: { id: string; eyebrow: string; title: string; children: React.ReactNode }) {
+  return <section className="manual-section" id={id}><span className="manual-eyebrow">{eyebrow}</span><h2>{title}</h2>{children}</section>
+}
+
+function BannerLibrary({ strict }: { strict: boolean }) {
+  return (
+    <div className="manual-banner-grid">
+      {banners.map((banner) => (
+        <article className="manual-banner-card" key={banner.id}>
+          <div className="manual-banner-card__preview">
+            <video controls playsInline preload="none" aria-label={`Предпросмотр баннера ${banner.id}`}>
+              <source src={banner.file} type="video/mp4" />
+            </video>
+            <span>Нажмите Play для предпросмотра</span>
+          </div>
+          <div className="manual-banner-card__body">
+            <div><span>Вариант {banner.id}</span><strong className={`manual-voice-tag manual-voice-tag--${strict ? banner.tone : 'optional'}`}>{strict ? banner.voice : 'Можно адаптировать под свой формат'}</strong></div>
+            <a href={banner.file} download={`plus-ai-banner-${banner.id}.mp4`}>Скачать MP4 <span aria-hidden="true">↓</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  )
+}
+
+function FixedTerms() {
+  return (
+    <>
+      <div className="manual-rate-card"><span>Ставка</span><strong>$0.10</strong><p>за каждые 1000 подтвержденных органических просмотров</p></div>
+      <div className="manual-callout manual-callout--important"><strong>До первой публикации</strong><p>Согласуйте с менеджером аккаунт, площадку, отчетный период, момент фиксации просмотров и порядок выплаты. Не начинайте публикации, пока условия не подтверждены.</p></div>
+      <ul className="manual-list">
+        <li>В описании аккаунта должна постоянно находиться кликабельная ссылка на <a href={SITE_URL} target="_blank" rel="noreferrer">plus-ai.site</a> или на <a href={BOT_URL} target="_blank" rel="noreferrer">Telegram-бот Plus AI</a>.</li>
+        <li>Каждый ролик публикуется с заметной нативной интеграцией Plus AI.</li>
+        <li>В зачет принимаются только органические просмотры без накрутки и платного трафика, если иное заранее не согласовано.</li>
+        <li>Оплата рассчитывается по статистике площадки на согласованную с менеджером дату.</li>
+      </ul>
+    </>
+  )
+}
+
+function PartnerTerms() {
+  return (
+    <>
+      <div className="manual-rate-card manual-rate-card--partner"><span>Модель</span><strong>Индивидуально</strong><p>условия, процент или оплата за результат фиксируются с менеджером до старта</p></div>
+      <div className="manual-callout manual-callout--important"><strong>Главное правило ссылки</strong><p>Используйте только свою персональную реферальную ссылку. Она создается внутри бота Plus AI во вкладке «Реферальная программа».</p></div>
+      <ol className="manual-steps">
+        <li><span>01</span><div><strong>Откройте Plus AI</strong><p>Перейдите в официальный Telegram-бот со своего аккаунта.</p></div></li>
+        <li><span>02</span><div><strong>Откройте «Реферальную программу»</strong><p>Скопируйте сформированную для вас ссылку.</p></div></li>
+        <li><span>03</span><div><strong>Используйте ее во всех размещениях</strong><p>Добавляйте одну и ту же персональную ссылку в профиль, описание и согласованные интеграции.</p></div></li>
+      </ol>
+      <p className="manual-note">Не заменяйте реферальную ссылку общей ссылкой на сайт или бота: иначе переход и результат могут не привязаться к вашему аккаунту.</p>
+    </>
+  )
+}
+
+function ChromaGuide() {
+  return (
+    <div className="manual-details-stack">
+      <div className="manual-callout"><strong>Главный принцип</strong><p>Основное видео размещается на нижней дорожке, баннер Plus AI — на дорожке выше. Зеленый фон <code>#00FF00</code> удаляется только у баннера. Не повышайте интенсивность хромакея сразу до максимума: можно повредить emerald/cyan-детали.</p></div>
+      <details open><summary>CapCut Desktop <span>+</span></summary><ol><li>Создайте проект 1080×1920 в формате 9:16.</li><li>Основной ролик положите на нижнюю дорожку, MP4-баннер — на дорожку выше.</li><li>Выберите баннер и откройте <code>Video → Remove BG → Chroma Key</code>.</li><li>Пипеткой выберите чистый зеленый фон.</li><li>Плавно увеличивайте Strength/Intensity, пока фон не исчезнет.</li><li>Проверьте начало, середину и конец: логотип, ссылка и бирюзовые линии должны остаться четкими.</li></ol></details>
+      <details><summary>Adobe Premiere Pro <span>+</span></summary><ol><li>Создайте вертикальную sequence 1080×1920.</li><li>Поместите основной ролик на V1, баннер — на V2.</li><li>Примените <code>Video Effects → Keying → Ultra Key</code>.</li><li>В Effect Controls выберите пипетку Key Color и укажите зеленый фон.</li><li>При необходимости аккуратно настройте Matte Cleanup и Spill Suppression.</li><li>Разместите баннер через Motion → Position/Scale, не меняя пропорции.</li></ol></details>
+      <details><summary>DaVinci Resolve <span>+</span></summary><ol><li>Основной ролик разместите на Video 1, баннер — на Video 2.</li><li>На странице Color выберите баннер и пипеткой укажите зеленый цвет в Qualifier.</li><li>Инвертируйте выделение и добавьте Alpha Output.</li><li>Matte Finesse используйте только для очистки края и зеленого ореола.</li><li>Для точной настройки в Fusion используйте Delta Keyer между MediaIn и MediaOut.</li></ol></details>
+      <details><summary>Если результат выглядит плохо <span>+</span></summary><ul><li>Зеленая кайма: слегка увеличьте Spill Suppression, затем проверьте темные и светлые кадры.</li><li>Исчезают зеленые детали: уменьшите Strength и снова выберите чистый фон пипеткой.</li><li>Мерцают края: смягчите matte/edge и смотрите результат в движении.</li><li>Баннер размыт: используйте исходный MP4 и не растягивайте его выше исходного размера.</li></ul></details>
+    </div>
+  )
+}
+
+export function CreatorManualPage({ kind }: { kind: CreatorManualKind }) {
+  const fixed = kind === 'fixed'
+  return (
+    <div className="manual-page">
+      <header className="manual-header"><ManualLogo /><div><span>Внутренний мануал</span><b>{fixed ? 'Фикс · $0.10 / 1000' : 'Партнерство'}</b></div></header>
+      <div className="manual-layout">
+        <ManualNavigation kind={kind} />
+        <main className="manual-content">
+          <section className="manual-hero" id="start">
+            <span className="manual-eyebrow">PLUS AI · CREATOR GUIDE</span>
+            <h1>{fixed ? 'Мануал для работы по фиксированной оплате' : 'Мануал для партнерской работы'}</h1>
+            <p>{fixed ? 'Как создавать и публиковать Reels с интеграцией Plus AI, чтобы контент соответствовал требованиям и просмотры могли быть приняты к расчету.' : 'Как работать с персональной реферальной ссылкой, использовать материалы Plus AI и вести трафик по индивидуальным условиям.'}</p>
+            <div className="manual-hero__status"><span>Версия 1.0</span><span>Черновик для согласования</span><span>Контакт: @plus_maks</span></div>
+          </section>
+
+          <ManualSection id="terms" eyebrow="01 / УСЛОВИЯ" title={fixed ? 'Как считается работа' : 'Как устроено партнерство'}>{fixed ? <FixedTerms /> : <PartnerTerms />}</ManualSection>
+
+          <ManualSection id="content" eyebrow="02 / КОНТЕНТ" title="Что можно публиковать">
+            <p className="manual-lead">Задача — создавать вирусные вертикальные видео для Instagram Reels и других коротких форматов, добавляя нативную интеграцию Plus AI.</p>
+            <div className="manual-content-grid">{contentFormats.map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></div>)}</div>
+            <div className="manual-callout"><strong>Не уверены в теме?</strong><p>Не публикуйте ролик наугад. Отправьте идею или черновик менеджеру и дождитесь подтверждения.</p></div>
+          </ManualSection>
+
+          <ManualSection id="integration" eyebrow="03 / ИНТЕГРАЦИЯ" title={fixed ? 'Что обязательно должно быть в ролике' : 'Как можно встроить Plus AI'}>
+            <div className="manual-requirements">
+              <article><span>01</span><h3>{fixed ? 'Заметный баннер' : 'Ваш формат'}</h3><p>{fixed ? 'Баннер Plus AI должен быть достаточно крупным и читаемым на телефоне. Маленькая формальная плашка не подходит.' : 'Вы сами выбираете подачу, монтаж, площадку и способ интеграции. Баннер Plus AI использовать необязательно.'}</p></article>
+              <article><span>02</span><h3>{fixed ? 'Без перекрытий' : 'Готовые материалы'}</h3><p>{fixed ? 'Размещайте баннер сверху или снизу, но не под кнопками, описанием и интерфейсом Reels.' : 'Если не хочется собирать интеграцию с нуля, ниже есть баннеры, safe-zone схема и подсказки по монтажу.'}</p></article>
+              <article><span>03</span><h3>{fixed ? 'Ссылка в профиле' : 'Единственное обязательное'}</h3><p>{fixed ? 'В описании аккаунта должна быть кликабельная ссылка на сайт Plus AI или официальный бот.' : 'В каждом источнике трафика должна использоваться ваша персональная ссылка из «Реферальной программы».'}</p></article>
+            </div>
+          </ManualSection>
+
+          <ManualSection id="banners" eyebrow={fixed ? '04 / МАТЕРИАЛЫ' : '04 / ДОПОЛНИТЕЛЬНЫЕ МАТЕРИАЛЫ'} title={fixed ? 'Баннеры Plus AI' : 'Готовые баннеры — если пригодятся'}>
+            <p className="manual-lead">{fixed ? 'Выберите один вариант. Нажмите Play для просмотра и скачайте исходный MP4 — не пересылайте его через мессенджер перед монтажом, чтобы не потерять качество.' : 'Это не обязательный шаблон и не ограничение для вашего контента. Можно взять готовый баннер, изменить подачу или собрать собственную интеграцию.'}</p>
+            <BannerLibrary strict={fixed} />
+          </ManualSection>
+
+          <ManualSection id="placement" eyebrow={fixed ? '05 / SAFE ZONE' : '05 / ПОДСКАЗКА'} title={fixed ? 'Куда ставить баннер' : 'Если используете готовый баннер'}>
+            <p className="manual-lead">{fixed ? 'Основная позиция — нижняя треть, но выше описания ролика. Верхнюю позицию используйте только когда она не закрывает лицо или главный объект.' : 'Схема помогает быстро разместить баннер так, чтобы его не перекрыл интерфейс Reels. Для партнерской модели следовать ей необязательно.'}</p>
+            <figure className="manual-safe-zone"><img src="/creator-assets/guides/reels-safe-zones.png" alt="Схема безопасных зон для размещения баннера в Instagram Reels" /><figcaption>Схема safe zones: не размещайте важный текст в правой колонке и в самом низу экрана.</figcaption></figure>
+          </ManualSection>
+
+          <ManualSection id="chroma" eyebrow={fixed ? '06 / МОНТАЖ' : '06 / ПО ЖЕЛАНИЮ'} title="Как убрать зеленый фон"><ChromaGuide /></ManualSection>
+
+          <ManualSection id="voice" eyebrow={fixed ? '07 / АУДИО' : '07 / ДОПОЛНИТЕЛЬНЫЕ МАТЕРИАЛЫ'} title="Готовые варианты озвучки">
+            <p className="manual-lead">{fixed ? 'Для баннеров 02, 03 и 04 озвучка обязательна. Для остальных вариантов ее можно не использовать.' : 'Озвучки можно будет использовать как заготовки. В партнерской модели они необязательны.'}</p>
+            <div className="manual-audio-grid"><div><span>Вариант озвучки 01</span><strong>Файл будет добавлен</strong><p>Раздел уже подготовлен. Здесь появится прослушивание и скачивание.</p></div><div><span>Вариант озвучки 02</span><strong>Файл будет добавлен</strong><p>Раздел уже подготовлен. Здесь появится прослушивание и скачивание.</p></div></div>
+          </ManualSection>
+
+          <ManualSection id="publishing" eyebrow="08 / ПУБЛИКАЦИЯ" title="Как передать результат">
+            <ol className="manual-steps">
+              <li><span>01</span><div><strong>Проверьте ролик на телефоне</strong><p>Формат 1080×1920, соотношение 9:16, MP4 H.264/H.265. Проверьте звук, читаемость баннера и безопасные зоны.</p></div></li>
+              <li><span>02</span><div><strong>Проверьте ссылку</strong><p>{fixed ? 'Откройте профиль и убедитесь, что ссылка plus-ai.site или t.me/plus_ai_robot кликабельна.' : 'Откройте ссылку из профиля и убедитесь, что используется именно ваш реферальный адрес.'}</p></div></li>
+              <li><span>03</span><div><strong>Опубликуйте ролик</strong><p>После публикации откройте его как обычный пользователь и убедитесь, что элементы интерфейса ничего не перекрывают.</p></div></li>
+              <li><span>04</span><div><strong>Отправьте ссылку менеджеру</strong><p>{fixed ? 'Передайте URL публикации. Статистику просмотров фиксируем в согласованный момент.' : 'Передайте URL публикации, если это предусмотрено вашими индивидуальными условиями.'}</p></div></li>
+            </ol>
+          </ManualSection>
+
+          <ManualSection id="rules" eyebrow="09 / ОГРАНИЧЕНИЯ" title={fixed ? 'Что запрещено' : 'Минимальные правила'}>
+            {!fixed && <p className="manual-lead">Мы не оцениваем ролики по шаблону и не платим за просмотры. Ограничения нужны только для честной атрибуции результата и корректного представления продукта.</p>}
+            <div className="manual-rules">{(fixed ? prohibitedRules : partnerRules).map(([title, text], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div>
+          </ManualSection>
+
+          <ManualSection id="checklist" eyebrow="10 / ПЕРЕД ПУБЛИКАЦИЕЙ" title="Финальный чек-лист">
+            <div className="manual-checklist">
+              {[
+                'Тема ролика подходит под согласованный формат',
+                fixed ? 'Баннер Plus AI крупный и читаемый' : 'Формат интеграции соответствует вашим договоренностям',
+                fixed ? 'Баннер не закрыт интерфейсом Reels' : 'Персональная ссылка открывается и ведет в Plus AI',
+                fixed ? 'Озвучка добавлена, если она обязательна для выбранного баннера' : 'В интеграции нет общей или чужой реферальной ссылки',
+                fixed ? 'В профиле стоит кликабельная ссылка на сайт или бот Plus AI' : 'В профиле и интеграции стоит персональная реферальная ссылка',
+                'Нет обещаний гарантированного результата или дохода',
+                'Ролик проверен на телефоне со звуком',
+                fixed ? 'Для просмотров не используется накрутка или несогласованный трафик' : 'Целевые действия не создаются искусственно',
+              ].map((item) => <label key={item}><input type="checkbox" /> <span>{item}</span></label>)}
+            </div>
+            <div className="manual-support-card"><div><span>Остался вопрос?</span><h3>Сначала уточните — потом публикуйте</h3><p>Отправьте менеджеру идею, черновик или скрин спорного момента.</p></div><a href={MANAGER_URL} target="_blank" rel="noreferrer">Написать @plus_maks ↗</a></div>
+          </ManualSection>
+        </main>
+      </div>
+      <footer className="manual-footer"><ManualLogo /><span>{fixed ? 'Мануал: фикс за просмотры' : 'Мануал: партнерство'} · Plus AI</span></footer>
+    </div>
+  )
+}
+
+export type { CreatorManualKind }

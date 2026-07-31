@@ -15,6 +15,8 @@ const routes = [
   ['/puls-rynka/', 'dist/puls-rynka/index.html'],
   ['/telegram-bot-analiz-matchey/', 'dist/telegram-bot-analiz-matchey/index.html'],
   ['/creators/', 'dist/creators/index.html'],
+  ['/creator-fixed/', 'dist/creator-fixed/index.html'],
+  ['/creator-partner/', 'dist/creator-partner/index.html'],
 ]
 
 for (const [pathname, relativeFile] of routes) {
