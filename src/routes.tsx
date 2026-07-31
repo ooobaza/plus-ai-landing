@@ -1,4 +1,5 @@
 import App from './App'
+import { CreatorsPage } from './creators'
 import { LegalPage, type LegalDocumentKey } from './legal'
 import { isProductPageKey, ProductPage } from './product'
 
@@ -9,6 +10,10 @@ export function RouteContent({ pathname }: { pathname: string }) {
 
   if (legalRoutes.has(route as LegalDocumentKey)) {
     return <LegalPage type={route as LegalDocumentKey} />
+  }
+
+  if (route === 'creators') {
+    return <CreatorsPage />
   }
 
   if (isProductPageKey(route)) {

@@ -15,6 +15,7 @@ const requiredFiles = [
   'dist/ai-analiz-matchey/index.html',
   'dist/puls-rynka/index.html',
   'dist/telegram-bot-analiz-matchey/index.html',
+  'dist/creators/index.html',
   'dist/404.html',
   'dist/og-plus-ai.png',
   'dist/fonts/inter-tight-cyrillic.woff2',
@@ -26,7 +27,7 @@ for (const file of requiredFiles) {
   await access(path.join(root, file))
 }
 
-const [html, css, js, links, aiPage, pulsePage, telegramPage, privacyPage] = await Promise.all([
+const [html, css, js, links, aiPage, pulsePage, telegramPage, privacyPage, creatorsPage, sitemap] = await Promise.all([
   readFile(path.join(root, 'dist/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/plus-ai.css'), 'utf8'),
   readFile(path.join(root, 'dist/plus-ai.js'), 'utf8'),
@@ -35,6 +36,8 @@ const [html, css, js, links, aiPage, pulsePage, telegramPage, privacyPage] = awa
   readFile(path.join(root, 'dist/puls-rynka/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/telegram-bot-analiz-matchey/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/privacy/index.html'), 'utf8'),
+  readFile(path.join(root, 'dist/creators/index.html'), 'utf8'),
+  readFile(path.join(root, 'dist/sitemap.xml'), 'utf8'),
 ])
 
 const requiredHtml = [
@@ -65,10 +68,17 @@ for (const [name, page] of [
   ['market pulse', pulsePage],
   ['Telegram bot', telegramPage],
   ['privacy', privacyPage],
+  ['creators', creatorsPage],
 ]) {
   if (page.includes('<div id="root"></div>')) {
     throw new Error(`${name} page was not prerendered`)
   }
+}
+if (!creatorsPage.includes('noindex, nofollow') || !creatorsPage.includes('Зарабатывай на') || !creatorsPage.includes('https://t.me/plus_maks')) {
+  throw new Error('The hidden creators page is missing noindex metadata, content or manager link')
+}
+if (sitemap.includes('/creators')) {
+  throw new Error('The hidden creators page must not appear in sitemap.xml')
 }
 if (!links.includes(campaignUrl) || !js.includes(campaignUrl)) {
   throw new Error('The Telegram advertising campaign link is missing from the build')
