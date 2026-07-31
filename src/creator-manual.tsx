@@ -103,6 +103,20 @@ function ManualSection({ id, eyebrow, title, children }: { id: string; eyebrow: 
   return <section className="manual-section" id={id}><span className="manual-eyebrow">{eyebrow}</span><h2>{title}</h2>{children}</section>
 }
 
+type FullscreenVideo = HTMLVideoElement & {
+  webkitEnterFullscreen?: () => void
+  webkitRequestFullscreen?: () => Promise<void> | void
+}
+
+function openVideoFullscreen(event: React.MouseEvent<HTMLButtonElement>) {
+  const video = event.currentTarget.closest('.manual-video-disclosure')?.querySelector<FullscreenVideo>('video')
+  if (!video) return
+
+  if (video.requestFullscreen) void video.requestFullscreen()
+  else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen()
+  else if (video.webkitRequestFullscreen) void video.webkitRequestFullscreen()
+}
+
 function BannerLibrary({ strict }: { strict: boolean }) {
   return (
     <div className="manual-banner-grid">
@@ -115,7 +129,13 @@ function BannerLibrary({ strict }: { strict: boolean }) {
                 if (!event.currentTarget.open) event.currentTarget.querySelector<HTMLVideoElement>('video')?.pause()
               }}
             >
-              <summary><span>Предпросмотр варианта {banner.id}</span><b><i>Открыть видео</i><em>Закрыть видео</em> <span aria-hidden="true">↓</span></b></summary>
+              <summary>
+                <span className="manual-video-disclosure__copy">
+                  <small>Вариант {banner.id} · видео</small>
+                  <strong><i>Посмотреть баннер в движении</i><em>Видео открыто</em></strong>
+                </span>
+                <b className="manual-video-disclosure__cta"><span aria-hidden="true">▶</span><i>Смотреть видео</i><em>Свернуть</em><span className="manual-video-disclosure__arrow" aria-hidden="true">↓</span></b>
+              </summary>
               <div className="manual-banner-card__preview">
                 <video
                   controls
@@ -130,6 +150,9 @@ function BannerLibrary({ strict }: { strict: boolean }) {
                 >
                   <source src={banner.file} type="video/mp4" />
                 </video>
+                <button className="manual-video-fullscreen" type="button" onClick={openVideoFullscreen} aria-label={`Открыть баннер ${banner.id} на весь экран`}>
+                  <span aria-hidden="true">⛶</span> На весь экран
+                </button>
               </div>
             </details>
           ) : (
