@@ -14,6 +14,15 @@ const creatorSteps = [
   ['04', 'Согласуй старт', 'Первые 2–3 ролика проверяем вместе. Дальше одобренную механику можно использовать без согласования каждого видео.'],
 ]
 
+const creatorSupport = [
+  'Готовые баннеры, озвучки и визуалы для роликов',
+  'Идеи, сценарные заходы и помощь с первым контентом',
+  'Личный менеджер на всём протяжении работы',
+  'Понятная фиксация результатов и прозрачная логика выплат',
+  'Можно начать с нового Instagram-аккаунта',
+  'После первых 2–3 роликов — меньше согласований и больше свободы',
+]
+
 const creatorRules = [
   ['Честная статистика', 'Накрутка, мотивированный трафик, боты, клик-фермы, подмена статистики и другие способы искусственного увеличения результата запрещены.'],
   ['Проверка при сомнениях', 'Обычно достаточно ссылки и скриншотов. При признаках абуза Plus AI вправе запросить запись экрана, аналитику аккаунта и другие подтверждения.'],
@@ -131,11 +140,10 @@ export function CreatorsPage() {
           </div>
         </section>
 
-        <section className="creator-section creator-rules">
+        <section className="creator-section creator-support">
           <div className="container">
-            <header className="creator-section__head"><span>04 / ОСНОВНЫЕ ПРАВИЛА</span><div><h2>Честная работа без серых схем</h2><p>Полная версия условий выдаётся после согласования. Ниже — правила, которые действуют для любого формата сотрудничества.</p></div></header>
-            <div className="creator-rules__grid">{creatorRules.map(([title, text], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div>
-            <div className="creator-rules__accept"><strong>Принятие условий</strong><p>Начало сотрудничества, отправка ролика на согласование, проверку или выплату означает принятие актуальной версии правил Plus AI. Индивидуальные условия, подтверждённые менеджером, имеют приоритет для конкретного сотрудничества.</p></div>
+            <header className="creator-section__head"><span>04 / ЧТО МЫ ДАЁМ</span><div><h2>Не просто оффер — поддержка для уверенного старта</h2><p>Помогаем быстро войти в работу, подобрать подачу и не оставляем креатора один на один с вопросами.</p></div></header>
+            <div className="creator-support__grid">{creatorSupport.map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item === 'Личный менеджер на всём протяжении работы' ? <>Личный <ManagerInline>менеджер</ManagerInline> на всём протяжении работы</> : item}</strong></div>)}</div>
           </div>
         </section>
 
@@ -147,6 +155,18 @@ export function CreatorsPage() {
             <p>Напиши нам, расскажи про свою площадку и какой вариант сотрудничества тебе ближе: фикс за просмотры или партнёрская модель.</p>
             <ContactLink className="creator-primary">Связаться с нами</ContactLink>
             <small><ManagerInline>Менеджер: @plus_maks ↗</ManagerInline></small>
+          </div>
+        </section>
+
+        <section className="creator-terms" aria-label="Условия сотрудничества">
+          <div className="container creator-terms__inner">
+            <p>Начало сотрудничества, отправка ролика на согласование, проверку или выплату означает принятие актуальной версии правил Plus AI. Индивидуальные условия, подтверждённые менеджером, имеют приоритет для конкретного сотрудничества.</p>
+            <details className="creator-terms__details">
+              <summary>Правила сотрудничества <span aria-hidden="true">+</span></summary>
+              <div className="creator-terms__content">
+                {creatorRules.map(([title, text], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}
+              </div>
+            </details>
           </div>
         </section>
       </main>
