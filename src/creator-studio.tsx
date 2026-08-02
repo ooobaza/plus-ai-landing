@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 const STUDIO_PASSWORD_HASH = '41f580b0b08a4558fdc2f57cc072b48513af22e86ccbca245a20a7a976bdfb70'
 const STUDIO_SESSION_KEY = 'plus-ai-analyz-access'
@@ -172,22 +172,38 @@ function AnalysisStage({ image, progress, status, format }: { image: string | nu
           </div>
 
           <div className="studio-market-card">
-            <div className="studio-market-card__head"><span>Динамика линии</span><strong>{done ? 'Сигнал обнаружен' : 'Сканирование'}</strong></div>
-            <div className="studio-market-chart" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /><i /><b /></div>
-            <div className="studio-market-card__axis"><span>СТАРТ</span><span>ДВИЖЕНИЕ</span><span>СЕЙЧАС</span></div>
+            <div className="studio-market-card__head"><span>Динамика линии</span><strong>{done ? 'Движение зафиксировано' : 'Сканирование данных'}</strong></div>
+            <div className="studio-market-chart" aria-hidden="true">
+              <svg viewBox="0 0 800 120" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="studio-chart-fill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#58e1c4" stopOpacity=".28" />
+                    <stop offset="100%" stopColor="#58e1c4" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <path className="studio-market-chart__area" d="M0 93 C70 91 98 78 148 76 C211 72 234 49 296 56 C350 63 382 83 440 76 C504 68 526 43 590 46 C654 49 696 33 750 36 C774 37 790 27 800 19 L800 120 L0 120 Z" />
+                <path className="studio-market-chart__line" d="M0 93 C70 91 98 78 148 76 C211 72 234 49 296 56 C350 63 382 83 440 76 C504 68 526 43 590 46 C654 49 696 33 750 36 C774 37 790 27 800 19" />
+                <circle className="studio-market-chart__point" cx="800" cy="19" r="6" />
+              </svg>
+            </div>
+            <div className="studio-market-card__axis"><span>РАНЕЕ</span><span>ДИНАМИКА</span><span>СЕЙЧАС</span></div>
           </div>
 
           <div className={`studio-locked-result${done ? ' is-visible' : ''}`}>
-            <div className="studio-locked-result__top"><span>✦ AI-МНЕНИЕ</span><b>ПОЛНЫЙ РАЗБОР</b></div>
-            <div className="studio-locked-result__blur" aria-hidden="true"><i /><i /><i /><i /></div>
-            <div className="studio-locked-result__cover"><span>＋AI</span><strong>Детали и итоговое AI-мнение скрыты</strong><p>Открой полный анализ матча в Telegram-боте Plus AI</p></div>
+            <div className="studio-locked-result__icon" aria-hidden="true">✦</div>
+            <div className="studio-locked-result__copy">
+              <span>AI-МНЕНИЕ СФОРМИРОВАНО</span>
+              <strong>Полный разбор доступен в Plus AI</strong>
+              <p>Контекст, риски и итоговое мнение откроются в Telegram-боте.</p>
+            </div>
+            <div className="studio-locked-result__badge">ЗАКРЫТО</div>
           </div>
         </div>
       </div>
 
       <footer className="studio-analysis__footer">
-        <span>Интерфейсная демонстрация · реальные выводы формируются в боте</span>
-        <a href={BOT_URL} target="_blank" rel="noreferrer">Открыть полный анализ <i aria-hidden="true">→</i></a>
+        <span>Демонстрация интерфейса · полный результат формируется в боте</span>
+        <a href={BOT_URL} target="_blank" rel="noreferrer"><strong>Открыть полный разбор</strong><small>в Telegram</small><i aria-hidden="true">↗</i></a>
       </footer>
     </section>
   )
@@ -223,8 +239,6 @@ export function CreatorStudioPage() {
 
   useEffect(() => () => { if (image) URL.revokeObjectURL(image) }, [image])
 
-  const statusLabel = useMemo(() => status === 'idle' ? 'Ожидание запуска' : status === 'processing' ? 'Анализ выполняется' : 'Разбор готов', [status])
-
   const loadFile = useCallback((file: File) => {
     if (image) URL.revokeObjectURL(image)
     setImage(URL.createObjectURL(file))
@@ -241,65 +255,27 @@ export function CreatorStudioPage() {
     return () => window.removeEventListener('paste', handlePaste)
   }, [loadFile])
 
-  function startAnalysis() {
-    if (!image || status === 'processing') return
-    setProgress(1)
-    setStatus('processing')
-  }
-
-  function resetAnalysis() {
-    setProgress(0)
-    setStatus('idle')
-  }
-
-  function logout() {
-    sessionStorage.removeItem(STUDIO_SESSION_KEY)
-    setAllowed(false)
-  }
-
   if (!allowed) return <AccessGate onAccess={() => setAllowed(true)} />
 
   return (
     <div className="studio-page">
       <header className="studio-header">
         <StudioLogo />
-        <div className="studio-header__status"><i /><span>{statusLabel}</span></div>
-        <button type="button" onClick={logout}>Закрыть доступ</button>
+        <div className="studio-header__status"><i /><span>{status === 'processing' ? `AI-анализ · ${progress}%` : status === 'done' ? 'Разбор сформирован' : 'Система готова'}</span></div>
       </header>
 
       <main className={`studio-analyzer${image ? ' has-image' : ''}`}>
-        <section className={`studio-entry${image ? ' is-compact' : ''}`}>
-          {!image && <div className="studio-entry__intro">
+        {!image && <section className="studio-entry">
+          <div className="studio-entry__intro">
             <span className="studio-kicker"><i /> PLUS AI · MATCH INTELLIGENCE</span>
             <h1>Загрузи матч.<br /><em>Запусти AI-анализ.</em></h1>
             <p>Добавь скрин события — система распознает структуру матча и последовательно покажет этапы аналитического разбора.</p>
-          </div>}
+          </div>
           <UploadPanel image={image} onFile={loadFile} />
-          {image && <div className="studio-commandbar">
-            <div>
-              <span className="studio-commandbar__eyebrow">ИЗОБРАЖЕНИЕ ПОЛУЧЕНО</span>
-              <strong>{status === 'processing' ? `AI-анализ выполняется · ${progress}%` : status === 'done' ? 'Разбор сформирован' : 'Готово к запуску'}</strong>
-            </div>
-            <div className="studio-format-switch" role="group" aria-label="Формат сцены">
-              <button className={format === 'wide' ? 'is-active' : ''} type="button" onClick={() => setFormat('wide')}><i>16:9</i><span>Desktop</span></button>
-              <button className={format === 'portrait' ? 'is-active' : ''} type="button" onClick={() => setFormat('portrait')}><i>9:16</i><span>Mobile</span></button>
-            </div>
-            <div className="studio-control-actions">
-              <button className="studio-start" type="button" disabled={!image || status === 'processing'} onClick={startAnalysis}>{status === 'done' ? 'Повторить анализ' : status === 'processing' ? `Анализ ${progress}%` : 'Запустить анализ'} <span aria-hidden="true">→</span></button>
-              {status !== 'idle' && <button className="studio-reset" type="button" onClick={resetAnalysis}>Сбросить</button>}
-            </div>
-          </div>}
-          {!image && <p className="studio-privacy-note"><i>✓</i> Изображение обрабатывается только в браузере и никуда не загружается.</p>}
-        </section>
-
-        {!image && <section className="studio-entry-steps" aria-label="Как работает анализ">
-          <article><span>01</span><strong>Добавь скрин</strong><p>Загрузка файла или вставка изображения из буфера.</p></article>
-          <article><span>02</span><strong>Дождись анализа</strong><p>Система последовательно покажет обработку ключевых факторов.</p></article>
-          <article><span>03</span><strong>Открой результат</strong><p>Полные детали и AI-мнение доступны в Telegram-боте.</p></article>
+          <p className="studio-privacy-note"><i>✓</i> Изображение обрабатывается только в браузере и никуда не загружается.</p>
         </section>}
 
         {image && <div className={`studio-preview studio-preview--${format}`}>
-          <div className="studio-preview__bar"><span>PREVIEW · {format === 'wide' ? '16:9' : '9:16'}</span><i>REC SAFE</i></div>
           <AnalysisStage image={image} progress={progress} status={status} format={format} />
         </div>}
       </main>
