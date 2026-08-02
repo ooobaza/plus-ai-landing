@@ -17,7 +17,7 @@ const routes = [
   ['/creators/', 'dist/creators/index.html'],
   ['/creator-fixed/', 'dist/creator-fixed/index.html'],
   ['/creator-partner/', 'dist/creator-partner/index.html'],
-  ['/creator-studio/', 'dist/creator-studio/index.html'],
+  ['/analyz/', 'dist/analyz/index.html'],
 ]
 
 for (const [pathname, relativeFile] of routes) {

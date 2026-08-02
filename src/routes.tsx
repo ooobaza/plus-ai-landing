@@ -26,7 +26,7 @@ export function RouteContent({ pathname }: { pathname: string }) {
     return <CreatorManualPage kind="partner" />
   }
 
-  if (route === 'creator-studio') {
+  if (route === 'analyz') {
     return <CreatorStudioPage />
   }
 

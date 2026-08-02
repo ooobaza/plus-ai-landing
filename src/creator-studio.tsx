@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 const STUDIO_PASSWORD_HASH = '41f580b0b08a4558fdc2f57cc072b48513af22e86ccbca245a20a7a976bdfb70'
-const STUDIO_SESSION_KEY = 'plus-ai-creator-studio-access'
+const STUDIO_SESSION_KEY = 'plus-ai-analyz-access'
 const BOT_URL = 'https://t.me/plus_ai_robot?start=ad_SITE'
 
 const analysisSteps = [
@@ -29,7 +29,7 @@ async function sha256(value: string) {
 }
 
 function StudioLogo() {
-  return <div className="studio-logo"><img src="/logo-plus-ai.png" alt="Plus AI" /><span>CREATOR STUDIO</span></div>
+  return <div className="studio-logo"><img src="/logo-plus-ai.png" alt="Plus AI" /><span>MATCH INTELLIGENCE</span></div>
 }
 
 function AccessGate({ onAccess }: { onAccess: () => void }) {
@@ -60,18 +60,18 @@ function AccessGate({ onAccess }: { onAccess: () => void }) {
       <div className="studio-gate__ambient" aria-hidden="true" />
       <section className="studio-gate__card">
         <StudioLogo />
-        <span className="studio-kicker"><i /> ЗАКРЫТАЯ РАБОЧАЯ ЗОНА</span>
-        <h1>Контент-студия<br /><em>Plus AI</em></h1>
-        <p>Инструмент для создания демонстрационных роликов с анимированным AI-разбором матча.</p>
+        <span className="studio-kicker"><i /> ЗАКРЫТЫЙ ИНТЕРФЕЙС</span>
+        <h1>AI-анализ<br /><em>матча</em></h1>
+        <p>Закрытый демонстрационный интерфейс Plus AI. Для продолжения введи общий пароль.</p>
         <form onSubmit={submit}>
           <label htmlFor="studio-password">Общий пароль</label>
           <div className="studio-gate__field">
             <input id="studio-password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" placeholder="Введите пароль" autoFocus />
-            <button type="submit" disabled={!password.trim() || checking}>{checking ? 'Проверяем…' : 'Открыть студию'} <span aria-hidden="true">→</span></button>
+            <button type="submit" disabled={!password.trim() || checking}>{checking ? 'Проверяем…' : 'Открыть анализ'} <span aria-hidden="true">→</span></button>
           </div>
           {error && <div className="studio-gate__error" role="alert">{error}</div>}
         </form>
-        <small>Доступ предназначен только для команды и креаторов Plus AI.</small>
+        <small>Доступ предоставляется участникам команды Plus AI.</small>
       </section>
     </main>
   )
@@ -79,15 +79,32 @@ function AccessGate({ onAccess }: { onAccess: () => void }) {
 
 function UploadPanel({ image, onFile }: { image: string | null; onFile: (file: File) => void }) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const [pasteHint, setPasteHint] = useState('')
 
   function acceptFiles(files: FileList | null) {
     const file = files?.[0]
     if (file?.type.startsWith('image/')) onFile(file)
   }
 
+  async function pasteFromClipboard() {
+    try {
+      const items = await navigator.clipboard.read()
+      for (const item of items) {
+        const imageType = item.types.find((type) => type.startsWith('image/'))
+        if (!imageType) continue
+        const blob = await item.getType(imageType)
+        onFile(new File([blob], 'match-from-clipboard.png', { type: imageType }))
+        setPasteHint('Изображение вставлено')
+        return
+      }
+      setPasteHint('В буфере нет изображения')
+    } catch {
+      setPasteHint('Нажми Ctrl+V, чтобы вставить изображение')
+    }
+  }
+
   return (
-    <section className="studio-upload-panel">
-      <div className="studio-panel-title"><span>01</span><div><h2>Исходный матч</h2><p>Загрузи скрин события: команды, турнир или карточку матча.</p></div></div>
+    <section className={`studio-upload-panel${image ? ' is-loaded' : ''}`}>
       <button
         className={`studio-dropzone${image ? ' studio-dropzone--loaded' : ''}`}
         type="button"
@@ -95,10 +112,14 @@ function UploadPanel({ image, onFile }: { image: string | null; onFile: (file: F
         onDragOver={(event) => event.preventDefault()}
         onDrop={(event) => { event.preventDefault(); acceptFiles(event.dataTransfer.files) }}
       >
-        {image ? <img src={image} alt="Загруженный скриншот матча" /> : <><span className="studio-upload-icon" aria-hidden="true">＋</span><strong>Выбрать изображение</strong><small>PNG, JPG или WEBP · файл останется на устройстве</small></>}
-        {image && <span className="studio-dropzone__change">Заменить изображение</span>}
+        {image ? <img src={image} alt="Загруженный скриншот матча" /> : <><span className="studio-upload-icon" aria-hidden="true">＋</span><strong>Загрузить скрин матча</strong><small>PNG, JPG или WEBP · анализ начнётся автоматически</small></>}
+        {image && <span className="studio-dropzone__change">Заменить скрин</span>}
       </button>
       <input ref={inputRef} className="studio-file-input" type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => acceptFiles(event.target.files)} />
+      <div className="studio-paste-row">
+        <button type="button" onClick={pasteFromClipboard}><span aria-hidden="true">⌘</span> Вставить из буфера</button>
+        <small>{pasteHint || 'Можно также нажать Ctrl+V в любом месте страницы'}</small>
+      </div>
     </section>
   )
 }
@@ -135,6 +156,12 @@ function AnalysisStage({ image, progress, status, format }: { image: string | nu
           <div className="studio-progress">
             <div><span>ANALYSIS PROGRESS</span><strong>{progress}%</strong></div>
             <div className="studio-progress__track"><i style={{ width: `${progress}%` }} /></div>
+          </div>
+
+          <div className="studio-telemetry" aria-label="Этапы обработки">
+            <span><i /> Событие <strong>{progress >= 18 ? 'распознано' : 'поиск'}</strong></span>
+            <span><i /> Источники <strong>{progress >= 46 ? 'сопоставлены' : 'проверка'}</strong></span>
+            <span><i /> Модель <strong>{progress >= 78 ? 'сформирована' : 'расчёт'}</strong></span>
           </div>
 
           <div className="studio-factor-grid">
@@ -198,12 +225,21 @@ export function CreatorStudioPage() {
 
   const statusLabel = useMemo(() => status === 'idle' ? 'Ожидание запуска' : status === 'processing' ? 'Анализ выполняется' : 'Разбор готов', [status])
 
-  function loadFile(file: File) {
+  const loadFile = useCallback((file: File) => {
     if (image) URL.revokeObjectURL(image)
     setImage(URL.createObjectURL(file))
-    setStatus('idle')
-    setProgress(0)
-  }
+    setProgress(1)
+    setStatus('processing')
+  }, [image])
+
+  useEffect(() => {
+    function handlePaste(event: ClipboardEvent) {
+      const file = Array.from(event.clipboardData?.files ?? []).find((item) => item.type.startsWith('image/'))
+      if (file) loadFile(file)
+    }
+    window.addEventListener('paste', handlePaste)
+    return () => window.removeEventListener('paste', handlePaste)
+  }, [loadFile])
 
   function startAnalysis() {
     if (!image || status === 'processing') return
@@ -231,28 +267,41 @@ export function CreatorStudioPage() {
         <button type="button" onClick={logout}>Закрыть доступ</button>
       </header>
 
-      <main className="studio-workspace">
-        <aside className="studio-controls">
-          <div className="studio-controls__intro"><span className="studio-kicker"><i /> CONTENT TOOL</span><h1>Создай эффектный<br />AI-разбор для видео</h1><p>Загрузи скрин матча, запусти демонстрационный анализ и запиши результат в нужном формате.</p></div>
+      <main className={`studio-analyzer${image ? ' has-image' : ''}`}>
+        <section className={`studio-entry${image ? ' is-compact' : ''}`}>
+          {!image && <div className="studio-entry__intro">
+            <span className="studio-kicker"><i /> PLUS AI · MATCH INTELLIGENCE</span>
+            <h1>Загрузи матч.<br /><em>Запусти AI-анализ.</em></h1>
+            <p>Добавь скрин события — система распознает структуру матча и последовательно покажет этапы аналитического разбора.</p>
+          </div>}
           <UploadPanel image={image} onFile={loadFile} />
-          <section className="studio-format-panel">
-            <div className="studio-panel-title"><span>02</span><div><h2>Формат сцены</h2><p>Переключай композицию под площадку.</p></div></div>
-            <div className="studio-format-switch" role="group" aria-label="Формат сцены">
-              <button className={format === 'wide' ? 'is-active' : ''} type="button" onClick={() => setFormat('wide')}><i>16:9</i><span>Широкий</span></button>
-              <button className={format === 'portrait' ? 'is-active' : ''} type="button" onClick={() => setFormat('portrait')}><i>9:16</i><span>Reels / Shorts</span></button>
+          {image && <div className="studio-commandbar">
+            <div>
+              <span className="studio-commandbar__eyebrow">ИЗОБРАЖЕНИЕ ПОЛУЧЕНО</span>
+              <strong>{status === 'processing' ? `AI-анализ выполняется · ${progress}%` : status === 'done' ? 'Разбор сформирован' : 'Готово к запуску'}</strong>
             </div>
-          </section>
-          <div className="studio-control-actions">
-            <button className="studio-start" type="button" disabled={!image || status === 'processing'} onClick={startAnalysis}>{status === 'done' ? 'Запустить ещё раз' : status === 'processing' ? `Анализ ${progress}%` : 'Запустить AI-разбор'} <span aria-hidden="true">→</span></button>
-            {status !== 'idle' && <button className="studio-reset" type="button" onClick={resetAnalysis}>Сбросить</button>}
-          </div>
-          <p className="studio-privacy-note"><i>✓</i> Изображение обрабатывается только в браузере и никуда не загружается.</p>
-        </aside>
+            <div className="studio-format-switch" role="group" aria-label="Формат сцены">
+              <button className={format === 'wide' ? 'is-active' : ''} type="button" onClick={() => setFormat('wide')}><i>16:9</i><span>Desktop</span></button>
+              <button className={format === 'portrait' ? 'is-active' : ''} type="button" onClick={() => setFormat('portrait')}><i>9:16</i><span>Mobile</span></button>
+            </div>
+            <div className="studio-control-actions">
+              <button className="studio-start" type="button" disabled={!image || status === 'processing'} onClick={startAnalysis}>{status === 'done' ? 'Повторить анализ' : status === 'processing' ? `Анализ ${progress}%` : 'Запустить анализ'} <span aria-hidden="true">→</span></button>
+              {status !== 'idle' && <button className="studio-reset" type="button" onClick={resetAnalysis}>Сбросить</button>}
+            </div>
+          </div>}
+          {!image && <p className="studio-privacy-note"><i>✓</i> Изображение обрабатывается только в браузере и никуда не загружается.</p>}
+        </section>
 
-        <div className={`studio-preview studio-preview--${format}`}>
+        {!image && <section className="studio-entry-steps" aria-label="Как работает анализ">
+          <article><span>01</span><strong>Добавь скрин</strong><p>Загрузка файла или вставка изображения из буфера.</p></article>
+          <article><span>02</span><strong>Дождись анализа</strong><p>Система последовательно покажет обработку ключевых факторов.</p></article>
+          <article><span>03</span><strong>Открой результат</strong><p>Полные детали и AI-мнение доступны в Telegram-боте.</p></article>
+        </section>}
+
+        {image && <div className={`studio-preview studio-preview--${format}`}>
           <div className="studio-preview__bar"><span>PREVIEW · {format === 'wide' ? '16:9' : '9:16'}</span><i>REC SAFE</i></div>
           <AnalysisStage image={image} progress={progress} status={status} format={format} />
-        </div>
+        </div>}
       </main>
     </div>
   )
