@@ -1,6 +1,7 @@
 import App from './App'
 import { CreatorsPage } from './creators'
 import { CreatorManualPage } from './creator-manual'
+import { CreatorStudioPage } from './creator-studio'
 import { LegalPage, type LegalDocumentKey } from './legal'
 import { isProductPageKey, ProductPage } from './product'
 
@@ -23,6 +24,10 @@ export function RouteContent({ pathname }: { pathname: string }) {
 
   if (route === 'creator-partner') {
     return <CreatorManualPage kind="partner" />
+  }
+
+  if (route === 'creator-studio') {
+    return <CreatorStudioPage />
   }
 
   if (isProductPageKey(route)) {

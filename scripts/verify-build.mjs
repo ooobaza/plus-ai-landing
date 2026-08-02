@@ -18,6 +18,7 @@ const requiredFiles = [
   'dist/creators/index.html',
   'dist/creator-fixed/index.html',
   'dist/creator-partner/index.html',
+  'dist/creator-studio/index.html',
   'dist/creator-assets/guides/reels-safe-zones.png',
   'dist/creator-assets/banners/banner-01.mp4',
   'dist/creator-assets/banners/banner-06.mp4',
@@ -32,7 +33,7 @@ for (const file of requiredFiles) {
   await access(path.join(root, file))
 }
 
-const [html, css, js, links, aiPage, pulsePage, telegramPage, privacyPage, creatorsPage, fixedManual, partnerManual, sitemap] = await Promise.all([
+const [html, css, js, links, aiPage, pulsePage, telegramPage, privacyPage, creatorsPage, fixedManual, partnerManual, creatorStudio, sitemap] = await Promise.all([
   readFile(path.join(root, 'dist/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/plus-ai.css'), 'utf8'),
   readFile(path.join(root, 'dist/plus-ai.js'), 'utf8'),
@@ -44,6 +45,7 @@ const [html, css, js, links, aiPage, pulsePage, telegramPage, privacyPage, creat
   readFile(path.join(root, 'dist/creators/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/creator-fixed/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/creator-partner/index.html'), 'utf8'),
+  readFile(path.join(root, 'dist/creator-studio/index.html'), 'utf8'),
   readFile(path.join(root, 'dist/sitemap.xml'), 'utf8'),
 ])
 
@@ -97,6 +99,12 @@ for (const [name, page, heading] of [
 }
 if (sitemap.includes('/creator-fixed') || sitemap.includes('/creator-partner')) {
   throw new Error('Private creator manuals must not appear in sitemap.xml')
+}
+if (!creatorStudio.includes('noindex, nofollow') || !creatorStudio.includes('Контент-студия') || creatorStudio.includes('<div id="root"></div>')) {
+  throw new Error('Creator Studio is missing noindex metadata or prerendered access screen')
+}
+if (sitemap.includes('/creator-studio')) {
+  throw new Error('Creator Studio must not appear in sitemap.xml')
 }
 if (!links.includes(campaignUrl) || !js.includes(campaignUrl)) {
   throw new Error('The Telegram advertising campaign link is missing from the build')
