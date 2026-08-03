@@ -217,10 +217,24 @@ function VoiceoverLibrary() {
 function FixedTerms() {
   return (
     <>
-      <div className="manual-rate-card"><span>Ставка</span><strong>$0.10</strong><p>за каждые 1 000 подтверждённых просмотров. Расчёт пропорциональный: 1 500 просмотров = $0.15.</p></div>
+      <div className="manual-rate-tiers" aria-label="Ставки за подтверждённые просмотры">
+        <article className="manual-rate-tier">
+          <div className="manual-rate-tier__head"><span>СТАВКА 01</span><b>БЕЗ ПРЯМОЙ БЕТТИНГ-ИНТЕГРАЦИИ</b></div>
+          <div className="manual-rate-tier__value"><strong>$0.10</strong><span>за 1 000<br />просмотров</span></div>
+          <p>Для роликов о футболе, CS2 или Dota 2 без прямой рекламы гемблинга: матчи, игровые моменты, реакции и тематические нарезки.</p>
+          <small>Примеры контента за $0.10 будут добавлены позже.</small>
+        </article>
+        <article className="manual-rate-tier manual-rate-tier--accent">
+          <div className="manual-rate-tier__head"><span>СТАВКА 02</span><b>С БЕТТИНГ-ИНТЕГРАЦИЕЙ</b></div>
+          <div className="manual-rate-tier__value"><strong>$0.20</strong><span>за 1 000<br />просмотров</span></div>
+          <p>Для роликов, где беттинг заметно встроен в сюжет: стример поставил деньги на матч и следит за исходом, показан бот или сайт Plus AI либо используется другой согласованный беттинг-формат.</p>
+          <small>Примеры контента за $0.20 будут добавлены позже.</small>
+        </article>
+      </div>
+      <p className="manual-note">Расчёт выполняется пропорционально количеству подтверждённых просмотров. Например: 1 500 просмотров = $0.15 по ставке $0.10 или $0.30 по ставке $0.20. Категорию ролика лучше подтвердить с менеджером до публикации.</p>
       <div className="manual-metric-grid">
         <article><span>Минимум</span><strong>1 000</strong><p>просмотров для отправки ролика на расчёт</p></article>
-        <article><span>Лимит</span><strong>1 000 000</strong><p>просмотров на один ролик, максимальная выплата — $100</p></article>
+        <article><span>Лимит</span><strong>1 000 000</strong><p>просмотров на один ролик, максимальная выплата — $100 или $200 в зависимости от категории</p></article>
         <article><span>Фиксация</span><strong>1 раз</strong><p>в момент, когда креатор отправил ролик менеджеру</p></article>
         <article><span>Проверка</span><strong>до 48 ч</strong><p>обычно быстрее; дополнительная проверка может потребовать больше времени</p></article>
       </div>
@@ -318,7 +332,7 @@ export function CreatorManualPage({ kind }: { kind: CreatorManualKind }) {
   const fixed = kind === 'fixed'
   return (
     <div className="manual-page">
-      <header className="manual-header"><ManualLogo /><div><span>Внутренний мануал</span><b>{fixed ? 'Фикс · $0.10 / 1000' : 'Партнерство'}</b></div></header>
+      <header className="manual-header"><ManualLogo /><div><span>Внутренний мануал</span><b>{fixed ? 'Фикс · $0.10–0.20 / 1000' : 'Партнерство'}</b></div></header>
       <div className="manual-layout">
         <ManualNavigation kind={kind} />
         <main className="manual-content">

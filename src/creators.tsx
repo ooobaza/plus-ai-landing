@@ -124,7 +124,7 @@ export function CreatorsPage() {
               <article className="creator-model creator-model--fixed">
                 <div className="creator-model__top"><span>ВАРИАНТ 01</span><b>ФИКС ЗА ПРОСМОТРЫ</b></div>
                 <h3>Понятная оплата<br />за охват</h3>
-                <div className="creator-rate"><strong>$0.10</strong><span>за 1000<br />просмотров</span></div>
+                <div className="creator-rate"><strong>$0.20</strong><span>за 1000<br />просмотров</span></div>
                 <ul><li>Минимум для расчёта — 1 000 просмотров</li><li>1 500 просмотров оплачиваются пропорционально</li><li>Лимит расчёта — 1 000 000 просмотров на ролик</li><li>Просмотры фиксируются один раз при отправке материала</li></ul>
                 <p className="creator-model__note">Только Instagram. Профиль должен быть открытым, а интеграция Plus AI — соответствовать закрытому мануалу.</p>
               </article>

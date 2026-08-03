@@ -809,6 +809,18 @@ button { color: inherit; font: inherit; }
 .manual-rate-card strong { grid-column: 1; color: #62e2c7; font: 650 clamp(48px, 6vw, 72px)/.9 var(--mono); letter-spacing: -.06em; }
 .manual-rate-card p { grid-column: 2; max-width: 340px; margin: 0 0 5px; color: #afc0ba; font-size: 16px; line-height: 1.55; }
 .manual-rate-card--partner strong { font-family: var(--display); font-size: clamp(42px, 5vw, 60px); letter-spacing: -.04em; }
+.manual-rate-tiers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.manual-rate-tier { min-height: 310px; display: flex; flex-direction: column; padding: 25px 27px 23px; overflow: hidden; border: 1px solid rgba(72, 213, 183, .2); border-radius: 16px; background: linear-gradient(145deg, rgba(25, 88, 74, .12), rgba(8, 17, 14, .82)); box-shadow: inset 0 1px rgba(168, 255, 235, .035); }
+.manual-rate-tier--accent { border-color: rgba(91, 229, 199, .38); background: radial-gradient(circle at 86% 6%, rgba(56, 221, 185, .14), transparent 38%), linear-gradient(145deg, rgba(31, 116, 96, .18), rgba(8, 18, 15, .88)); box-shadow: 0 24px 70px rgba(34, 176, 145, .08), inset 0 1px rgba(183, 255, 240, .06); }
+.manual-rate-tier__head { display: flex; min-height: 30px; align-items: center; justify-content: space-between; gap: 14px; }
+.manual-rate-tier__head span { color: #62dfc5; font: 700 9px/1 var(--mono); letter-spacing: .14em; }
+.manual-rate-tier__head b { padding: 7px 9px; border: 1px solid rgba(83, 217, 189, .18); border-radius: 6px; color: #99c6bc; font: 650 8px/1 var(--mono); letter-spacing: .08em; text-align: right; }
+.manual-rate-tier--accent .manual-rate-tier__head b { color: #70e9ce; border-color: rgba(83, 224, 194, .3); background: rgba(60, 210, 179, .06); }
+.manual-rate-tier__value { display: flex; align-items: flex-end; gap: 16px; margin-top: 34px; padding-bottom: 23px; border-bottom: 1px solid rgba(255,255,255,.07); }
+.manual-rate-tier__value strong { color: #63e3c8; font: 650 clamp(48px, 5.2vw, 70px)/.82 var(--mono); letter-spacing: -.07em; text-shadow: 0 0 30px rgba(75, 225, 193, .13); }
+.manual-rate-tier__value span { padding-bottom: 1px; color: #93a7a0; font-size: 12px; line-height: 1.45; }
+.manual-rate-tier > p { margin: 22px 0 0; color: #c0cec9; font-size: 15px; line-height: 1.58; }
+.manual-rate-tier > small { margin-top: auto; padding-top: 19px; color: #6fe0c8; font: 600 10px/1.45 var(--mono); }
 .manual-metric-grid { margin-top: 14px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .manual-metric-grid article { min-height: 150px; padding: 20px; border: 1px solid rgba(116, 187, 171, .15); border-radius: 12px; background: rgba(13, 22, 19, .66); }
 .manual-metric-grid span, .manual-payout-card span { display: block; color: #668079; font: 650 9px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
@@ -955,6 +967,8 @@ button { color: inherit; font: inherit; }
   .manual-rate-card { min-height: auto; padding: 21px; grid-template-columns: 1fr; }
   .manual-rate-card strong { grid-column: 1; margin-top: 22px; }
   .manual-rate-card p { grid-column: 1; max-width: none; }
+  .manual-rate-tiers { grid-template-columns: 1fr; }
+  .manual-rate-tier { min-height: 285px; padding: 22px; }
   .manual-metric-grid { grid-template-columns: 1fr; }
   .manual-metric-grid article { min-height: auto; }
   .manual-metric-grid strong { margin-top: 22px; }
