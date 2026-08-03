@@ -127,6 +127,7 @@ function UploadPanel({ image, onFile }: { image: string | null; onFile: (file: F
 function AnalysisStage({ image, progress, status, format }: { image: string | null; progress: number; status: 'idle' | 'processing' | 'done'; format: 'wide' | 'portrait' }) {
   const activeStep = Math.min(analysisSteps.length - 1, Math.floor(progress / (100 / analysisSteps.length)))
   const done = status === 'done'
+  const pixelCount = 96
 
   return (
     <section className={`studio-analysis studio-analysis--${format} studio-analysis--${status}`} aria-live="polite">
@@ -143,11 +144,21 @@ function AnalysisStage({ image, progress, status, format }: { image: string | nu
             {image ? <img src={image} alt="Источник для демонстрационного анализа" /> : <div className="studio-source-card__empty"><span>＋</span><p>Добавь изображение матча</p></div>}
             {image && <div className="studio-source-card__corners" aria-hidden="true"><i /><i /><i /><i /></div>}
             {status === 'processing' && <>
-              <div className="studio-source-card__scan" aria-hidden="true" />
-              <div className="studio-source-card__processing">
-                <div className="studio-source-card__radar" aria-hidden="true"><i /><span>{progress}</span></div>
-                <strong>{analysisSteps[activeStep][1]}</strong>
-                <small>Сопоставляем данные события и движение линии</small>
+              <div className="studio-source-card__pixel-reconstruction" aria-hidden="true">
+                <div className="studio-source-card__pixel-grid">
+                  {Array.from({ length: pixelCount }, (_, index) => (
+                    <i className={index < Math.round((progress / 100) * pixelCount) ? 'is-resolved' : ''} key={index} />
+                  ))}
+                </div>
+                <div className="studio-source-card__pixel-scan" style={{ top: `${Math.min(96, Math.max(3, progress))}%` }} />
+                <div className="studio-source-card__pixel-status">
+                  <span>PIXEL RECONSTRUCTION</span>
+                  <strong>{String(progress).padStart(2, '0')}%</strong>
+                </div>
+                <div className="studio-source-card__pixel-stage">
+                  <i />
+                  <div><span>AI-АНАЛИЗ ИЗОБРАЖЕНИЯ</span><strong>{analysisSteps[activeStep][1]}</strong></div>
+                </div>
               </div>
             </>}
           </div>
@@ -212,7 +223,7 @@ function AnalysisStage({ image, progress, status, format }: { image: string | nu
       <footer className="studio-analysis__footer">
         <span>Демо-интерфейс · итоговый вывод доступен в боте</span>
         <div className="studio-analysis__footer-action">
-          <a href={BOT_URL} target="_blank" rel="noreferrer"><strong>Узнать выбранную сторону</strong><small>Открыть итоговый разбор в Plus AI</small><i aria-hidden="true">→</i></a>
+          <a href={BOT_URL} target="_blank" rel="noreferrer"><strong>Открыть найденный результат</strong><small>Выбранная сторона, аргументы и риски — в Plus AI</small><i aria-hidden="true">→</i></a>
         </div>
       </footer>
     </section>
