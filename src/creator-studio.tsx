@@ -141,16 +141,24 @@ function AnalysisStage({ image, progress, status, format }: { image: string | nu
         <div className="studio-source-card">
           <div className="studio-source-card__image">
             {image ? <img src={image} alt="Источник для демонстрационного анализа" /> : <div className="studio-source-card__empty"><span>＋</span><p>Добавь изображение матча</p></div>}
-            {status !== 'idle' && <><div className="studio-source-card__scan" aria-hidden="true" /><div className="studio-source-card__corners" aria-hidden="true"><i /><i /><i /><i /></div></>}
+            {image && <div className="studio-source-card__corners" aria-hidden="true"><i /><i /><i /><i /></div>}
+            {status === 'processing' && <>
+              <div className="studio-source-card__scan" aria-hidden="true" />
+              <div className="studio-source-card__processing">
+                <div className="studio-source-card__radar" aria-hidden="true"><i /><span>{progress}</span></div>
+                <strong>{analysisSteps[activeStep][1]}</strong>
+                <small>Сопоставляем данные события и движение линии</small>
+              </div>
+            </>}
           </div>
           <div className="studio-source-card__meta"><span>ИСТОЧНИК</span><strong>{image ? 'Изображение получено' : 'Ожидание изображения'}</strong><i>{status === 'processing' ? 'Распознаём событие…' : done ? 'Событие распознано' : 'Готово к загрузке'}</i></div>
         </div>
 
         <div className="studio-analysis__content">
           <div className="studio-analysis__headline">
-            <span><i /> {status === 'idle' ? 'СИСТЕМА ГОТОВА' : done ? 'РАЗБОР СФОРМИРОВАН' : 'ИДЁТ AI-АНАЛИЗ'}</span>
-            <h2>{status === 'idle' ? 'Загрузи матч и запусти разбор' : done ? 'Ключевые факторы найдены' : analysisSteps[activeStep][1]}</h2>
-            <p>{done ? 'Plus AI собрал доступный контекст, рыночную динамику и факторы риска.' : 'Последовательно сопоставляем доступные данные и структуру события.'}</p>
+            <span><i /> {status === 'idle' ? 'СИСТЕМА ГОТОВА' : done ? 'ИТОГОВЫЙ ВЫВОД СФОРМИРОВАН' : 'ИДЁТ ГЛУБОКИЙ AI-АНАЛИЗ'}</span>
+            <h2>{status === 'idle' ? 'Загрузи матч и запусти разбор' : done ? 'Сторона с преимуществом найдена' : analysisSteps[activeStep][1]}</h2>
+            <p>{done ? 'Модель завершила разбор и выделила наиболее сильную сторону по совокупности факторов. Итоговый выбор и аргументы уже готовы.' : 'Последовательно сопоставляем контекст, форму, линию и ключевые риски.'}</p>
           </div>
 
           <div className="studio-progress">
@@ -171,7 +179,7 @@ function AnalysisStage({ image, progress, status, format }: { image: string | nu
             })}
           </div>
 
-          <div className="studio-market-card">
+          <div className={`studio-market-card${progress >= 56 ? ' is-active' : ''}${done ? ' is-ready' : ''}`}>
             <div className="studio-market-card__head"><span>Динамика линии</span><strong>{done ? 'Движение зафиксировано' : 'Сканирование данных'}</strong></div>
             <div className="studio-market-chart" aria-hidden="true">
               <svg viewBox="0 0 800 120" preserveAspectRatio="none">
@@ -192,18 +200,20 @@ function AnalysisStage({ image, progress, status, format }: { image: string | nu
           <div className={`studio-locked-result${done ? ' is-visible' : ''}`}>
             <div className="studio-locked-result__icon" aria-hidden="true">✦</div>
             <div className="studio-locked-result__copy">
-              <span>AI-МНЕНИЕ СФОРМИРОВАНО</span>
-              <strong>Полный разбор доступен в Plus AI</strong>
-              <p>Контекст, риски и итоговое мнение откроются в Telegram-боте.</p>
+              <span>КЛЮЧЕВОЙ ВЫВОД СФОРМИРОВАН</span>
+              <strong>Итоговая сторона определена</strong>
+              <p>AI-мнение, аргументы и ключевой риск уже собраны. Открой полный анализ в Telegram.</p>
             </div>
-            <div className="studio-locked-result__badge">ЗАКРЫТО</div>
+            <div className="studio-locked-result__badge">ВЫВОД ГОТОВ</div>
           </div>
         </div>
       </div>
 
       <footer className="studio-analysis__footer">
-        <span>Демонстрация интерфейса · полный результат формируется в боте</span>
-        <a href={BOT_URL} target="_blank" rel="noreferrer"><strong>Открыть полный разбор</strong><small>в Telegram</small><i aria-hidden="true">↗</i></a>
+        <span>Демо-интерфейс · итоговый вывод доступен в боте</span>
+        <div className="studio-analysis__footer-action">
+          <a href={BOT_URL} target="_blank" rel="noreferrer"><strong>Узнать выбранную сторону</strong><small>Открыть итоговый разбор в Plus AI</small><i aria-hidden="true">→</i></a>
+        </div>
       </footer>
     </section>
   )
