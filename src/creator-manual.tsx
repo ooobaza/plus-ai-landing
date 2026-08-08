@@ -35,8 +35,8 @@ const banners = [
   { id: '02', file: '/creator-assets/banners/banner-02.mp4', drive: 'https://drive.google.com/file/d/1qM6kdWV5Qy_hXdp3qRH7_Nete1Fvrd3Q/view?usp=sharing', voice: 'Озвучка обязательна', tone: 'required', format: 'wide' },
   { id: '03', file: '/creator-assets/banners/banner-03.mp4', drive: 'https://drive.google.com/file/d/1Fl69uQE6yNybF2R8IkO73uGHDcaLIa9F/view?usp=sharing', voice: 'Озвучка обязательна', tone: 'required', format: 'wide' },
   { id: '04', file: '/creator-assets/banners/banner-04.mp4', drive: 'https://drive.google.com/file/d/1WnOhx4xcr47of-et-xK6a4V7cNaeHEWa/view?usp=sharing', voice: 'Озвучка обязательна', tone: 'required', format: 'wide' },
-  { id: '05', file: '/creator-assets/banners/banner-05.mp4', drive: 'https://drive.google.com/file/d/1e_rrb6XzyIudlCSmeBVqfdQ3P-bmnliF/view?usp=sharing', voice: 'Можно использовать без озвучки', tone: 'optional', format: 'vertical' },
-  { id: '06', file: '/creator-assets/banners/banner-06.mp4', drive: 'https://drive.google.com/file/d/1NHfNFnQBxGftzKEi7SC_gXcbKMMhJhjb/view?usp=sharing', voice: 'Можно использовать без озвучки', tone: 'optional', format: 'vertical' },
+  { id: '05', file: '/creator-assets/banners/banner-05.mp4', drive: 'https://drive.google.com/file/d/1FGd003gZSZ6PMzYMEh2lY8zZ28C6Z1Yy/view?usp=sharing', voice: 'Можно использовать без озвучки', tone: 'optional', format: 'vertical' },
+  { id: '06', file: '/creator-assets/banners/banner-06.mp4', drive: 'https://drive.google.com/file/d/1ehk1Jtexk9NlFfWBbCI-5nza0i0hG3ih/view?usp=sharing', voice: 'Можно использовать без озвучки', tone: 'optional', format: 'vertical' },
 ] as const
 
 const voiceovers = [
