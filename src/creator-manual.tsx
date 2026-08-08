@@ -7,6 +7,7 @@ const BOT_URL = 'https://t.me/plus_ai_robot'
 const fixedManualNavigation = [
   ['start', 'Перед началом'],
   ['terms', 'Условия работы'],
+  ['examples', 'Примеры за $0.20'],
   ['workflow', 'Как проходит работа'],
   ['content', 'Какой контент подходит'],
   ['integration', 'Интеграция Plus AI'],
@@ -37,6 +38,15 @@ const banners = [
   { id: '04', file: '/creator-assets/banners/banner-04.mp4', drive: 'https://drive.google.com/file/d/1WnOhx4xcr47of-et-xK6a4V7cNaeHEWa/view?usp=sharing', voice: 'Озвучка обязательна', tone: 'required', format: 'wide' },
   { id: '05', file: '/creator-assets/banners/banner-05-red-v2.mp4', drive: 'https://drive.google.com/file/d/1FGd003gZSZ6PMzYMEh2lY8zZ28C6Z1Yy/view?usp=sharing', voice: 'Можно использовать без озвучки', tone: 'optional', format: 'vertical' },
   { id: '06', file: '/creator-assets/banners/banner-06-red-v2.mp4', drive: 'https://drive.google.com/file/d/1ehk1Jtexk9NlFfWBbCI-5nza0i0hG3ih/view?usp=sharing', voice: 'Можно использовать без озвучки', tone: 'optional', format: 'vertical' },
+] as const
+
+const paidVideoExamples = [
+  { id: '01', duration: '0:15', file: '/creator-assets/examples-020/example-01.mp4', poster: '/creator-assets/examples-020/example-01.jpg' },
+  { id: '02', duration: '0:28', file: '/creator-assets/examples-020/example-02.mp4', poster: '/creator-assets/examples-020/example-02.jpg' },
+  { id: '03', duration: '0:13', file: '/creator-assets/examples-020/example-03.mp4', poster: '/creator-assets/examples-020/example-03.jpg' },
+  { id: '04', duration: '0:15', file: '/creator-assets/examples-020/example-04.mp4', poster: '/creator-assets/examples-020/example-04.jpg' },
+  { id: '05', duration: '0:13', file: '/creator-assets/examples-020/example-05.mp4', poster: '/creator-assets/examples-020/example-05.jpg' },
+  { id: '06', duration: '0:46', file: '/creator-assets/examples-020/example-06.mp4', poster: '/creator-assets/examples-020/example-06.jpg' },
 ] as const
 
 const voiceovers = [
@@ -197,6 +207,38 @@ function BannerLibrary({ strict }: { strict: boolean }) {
   )
 }
 
+function PaidVideoExamples() {
+  return (
+    <div className="manual-example-grid" aria-label="Примеры роликов со ставкой 0.20 доллара за 1000 просмотров">
+      {paidVideoExamples.map((example) => (
+        <article className="manual-example-card" key={example.id}>
+          <div className="manual-example-card__media">
+            <video
+              controls
+              playsInline
+              preload="none"
+              poster={example.poster}
+              aria-label={`Посмотреть пример ролика ${example.id}`}
+              onPlay={(event) => {
+                document.querySelectorAll<HTMLVideoElement>('.manual-page video').forEach((video) => {
+                  if (video !== event.currentTarget) video.pause()
+                })
+              }}
+            >
+              <source src={example.file} type="video/mp4" />
+            </video>
+            <span className="manual-example-card__rate">$0.20 / 1 000</span>
+          </div>
+          <div className="manual-example-card__body">
+            <div><small>ПРИМЕР {example.id}</small><strong>Беттинг-интеграция</strong></div>
+            <span>{example.duration} · 9:16</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  )
+}
+
 function VoiceoverLibrary() {
   return (
     <div className="manual-audio-grid">
@@ -228,7 +270,7 @@ function FixedTerms() {
           <div className="manual-rate-tier__head"><span>СТАВКА 02</span><b>С БЕТТИНГ-ИНТЕГРАЦИЕЙ</b></div>
           <div className="manual-rate-tier__value"><strong>$0.20</strong><span>за 1 000<br />просмотров</span></div>
           <p>Для роликов, где беттинг заметно встроен в сюжет: стример поставил деньги на матч и следит за исходом, показан бот или сайт Plus AI либо используется другой согласованный беттинг-формат.</p>
-          <small>Примеры контента за $0.20 будут добавлены позже.</small>
+          <small><a href="#examples">Смотреть 6 примеров контента за $0.20 ↓</a></small>
         </article>
       </div>
       <p className="manual-note">Расчёт выполняется пропорционально количеству подтверждённых просмотров. Например: 1 500 просмотров = $0.15 по ставке $0.10 или $0.30 по ставке $0.20. Категорию ролика лучше подтвердить с менеджером до публикации.</p>
@@ -340,25 +382,33 @@ export function CreatorManualPage({ kind }: { kind: CreatorManualKind }) {
             <span className="manual-eyebrow">PLUS AI · CREATOR GUIDE</span>
             <h1>{fixed ? 'Мануал для работы по фиксированной оплате' : 'Мануал для партнерской работы'}</h1>
             <p>{fixed ? 'Как создавать и публиковать Reels с интеграцией Plus AI, чтобы контент соответствовал требованиям и просмотры могли быть приняты к расчету.' : 'Как работать с персональной ссылкой от менеджера, использовать материалы Plus AI и вести трафик по индивидуальным условиям.'}</p>
-            <div className="manual-hero__status"><span>Версия 2.0</span><span>Обновлено 01.08.2026</span><ManagerLink>Контакт: @plus_maks ↗</ManagerLink></div>
+            <div className="manual-hero__status"><span>{fixed ? 'Версия 2.1' : 'Версия 2.0'}</span><span>{fixed ? 'Обновлено 08.08.2026' : 'Обновлено 01.08.2026'}</span><ManagerLink>Контакт: @plus_maks ↗</ManagerLink></div>
           </section>
 
           <ManualSection id="terms" eyebrow="01 / УСЛОВИЯ" title={fixed ? 'Как считается работа' : 'Как устроено партнерство'}>{fixed ? <FixedTerms /> : <PartnerTerms />}</ManualSection>
 
+          {fixed && (
+            <ManualSection id="examples" eyebrow="02 / ПРИМЕРЫ" title="Как выглядят ролики за $0.20">
+              <p className="manual-lead">Шесть ориентиров по механике и подаче: беттинг заметно встроен в сюжет, а интеграция Plus AI является частью ролика. Используйте примеры как референс — копировать монтаж один в один не нужно.</p>
+              <PaidVideoExamples />
+              <p className="manual-note">Видео загружается только после нажатия Play. Перед публикацией новой механики подтвердите категорию и ставку с менеджером.</p>
+            </ManualSection>
+          )}
+
           {fixed ? (
-            <ManualSection id="workflow" eyebrow="02 / ПРОЦЕСС" title="От первого ролика до выплаты"><FixedWorkflow /></ManualSection>
+            <ManualSection id="workflow" eyebrow="03 / ПРОЦЕСС" title="От первого ролика до выплаты"><FixedWorkflow /></ManualSection>
           ) : (
             <ManualSection id="attribution" eyebrow="02 / АТРИБУЦИЯ" title="Как учитывается результат"><PartnerAttribution /></ManualSection>
           )}
 
-          <ManualSection id="content" eyebrow="03 / КОНТЕНТ" title={fixed ? 'Что можно публиковать' : 'Какие форматы можно использовать'}>
+          <ManualSection id="content" eyebrow={fixed ? '04 / КОНТЕНТ' : '03 / КОНТЕНТ'} title={fixed ? 'Что можно публиковать' : 'Какие форматы можно использовать'}>
             <p className="manual-lead">{fixed ? 'Задача — создавать вирусные вертикальные видео для Instagram Reels, добавляя заметную нативную интеграцию Plus AI.' : 'Формат продвижения выбираете вы: короткие ролики, объясняющий контент, тематические публикации или другая согласованная интеграция.'}</p>
             <div className="manual-content-grid">{contentFormats.map((item, index) => <div key={item}><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></div>)}</div>
             <div className="manual-callout"><strong>Не уверены в теме?</strong><p>Не публикуйте ролик наугад. Отправьте идею или черновик <ManagerLink>менеджеру</ManagerLink> и дождитесь подтверждения.</p></div>
           </ManualSection>
 
           {fixed ? <>
-            <ManualSection id="integration" eyebrow="04 / ИНТЕГРАЦИЯ" title="Что обязательно должно быть в ролике">
+            <ManualSection id="integration" eyebrow="05 / ИНТЕГРАЦИЯ" title="Что обязательно должно быть в ролике">
               <div className="manual-requirements">
                 <article><span>01</span><h3>Заметный баннер</h3><p>Баннер Plus AI должен быть достаточно крупным и читаемым на телефоне. Маленькая формальная плашка не подходит.</p></article>
                 <article><span>02</span><h3>Без перекрытий</h3><p>Размещайте баннер сверху или снизу, но не под кнопками, описанием и интерфейсом Reels.</p></article>
@@ -366,28 +416,28 @@ export function CreatorManualPage({ kind }: { kind: CreatorManualKind }) {
               </div>
             </ManualSection>
 
-            <ManualSection id="banners" eyebrow="05 / МАТЕРИАЛЫ" title="Баннеры Plus AI">
+            <ManualSection id="banners" eyebrow="06 / МАТЕРИАЛЫ" title="Баннеры Plus AI">
               <p className="manual-lead">Выберите вариант, запустите предпросмотр и скачайте исходный MP4 с Google Drive. Не пересылайте файл через мессенджер перед монтажом, чтобы не потерять качество.</p>
               <BannerLibrary strict />
             </ManualSection>
 
-            <ManualSection id="voice" eyebrow="06 / АУДИО" title="Готовые варианты озвучки">
+            <ManualSection id="voice" eyebrow="07 / АУДИО" title="Готовые варианты озвучки">
               <p className="manual-lead">Для баннеров 02, 03 и 04 озвучка обязательна. Для остальных вариантов её можно не использовать.</p>
               <div className="manual-callout manual-callout--important"><strong>Ограничение по скорости</strong><p>Озвучку разрешено ускорять не более чем на 50%. Максимальная допустимая скорость — <code>1.5×</code> от исходной.</p></div>
               <VoiceoverLibrary />
             </ManualSection>
 
-            <ManualSection id="placement" eyebrow="07 / SAFE ZONE" title="Куда ставить баннер">
+            <ManualSection id="placement" eyebrow="08 / SAFE ZONE" title="Куда ставить баннер">
               <p className="manual-lead">Основная позиция — нижняя треть, но выше описания ролика. Верхнюю позицию используйте только когда она не закрывает лицо или главный объект.</p>
               <figure className="manual-safe-zone"><img src="/creator-assets/guides/reels-safe-zones.png" alt="Схема безопасных зон для размещения баннера в Instagram Reels" /><figcaption>Схема safe zones: не размещайте важный текст в правой колонке и в самом низу экрана.</figcaption></figure>
             </ManualSection>
 
-            <ManualSection id="chroma" eyebrow="08 / МОНТАЖ" title="Как убрать зеленый или красный фон"><ChromaGuide /></ManualSection>
+            <ManualSection id="chroma" eyebrow="09 / МОНТАЖ" title="Как убрать зеленый или красный фон"><ChromaGuide /></ManualSection>
           </> : (
             <ManualSection id="materials" eyebrow="04 / ПО ЖЕЛАНИЮ" title="Материалы для быстрого старта"><PartnerMaterials /></ManualSection>
           )}
 
-          <ManualSection id="publishing" eyebrow={fixed ? '09 / ПУБЛИКАЦИЯ' : '05 / РЕЗУЛЬТАТ'} title="Как передать результат">
+          <ManualSection id="publishing" eyebrow={fixed ? '10 / ПУБЛИКАЦИЯ' : '05 / РЕЗУЛЬТАТ'} title="Как передать результат">
             <ol className="manual-steps">
               <li><span>01</span><div><strong>Проверьте материал перед публикацией</strong><p>{fixed ? 'Формат 1080×1920, соотношение 9:16, MP4 H.264/H.265. Проверьте звук, читаемость баннера и безопасные зоны.' : 'Убедитесь, что материал соответствует согласованной площадке, корректно представляет Plus AI и содержит понятный переход по персональной ссылке.'}</p></div></li>
               <li><span>02</span><div><strong>Проверьте ссылку</strong><p>{fixed ? 'Откройте профиль и убедитесь, что ссылка plus-ai.site или t.me/plus_ai_robot кликабельна.' : 'Откройте ссылку из профиля и убедитесь, что используется именно персональный адрес, полученный у менеджера.'}</p></div></li>
@@ -397,7 +447,7 @@ export function CreatorManualPage({ kind }: { kind: CreatorManualKind }) {
             {fixed && <div className="manual-callout"><strong>Что может потребоваться дополнительно</strong><p>При аномальной динамике, несоответствии охвата и вовлечённости, подозрительных источниках трафика или иных признаках злоупотребления менеджер может запросить непрерывную запись экрана и расширенную статистику Instagram. До получения подтверждений ролик не принимается к выплате.</p></div>}
           </ManualSection>
 
-          <ManualSection id="rules" eyebrow={fixed ? '10 / ОГРАНИЧЕНИЯ' : '06 / ОГРАНИЧЕНИЯ'} title={fixed ? 'Что запрещено' : 'Минимальные правила'}>
+          <ManualSection id="rules" eyebrow={fixed ? '11 / ОГРАНИЧЕНИЯ' : '06 / ОГРАНИЧЕНИЯ'} title={fixed ? 'Что запрещено' : 'Минимальные правила'}>
             {!fixed && <p className="manual-lead">Мы не оцениваем ролики по шаблону и не платим за просмотры. Ограничения нужны только для честной атрибуции результата и корректного представления продукта.</p>}
             <div className="manual-rules">{(fixed ? prohibitedRules : partnerRules).map(([title, text], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{managerLinkedText(text)}</p></div></article>)}</div>
             <div className="manual-terms-accept">
@@ -407,7 +457,7 @@ export function CreatorManualPage({ kind }: { kind: CreatorManualKind }) {
             </div>
           </ManualSection>
 
-          <ManualSection id="checklist" eyebrow={fixed ? '11 / ПЕРЕД ПУБЛИКАЦИЕЙ' : '07 / ПЕРЕД ЗАПУСКОМ'} title="Финальный чек-лист">
+          <ManualSection id="checklist" eyebrow={fixed ? '12 / ПЕРЕД ПУБЛИКАЦИЕЙ' : '07 / ПЕРЕД ЗАПУСКОМ'} title="Финальный чек-лист">
             <div className="manual-checklist">
               {[
                 'Тема ролика подходит под согласованный формат',
@@ -421,7 +471,7 @@ export function CreatorManualPage({ kind }: { kind: CreatorManualKind }) {
                 fixed ? 'Профиль открыт, публикация доступна и останется доступной минимум 30 дней' : 'Условия оплаты и целевое действие подтверждены менеджером в переписке',
               ].map((item) => <label key={item}><input type="checkbox" /> <span>{item}</span></label>)}
             </div>
-            <p className="manual-version-note">Версия 2.0 от 01.08.2026. Отправляя материал на согласование, проверку или выплату, креатор подтверждает, что ознакомился с этой редакцией правил и принимает её. Новые редакции применяются к будущим публикациям после уведомления менеджером или в закрытом канале креаторов.</p>
+            <p className="manual-version-note">{fixed ? 'Версия 2.1 от 08.08.2026.' : 'Версия 2.0 от 01.08.2026.'} Отправляя материал на согласование, проверку или выплату, креатор подтверждает, что ознакомился с этой редакцией правил и принимает её. Новые редакции применяются к будущим публикациям после уведомления менеджером или в закрытом канале креаторов.</p>
             <div className="manual-support-card"><div><span>Остался вопрос?</span><h3>Сначала уточните — потом публикуйте</h3><p>Отправьте <ManagerLink>менеджеру</ManagerLink> идею, черновик или скрин спорного момента.</p></div><ManagerLink className="manual-support-card__button">Написать @plus_maks ↗</ManagerLink></div>
           </ManualSection>
         </main>
